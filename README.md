@@ -9,4 +9,4 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [User stories](../../wiki/User%20stories)
 - [Requirements](../../wiki/Requirements)
 - [Development Plan](../../wiki/Development%20Plan)
-- [Iteration 1](../../wiki/Iteration%201%20Plan) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/5)
+- [Iteration 1](../../wiki/Iteration%201%20) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/5)
