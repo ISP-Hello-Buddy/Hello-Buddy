@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "authorize.apps.AuthorizeConfig",
+    'Hello_Buddy.apps.HelloBuddyConfig'
 ]
 
 MIDDLEWARE = [
