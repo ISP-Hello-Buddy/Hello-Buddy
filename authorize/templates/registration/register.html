@@ -1,4 +1,4 @@
-<div class="content-section col-md-8 col-md-offset-2">
+<!-- <div class="content-section col-md-8 col-md-offset-2">
     <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
       {% csrf_token %}
       <fieldset class="form-group">
@@ -8,6 +8,25 @@
         <button style="background: black; padding:2%; font-size: 2rem; color:white;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-check"></span> &nbsp; sign up</button>
       </center>
       <br />
-      <sub><a href="{% url "login" %}" style="text-decoration: none; color: blue; padding:3%; cursor:pointer;">Already have an account ?</a></sub>
+      <sub><a href="{% url 'login' %}" style="text-decoration: none; color: blue; padding:3%; cursor:pointer;">Already have an account ?</a></sub>
     </form>
-  </div>
+  </div> -->
+{% block content %}
+<h2 style="color: black">Register</h2>
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+    <tr>
+      <td colspan="3">
+        <button type="submit">Register</button>  
+        <!-- ome to main poll for see only -->
+        <a href="{% url 'signup' %}"
+          ><button type="button">Home</button></a
+        >
+        
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}
