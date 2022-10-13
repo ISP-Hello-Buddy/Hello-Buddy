@@ -19,7 +19,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    # path("",)
     path('', include('Hello_Buddy.urls'),name = "home"),
     path("users/", include("authorize.urls")),
     path("admin/", admin.site.urls),
