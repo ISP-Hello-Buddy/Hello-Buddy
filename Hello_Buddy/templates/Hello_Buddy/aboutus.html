@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="height:1500px">
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Hello Buddy</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href='home'>Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Eating</a></li>
+          <li><a href="#">Sport</a></li>
+          <li><a href="#">Movie</a></li>
+          <li><a href="#">Party</a></li>
+          <li><a href="#">Education</a></li>
+        </ul>
+      </li>
+      <li class="active"><a href="#">About us</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>Welcome to Hello Buddy</h1>
+  <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div id="team" class="container text-center">
+    <h3>My team</h3>
+  <br>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-3">
+        <a href="#demo" data-toggle="collapse">
+        <img src="https://cloudbox.ku.ac.th/index.php/s/BQWH7kKDt52MNQj/preview"
+              class="img-circle person" alt="Random Name" width="255" height="255">
+                  </a>
+          <div id="demo" class="collapse">
+            <p class="text-center"></p><br>
+        <p>Jirasak Tumbal</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> xxxxxxxxxx</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> jirasak.tu@ku.th</p>
+            <p><span class="glyphicon glyphicon-link"></span> jirasak.tu@ku.th</p>
+      </div>
+      </div>
+
+
+      <div class="col-sm-3">
+        <a href="#demo2" data-toggle="collapse">
+          <img src="https://cloudbox.ku.ac.th/index.php/s/sGeffREA6BHCRaX/preview"
+                class="img-circle person" alt="Random Name" width="255" height="255">
+        </a>
+        <div id="demo2" class="collapse">
+          <p class="text-center"></p><br>
+        <p>Khemissara Pratummanee</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> xxxxxxxxxx</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> khemissara.p@ku.th</p>
+        </div>
+      </div>
+
+            <div class="col-sm-3">
+        <a href="#demo3" data-toggle="collapse">
+          <img src="https://cloudbox.ku.ac.th/index.php/s/ZQmfS4EELSdAMxs/preview"
+                class="img-circle person" alt="Random Name" width="255" height="255">
+        </a>
+        <div id="demo3" class="collapse">
+          <p class="text-center"></p><br>
+        <p>Setthanan Thongpanchang</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> xxxxxxxxxx</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> setthanan.th@ku.th</p>
+        </div>
+      </div>
+
+    <div class="col-sm-3">
+      <a href="#demo4" data-toggle="collapse">
+        <img src="https://cloudbox.ku.ac.th/index.php/s/ZQmfS4EELSdAMxs/preview" class="img-circle person" alt="Random Name" width="255" height="255">
+      </a>
+      <div id="demo4" class="collapse">
+        <p class="text-center"></p><br>
+        <p>Ratthicha Parinthip</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> xxxxxxxxxx</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> ratthicha.p@ku.th</p>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+
+
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container">
+  <h3 class="text-center">Contact</h3>
+  <p class="text-center"></p>
+
+  <div class="row">
+    <div class="col-md-4">
+      <p><span class="glyphicon glyphicon-map-marker" ></span> Bangkok, Thailand</p>
+      <p><span class="glyphicon glyphicon-phone"></span> Phone: +66 0000000</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> Email: hellobudy@ku.th</p>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea>
+      <br>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <button class="btn pull-right" type="submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+</body>
+</html>
