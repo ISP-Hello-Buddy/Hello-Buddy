@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'Hello_Buddy/style.css' %}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +34,38 @@
       <li><a href="{% url 'aboutus'%}">About us</a></li>
       <li><a href="{% url 'create' %}">Create</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
-  </div>
-</nav>
+     <!-- when login -->
+     {% if user.is_authenticated %}
+     <ul class="nav navbar-nav navbar-right">
+       <li>
+         <a href="#"
+           ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a
+         >
+       </li>
+       <li>
+         <a href="{% url 'logout'%}?next={{request.path}}"
+           ><span class="glyphicon glyphicon-log-out"></span> Logout</a
+         >
+       </li>
+     </ul>
+
+     <!-- when not login -->
+     {% else %}
+     <ul class="nav navbar-nav navbar-right">
+       <li>
+         <a href="{% url 'signup'%}"
+           ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+         >
+       </li>
+       <li>
+         <a href="{% url 'login'%}?next={{request.path}}" method="post"
+           ><span class="glyphicon glyphicon-log-in"></span> Login</a
+         >
+       </li>
+     </ul>
+     {% endif %}
+   </div>
+ </nav>
 
 {% block content %}{% endblock %}
 

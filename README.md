@@ -11,3 +11,4 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Development Plan](../../wiki/Development%20Plan)
 - [Iteration 1](../../wiki/Iteration%201) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/5)
 - [Iteration 2](../../wiki/Iteration%202) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/6)
+- [Iteration 3](https://github.com/ISP-Hello-Buddy/Hello-Buddy/wiki/Iteration-3) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/7)
