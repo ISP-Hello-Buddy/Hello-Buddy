@@ -1,40 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body style="height:1500px">
+{% extends 'Hello_Buddy/base.html' %}
 
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Hello Buddy</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href='home'>Home</a></li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Eating</a></li>
-          <li><a href="#">Sport</a></li>
-          <li><a href="#">Movie</a></li>
-          <li><a href="#">Party</a></li>
-          <li><a href="#">Education</a></li>
-        </ul>
-      </li>
-      <li class="active"><a href="#">About us</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
-  </div>
-</nav>
+{% block content %}
 
 <div class="jumbotron text-center">
   <h1>Welcome to Hello Buddy</h1>
@@ -137,6 +103,4 @@
 
 
 </div>
-
-</body>
-</html>
+{% endblock %}

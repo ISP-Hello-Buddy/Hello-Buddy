@@ -4,5 +4,6 @@ from Hello_Buddy.views import reverse_to_home
 urlpatterns = [
     path('', reverse_to_home),
     path('home',views.home, name='home'),
-    path('aboutus', views.aboutus, name='aboutus')
+    path('aboutus', views.aboutus, name='aboutus'),
+    path('create', views.create, name='create')
 ]

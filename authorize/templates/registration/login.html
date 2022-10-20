@@ -1,21 +1,25 @@
+{% extends 'Hello_Buddy/base.html' %}
+
 {% block content %}
+<div class="container" style="margin-top: 50px;">
 <h2 style="color: black">Login</h2>
+</div>
 <form action="{% url 'login' %}" method="POST">
   {% csrf_token %}
   <table class="content-container">
-    <div class="form-field">
+    <div class="container" class="form-field">
       {{ form.username.label_tag}}
       <nav></nav>
       {{form.username}}
     </div>
-    <div class="form-field">
+    <div class="container" class="form-field">
       {{ form.password.label_tag}}
       <nav></nav>
       {{form.password}}
     </div>
   </table>
 
-  <table>
+  <table class="container" style="margin-top: 10px;">
     <tr>
       <td colspan="3">
         <button type="submit">Login</button>

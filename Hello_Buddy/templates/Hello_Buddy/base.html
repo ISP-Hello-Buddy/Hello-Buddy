@@ -1,0 +1,73 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'Hello_Buddy/style.css' %}" />
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hello Buddy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="height:1500px">
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Hello Buddy</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'home'%}">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Eating</a></li>
+          <li><a href="#">Sport</a></li>
+          <li><a href="#">Movie</a></li>
+          <li><a href="#">Party</a></li>
+          <li><a href="#">Education</a></li>
+        </ul>
+      </li>
+      <li><a href="{% url 'aboutus'%}">About us</a></li>
+      <li><a href="{% url 'create' %}">Create</a></li>
+    </ul>
+     <!-- when login -->
+     {% if user.is_authenticated %}
+     <ul class="nav navbar-nav navbar-right">
+       <li>
+         <a href="#"
+           ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a
+         >
+       </li>
+       <li>
+         <a href="{% url 'logout'%}?next={{request.path}}"
+           ><span class="glyphicon glyphicon-log-out"></span> Logout</a
+         >
+       </li>
+     </ul>
+
+     <!-- when not login -->
+     {% else %}
+     <ul class="nav navbar-nav navbar-right">
+       <li>
+         <a href="{% url 'signup'%}"
+           ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+         >
+       </li>
+       <li>
+         <a href="{% url 'login'%}?next={{request.path}}" method="post"
+           ><span class="glyphicon glyphicon-log-in"></span> Login</a
+         >
+       </li>
+     </ul>
+     {% endif %}
+   </div>
+ </nav>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>
