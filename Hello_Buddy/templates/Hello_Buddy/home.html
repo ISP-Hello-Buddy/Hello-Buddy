@@ -16,16 +16,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body style="height: 1500px">
-    <nav
-      class="navbar navbar-inverse navbar-fixed-top"
-      style="background-color: rgb(119, 205, 236)"
-    >
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" style="color: black" href="#">Hello Buddy</a>
+          <a class="navbar-brand" href="#">Hello Buddy</a>
         </div>
+
         <ul class="nav navbar-nav">
-          <!-- <li class="active"><a href="#">Home</a></li> -->
           <li><a href="#">Home</a></li>
 
           <li class="dropdown">
@@ -49,7 +46,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <a href="#"
-              ><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a
+              ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a
             >
           </li>
           <li>
@@ -63,8 +60,7 @@
         {% else %}
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="users/signup/"
-
+            <a href="{% url 'signup'%}"
               ><span class="glyphicon glyphicon-user"></span> Sign Up</a
             >
           </li>
@@ -78,45 +74,45 @@
       </div>
     </nav>
 
-    <!-- <div class="container" style="margin-top:50px">
-  <h3>Welcome to Hello Buddy</h3>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-  <p>Welcome to Hello Buddy</p>
-</div> -->
+    <div style="margin-top: 50px">
+      <h3>Welcome to Hello Buddy</h3>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+      <p>Welcome to Hello Buddy</p>
+    </div>
   </body>
 </html>

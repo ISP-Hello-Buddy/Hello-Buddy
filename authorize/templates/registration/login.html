@@ -10,6 +10,7 @@
     <form action="{%url 'login'%}" method="post">
       {% csrf_token %} {{form.as_p}}
       <input type="submit" value="Login" />
+      <a href="{% url 'home' %}"><button type="button">Cancel</button></a>
     </form>
   </body>
 </html>

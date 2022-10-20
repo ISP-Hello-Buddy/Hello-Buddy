@@ -8,20 +8,6 @@ from authorize.forms import RegisterForm
 
 def signup(request):
     """Register a new user."""
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.save()
-    #         login(request, user)
-    #         return redirect('home')
-    # # else:
-    #     # when user click sign up in ap will create register.html page page
-    #     # form = UserCreationForm()
-    #     form = RegisterForm()
-    #     context = {"form": form}
-    # return render(request, 'registration/register.html', context)
-
-    # post
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         # if data can save == true
@@ -32,5 +18,6 @@ def signup(request):
             # return HttpResponseRedirect(reverse("home"))
     else:
         form = RegisterForm()
+    # keep data in each user (dict)
     context = {"form": form}
     return render(request, 'registration/register.html', context)

@@ -6,6 +6,4 @@ from django.conf import settings
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('signup/', view = views.signup, name='signup')
-
-
 ]
