@@ -1,0 +1,39 @@
+{% block content %}
+<h2 style="color: black">Register</h2>
+<form action="{% url 'signup' %}" method="POST">
+  {% csrf_token %}
+  <table class="content-container">
+    <div class="form-field">
+      {{ form.username.label_tag}}
+      <nav></nav>
+      {{form.username}}
+    </div>
+    <div class="form-field">
+      {{ form.password1.label_tag}}
+      <nav></nav>
+      {{form.password1}}
+    </div>
+    <div class="form-field">
+      {{ form.password2.label_tag}}
+      <nav></nav>
+      {{form.password2}}
+    </div>
+    <div class="form-field">
+      {{form.email.label_tag}}
+      <nav></nav>
+      {{form.email}}
+    </div>
+  </table>
+
+  <table>
+    <tr>
+      <td colspan="3">
+        <button type="submit">Register</button>
+        <!-- ome to main poll for see only -->
+        <a href="{% url 'home' %}"><button type="button">Cancel</button></a>
+      </td>
+    </tr>
+  </table>
+</form>
+{{form.username.errors}} {{form.password1.errors}} {{form.password2.errors}}
+{{form.email.errors}} {% endblock %}
