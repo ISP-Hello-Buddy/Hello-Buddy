@@ -14,3 +14,6 @@ def aboutus(request):
 def reverse_to_home(self):
     """redirect to homepage"""
     return HttpResponseRedirect(reverse('home'))
+
+def profile_user(request):
+    return render(request, 'Hello_Buddy/profile_user.html')
