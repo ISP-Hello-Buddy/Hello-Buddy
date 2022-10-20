@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,11 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LoginSystem</title>
   </head>
+  <h2 style="color: black">Login</h2>
   <body>
     <form action="{%url 'login'%}" method="post">
-      {% csrf_token %} {{form.as_p}}
-      <input type="submit" value="Login" />
-      <a href="{% url 'home' %}"><button type="button">Cancel</button></a>
+      {% csrf_token %}
+      
+      <table class="content-container">
+        <div class="form-field">
+          {{ form.username.label_tag}}
+          <nav></nav>
+          {{form.username}}
+        </div>
+        <div class="form-field">
+          {{ form.password.label_tag}}
+          <nav></nav>
+          {{form.password}}
+        </div>
+      </table>
     </form>
   </body>
+
+  <td colspan="3">
+    <input type="submit" value="Login" />
+    <a href="{% url 'home' %}"> <button type="button">Cancel</button></a>
+  </td>
 </html>
+
+ -->
+
+
+
+{% block content %}
+<h2 style="color: black">Login</h2>
+<form action="{% url 'login' %}" method="POST">
+  {% csrf_token %}
+  <table class="content-container">
+    <div class="form-field">
+      {{ form.username.label_tag}}
+      <nav></nav>
+      {{form.username}}
+    </div>
+    <div class="form-field">
+      {{ form.password.label_tag}}
+      <nav></nav>
+      {{form.password}}
+    </div>
+  </table>
+
+  <table>
+    <tr>
+      <td colspan="3">
+        <button type="submit">Login</button>
+        <!-- ome to main poll for see only -->
+        <a href="{% url 'home' %}"><button type="button">Cancel</button></a>
+      </td>
+    </tr>
+  </table>
+</form>
+{{form.username.errors}} {{form.password.errors}} 
+{% endblock %}

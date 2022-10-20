@@ -4,29 +4,28 @@
   {% csrf_token %}
   <table class="content-container">
     <div class="form-field">
-      {{ form.username.label_tag}} <nav></nav>
-      {{form.username}} 
-      
-    </div>
-    <div  class="form-field">
-      {{ form.password1.label_tag}} <nav></nav>
-      {{form.password1}} 
-      
+      {{ form.username.label_tag}}
+      <nav></nav>
+      {{form.username}}
     </div>
     <div class="form-field">
-      {{ form.password2.label_tag}} <nav></nav>
-      {{form.password2}} 
-      
+      {{ form.password1.label_tag}}
+      <nav></nav>
+      {{form.password1}}
     </div>
     <div class="form-field">
-      {{form.email.label_tag}} <nav></nav>
-      {{form.email}} 
-     
+      {{ form.password2.label_tag}}
+      <nav></nav>
+      {{form.password2}}
+    </div>
+    <div class="form-field">
+      {{form.email.label_tag}}
+      <nav></nav>
+      {{form.email}}
     </div>
   </table>
 
   <table>
-
     <tr>
       <td colspan="3">
         <button type="submit">Register</button>
@@ -36,8 +35,5 @@
     </tr>
   </table>
 </form>
-{{form.username.errors}}
-{{form.password1.errors}}
-{{form.password2.errors}}
-{{form.email.errors}}
-{% endblock %}
+{{form.username.errors}} {{form.password1.errors}} {{form.password2.errors}}
+{{form.email.errors}} {% endblock %}
