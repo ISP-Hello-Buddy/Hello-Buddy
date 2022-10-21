@@ -1,6 +1,6 @@
-from urllib import response
 from django.test import TestCase
 from django.urls import reverse
+
 
 class BaseSet(TestCase):
     def setUp(self):
@@ -61,6 +61,7 @@ class BaseSet(TestCase):
         }
         return super().setUp()
     
+    
 class RegisterTest(BaseSet):
 
 
@@ -112,4 +113,48 @@ class RegisterTest(BaseSet):
         response = self.client.post(self.url_register, self.register6)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/register.html')
+        
+        
+class LoginTest(BaseSet):
+    
+    
+    def test_login_page_correctly(self):
+        """ Test login page"""
+        response = self.client.get(self.url_login)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+        
+    def test_login_successful(self):
+        """ Test if user login successful"""
+        self.client.post(self.url_register, self.register1)
+        response = self.client.post(self.url_login, self.login1)
+        self.assertEqual(response.status_code, 302)
+        # Check url that redirect to
+        self.assertEqual(response.url, '/home')
+        
+    def test_incorrect_password(self):
+        """ Test if user enter incorrect password"""
+        self.client.post(self.url_register, self.register2)
+        response = self.client.post(self.url_login, self.login1)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+        
+    def test_incorrect_username(self):
+        """ Test if user enter incorrect username"""
+        self.client.post(self.url_register, self.register2)
+        response = self.client.post(self.url_login, self.login2)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+        
+    def test_with_no_username(self):
+        """ Test if can not login with no username"""
+        response = self.client.post(self.url_login, {'password':'admin1234567'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+        
+    def test_with_no_password(self):
+        """ Test if can not login with no password"""
+        response = self.client.post(self.url_login, {'username':'demo123'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
     
