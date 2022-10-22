@@ -4,6 +4,9 @@ from .forms import CreateEventForm
 from .models import Event
 
 # Create your views here.
+# def image_upload(request):
+    # if request.method == 'POST':
+
 
 def home(request):
     all_event = Event.objects.all()
