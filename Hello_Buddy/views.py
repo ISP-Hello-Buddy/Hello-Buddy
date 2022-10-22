@@ -29,4 +29,6 @@ def reverse_to_home(self):
     return redirect('home')
 
 def profile_user(request):
-    return render(request, 'Hello_Buddy/profile_user.html')
+    # all_event = Event.objects.get(username=request.user)
+    all_event = Event.objects.all()
+    return render(request, 'Hello_Buddy/profile_user.html' ,context={'events' : all_event})
