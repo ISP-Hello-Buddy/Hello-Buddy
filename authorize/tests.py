@@ -74,13 +74,13 @@ class RegisterTest(BaseSet):
         self.assertTemplateUsed(response, 'registration/register.html')
         
     def test_correct_register(self):
-        """ Test correctly information to register"""
+        """ Correctly information to register"""
         response = self.client.post(self.url_register, self.register1)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/home')
         
     def test_taken_username(self):
-        """ Test if username already taken"""
+        """ Username already taken"""
         self.client.post(self.url_register, self.register1)
         response = self.client.post(self.url_register, self.register2)
         # Cilent should not error and should render the register page to fix information.
@@ -88,7 +88,7 @@ class RegisterTest(BaseSet):
         self.assertTemplateUsed(response, 'registration/register.html')
         
     def test_taken_email(self):
-        """ Test if email already taken"""
+        """ Email already taken"""
         self.client.post(self.url_register, self.register2)
         response1 = self.client.post(self.url_register, self.register3)
         # Cilent should not error and should render the register page to fix information.
@@ -96,20 +96,20 @@ class RegisterTest(BaseSet):
         self.assertTemplateUsed(response1, 'registration/register.html')
         
     def test_unmatch_password(self):
-        """ Test if password are not matching"""
+        """ Password are not matching"""
         response = self.client.post(self.url_register, self.register4)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/register.html')
         
     def test_invalid_email(self):
-        """ Test invalid email"""
+        """ Invalid email"""
         response = self.client.post(self.url_register, self.register5)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/register.html')
 
     
     def test_short_password(self):
-        """ Test short password"""
+        """ Short password"""
         response = self.client.post(self.url_register, self.register6)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/register.html')
@@ -125,7 +125,7 @@ class LoginTest(BaseSet):
         self.assertTemplateUsed(response, 'registration/login.html')
         
     def test_login_successful(self):
-        """ Test if user login successful"""
+        """ User login successful"""
         self.client.post(self.url_register, self.register1)
         response = self.client.post(self.url_login, self.login1)
         self.assertEqual(response.status_code, 302)
@@ -133,28 +133,39 @@ class LoginTest(BaseSet):
         self.assertEqual(response.url, '/home')
         
     def test_incorrect_password(self):
-        """ Test if user enter incorrect password"""
+        """ User enter incorrect password"""
         self.client.post(self.url_register, self.register2)
         response = self.client.post(self.url_login, self.login1)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
         
     def test_incorrect_username(self):
-        """ Test if user enter incorrect username"""
+        """ User enter incorrect username"""
         self.client.post(self.url_register, self.register2)
         response = self.client.post(self.url_login, self.login2)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
         
     def test_with_no_username(self):
-        """ Test if can not login with no username"""
+        """ User can not login with no username"""
         response = self.client.post(self.url_login, {'password':'admin1234567'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
         
     def test_with_no_password(self):
-        """ Test if can not login with no password"""
+        """ User can not login with no password"""
         response = self.client.post(self.url_login, {'username':'demo123'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
     
+    
+class LogoutTest(BaseSet):
+    
+    def test_logout_successful(self):
+        """ Test user can logout without error"""
+        self.client.post(self.url_register, self.register1)
+        self.client.login(username='demo12', password='admin123456')
+        self.client.logout()
+        response = self.client.get('/home')
+        self.assertEqual(response.status_code, 200)
+        
