@@ -12,7 +12,6 @@ class Event(models.Model):
     participant = models.PositiveIntegerField("Participant",default=1, validators=[MinValueValidator(1)])
     date = models.DateTimeField("Date")
     type = models.CharField("Type",max_length = 20, null=True)
-
     image_upload = models.ImageField(null = True,blank = True,upload_to='event/images')  
     
     def __str__(self):

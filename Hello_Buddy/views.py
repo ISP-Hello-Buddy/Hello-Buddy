@@ -18,12 +18,10 @@ def create(request):
         form = CreateEventForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            img_obj = form.instance
-            context = {'form': form, 'img_obj': img_obj}
             return redirect('home')
     else:
         form = CreateEventForm()
-        context = {'form': form}
+    context = {'form': form}
     return render(request, 'Hello_Buddy/create_event.html', context)
 
 
