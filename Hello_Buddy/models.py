@@ -1,3 +1,4 @@
+from enum import unique
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -17,3 +18,8 @@ class Event(models.Model):
     def __str__(self):
         """Return a  string representation of the name event object."""
         return self.name
+    
+class ManyToMany(models.Model):
+    
+    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    event = models.ForeignKey('Hello_Buddy.Event', on_delete=models.SET_NULL, null=True)
