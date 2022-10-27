@@ -24,6 +24,7 @@ def create(request):
             event.place = data['place']
             event.participant = data['participant']
             event.date = data['date']
+            event.time = data['time']
             event.type = data['type']
             event.image_upload = data['image_upload']
             event.save()
