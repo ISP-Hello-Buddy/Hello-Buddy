@@ -1,14 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import CreateEventForm
-from .models import Event, ManyToMany
+from .models import Event, HostOfEvent
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-# def image_upload(request):
-# if request.method == 'POST':
-
 
 def home(request):
     all_event = Event.objects.all()
@@ -30,12 +25,13 @@ def create(request):
             event.participant = data['participant']
             event.date = data['date']
             event.type = data['type']
+            event.image_upload = data['image_upload']
             event.save()
             
-            many = ManyToMany()
-            many.user = user
-            many.event = event
-            many.save()
+            host = HostOfEvent()
+            host.user = user
+            host.event = event
+            host.save()
             
             return redirect('home')
     else:

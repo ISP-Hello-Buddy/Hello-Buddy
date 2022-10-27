@@ -19,7 +19,7 @@ class Event(models.Model):
         """Return a  string representation of the name event object."""
         return self.name
     
-class ManyToMany(models.Model):
+class HostOfEvent(models.Model):
     
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
     event = models.ForeignKey('Hello_Buddy.Event', on_delete=models.SET_NULL, null=True)
