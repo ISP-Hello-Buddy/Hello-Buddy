@@ -17,7 +17,12 @@
   <p>Date: {{event.date}}</p>
 </div>
 <div>
+  <p>Time: {{event.time}}</p>
+</div>
+<div>
+  {% if event.type is not None %}
   <p>Type: {{event.type}}</p>
+  {% endif %}
 </div>
 {% if event.image_upload %}
 <div>   

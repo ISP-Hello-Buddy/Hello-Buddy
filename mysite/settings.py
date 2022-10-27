@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "authorize.apps.AuthorizeConfig",
     'Hello_Buddy.apps.HelloBuddyConfig',
+    'bootstrap_datepicker_plus',
 
 ]
 
