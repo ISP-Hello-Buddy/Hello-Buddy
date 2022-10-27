@@ -6,10 +6,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+# def image_upload(request):
+# if request.method == 'POST':
+
 
 def home(request):
     all_event = Event.objects.all()
-    return render(request, 'Hello_Buddy/home.html', context={'events' : all_event})
+    return render(request, 'Hello_Buddy/home.html', context={'events': all_event})
+
 
 @login_required
 def create(request):
@@ -17,7 +21,7 @@ def create(request):
     if not user.is_authenticated:
         return redirect('login')
     if request.method == 'POST':
-        form = CreateEventForm(request.POST)
+        form = CreateEventForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             event = Event()
@@ -41,6 +45,7 @@ def create(request):
 
 def aboutus(request):
     return render(request, 'Hello_Buddy/aboutus.html')
+
 
 def reverse_to_home(self):
     """redirect to homepage"""

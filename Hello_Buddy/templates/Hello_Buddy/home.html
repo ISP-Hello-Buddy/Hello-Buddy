@@ -19,6 +19,11 @@
 <div>
   <p>Type: {{event.type}}</p>
 </div>
+{% if event.image_upload %}
+<div>   
+  <img src="{{ event.image_upload.url }}" width = 500 height=300>
+</div>
+{% endif %}
 </div>
 {% endfor %}
 
