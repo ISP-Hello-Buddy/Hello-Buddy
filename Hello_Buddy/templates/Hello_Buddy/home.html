@@ -1,9 +1,54 @@
 {% extends 'Hello_Buddy/base.html' %}
 
 {% block content %}
+
+<head>
+  <style>
+  a:link {
+    color: Black;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  a:visited {
+    color: Black;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  a:hover {
+    color: grey;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  </style>
+  </head>
+
+  <div class='container' style="margin-top:100px">
+    <div class="container-fluid text-center bg-grey">
+      <div class="row text-center">
   
 {% for event in events %}
-<div class="container" style="margin-top:50px">
+
+<a href="{% url 'event' event.id %}">
+  <div class="col-sm-4">
+    <div class="thumbnail">
+      <h3><strong>{{event.name}}</strong></h3>
+      <p>Place: {{event.place}}</p>
+      <p>Participant: 0/{{event.participant}}</p>
+      <p>Date: {{event.date}}</p>
+      <p>Time: {{event.time}}</p>
+      {% if event.type is not None %}
+      <p>Type: {{event.type}}</p>
+      {% endif %}
+    </div>
+  </div>
+</a>
+
+{% comment %} <div class="container" style="margin-top:50px">
 <div>
   <h3>{{event.name}}</h3>
 </div>
@@ -30,6 +75,11 @@
 </div>
 {% endif %}
 </div>
-{% endfor %}
+{% endfor %} {% endcomment %}
+{%endfor%}
+
+  </div>
+</div>
+</div>
 
 {% endblock %}

@@ -44,6 +44,12 @@ def aboutus(request):
     return render(request, 'Hello_Buddy/aboutus.html')
 
 
-def reverse_to_home(self):
+def reverse_to_home(request):
     """redirect to homepage"""
     return redirect('home')
+
+def event(request, event_id):
+    event = Event.objects.filter(id=event_id).first()
+    context = {'event': event}
+    return render(request, 'Hello_Buddy/event.html', context)
+    
