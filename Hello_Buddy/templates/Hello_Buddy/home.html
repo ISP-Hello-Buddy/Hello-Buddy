@@ -48,34 +48,6 @@
   </div>
 </a>
 
-{% comment %} <div class="container" style="margin-top:50px">
-<div>
-  <h3>{{event.name}}</h3>
-</div>
-<div>
-  <p>Place: {{event.place}}</p>
-</div>
-<div>
-  <p>Participant: {{event.participant}}</p>
-</div>
-<div>
-  <p>Date: {{event.date}}</p>
-</div>
-<div>
-  <p>Time: {{event.time}}</p>
-</div>
-<div>
-  {% if event.type is not None %}
-  <p>Type: {{event.type}}</p>
-  {% endif %}
-</div>
-{% if event.image_upload %}
-<div>   
-  <img src="{{ event.image_upload.url }}" width = 500 height=300>
-</div>
-{% endif %}
-</div>
-{% endfor %} {% endcomment %}
 {%endfor%}
 
   </div>
