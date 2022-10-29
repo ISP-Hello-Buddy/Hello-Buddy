@@ -3,8 +3,9 @@
 {% block content %}
 <div class="container" style="margin-top:50px">
     <h3>Create Event</h3>
-<form action = '{% url 'create' %}' method = 'POST'>
+<form action = '{% url "create" %}' method = 'POST' enctype="multipart/form-data">
     {% csrf_token %}
+
 <div style="margin-top:10px">
     {{form.name.label_tag}}
     {{form.name}}
@@ -21,11 +22,22 @@
 <div style="margin-top:10px">
     {{form.date.label_tag}}
     {{form.date}}
+    {{form.media}}
+</div>
+<div style="margin-top:10px">
+    {{form.time.label_tag}}
+    {{form.time}}
+    {{form.media}}
 </div>
 <div style="margin-top:10px">
     {{form.type.label_tag}}
     {{form.type}}
 </div>
+<div style="margin-top:10px">
+    {{form.image_upload.label_tag}}
+    {{form.image_upload}}
+</div>
+     
 <div style="margin-top:10px">
     <button type='submit'>SUBMIT</button>
 </div>
