@@ -1,8 +1,66 @@
-{% extends 'Hello_Buddy/base.html' %}
+{% extends 'Hello_Buddy/base.html' %} {% block content %}
 
-{% block content %}
+<head>
+  <style>
+    a:link {
+      color: Black;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:visited {
+      color: Black;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:hover {
+      color: grey;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    a:active {
+      color: yellow;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  </style>
+</head>
 
-<div class='container' style="margin-top:50px">
-<h1>{{event.name}}</h1>
+<div class="container" style="margin-top: 100px">
+  <div class="container-fluid text-center bg-grey">
+    <div class="row text-center">
+      <div class="col-sm-12">
+        <div class="thumbnail">
+          <h1>{{event.name}}</h1>
 
+          <form action="{% url 'event' event.id%}" method="post">
+            {% csrf_token %} {%if not par.check_par %}
+            <button type="submit" name="join">JOIN</button>
+            {% else %}
+            <button type="submit" name="join">CANCEL</button>
+            {%endif%}
+          </form>
+        </div>
+      </div>
+
+      {% for e in events %}
+
+      <a href="{% url 'event' e.id %}">
+        <div class="col-sm-4">
+          <div class="thumbnail">
+            <h3><strong>{{e.name}}</strong></h3>
+            <p>Place: {{e.place}}</p>
+            <p>Participant: 0/{{e.participant}}</p>
+            <p>Date: {{e.date}}</p>
+            <p>Time: {{e.time}}</p>
+            {% if e.type is not None %}
+            <p>Type: {{e.type}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+
+      {%endfor%}
+    </div>
+  </div>
+</div>
 {% endblock %}

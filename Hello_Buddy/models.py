@@ -31,3 +31,12 @@ class HostOfEvent(models.Model):
     
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
     event = models.ForeignKey('Hello_Buddy.Event', on_delete=models.SET_NULL, null=True)
+    
+class ParticipantOfEvent(models.Model):
+    
+    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    event = models.ForeignKey('Hello_Buddy.Event', on_delete=models.SET_NULL, null=True)
+    
+    def check_par(self):
+        """ To check participant and use for create button. """
+        return False

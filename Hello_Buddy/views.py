@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import CreateEventForm
-from .models import Event, HostOfEvent
+from .models import Event, HostOfEvent, ParticipantOfEvent
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -12,9 +12,13 @@ def home(request):
 
 @login_required
 def create(request):
+    # get user object
     user = request.user
+    # check user login
     if not user.is_authenticated:
         return redirect('login')
+    
+    # create event and keep into database
     if request.method == 'POST':
         form = CreateEventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -48,8 +52,40 @@ def reverse_to_home(request):
     """redirect to homepage"""
     return redirect('home')
 
+@login_required
 def event(request, event_id):
+    id = event_id
+    user = request.user
     event = Event.objects.filter(id=event_id).first()
-    context = {'event': event}
+    all_event = Event.objects.all()
+    
+    # check that participant already join or not
+    try:
+        existing_par = ParticipantOfEvent.objects.get(event_id=id, user_id=user)
+        check = True
+    except:
+        check = False
+        
+    # new participant        
+    if not check:
+        context = {'event': event, 'events': all_event}
+        if request.method == 'POST':
+            person = ParticipantOfEvent()
+            person.event = Event.objects.filter(id=event_id).first()
+            person.user = user
+            person.save()
+            person.check_par = True
+            context = {'event': event, 'par': person, 'events': all_event}
+            
+    # already join
+    else:
+        par = ParticipantOfEvent.objects.filter(event_id=id, user_id=user).first()
+        par.check_par = True
+        context = {'event': event, 'par': par, 'events': all_event}
+        if request.method == 'POST':
+            existing_par.delete()
+            par.check_par = False
+            context = {'event': event, 'par': par, 'events': all_event}
+    
     return render(request, 'Hello_Buddy/event.html', context)
     
