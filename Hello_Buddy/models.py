@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -21,7 +22,7 @@ class Event(models.Model):
     date = models.DateField("Date")
     time = models.TimeField("Time", default=datetime.time(00, 00))
     type = models.CharField("Type", max_length = 20, null=True, blank = True, choices=category)
-    image_upload = models.ImageField(null = True, blank = True, upload_to='event/images')  
+    image_upload = models.ImageField(null = True, blank = True, upload_to='event/images', default='event/images/default.jpg')  
     
     def __str__(self):
         """Return a  string representation of the name event object."""

@@ -20,9 +20,22 @@
     text-decoration: none;
   }
   a:active {
-    color: yellow;
+    color: grey;
     background-color: transparent;
     text-decoration: underline;
+  }
+  .thumbnail {
+    padding: 0 0 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    height: 280px;
+    box-shadow: 0 0 10px 4px rgb(239,239,239);
+  }
+  .thumbnail img {
+    width: 100%;
+    height: 70%;
+    margin-bottom: 10px;
   }
   </style>
   </head>
@@ -36,14 +49,9 @@
 <a href="{% url 'event' event.id %}">
   <div class="col-sm-4">
     <div class="thumbnail">
+      <img src="{{ event.image_upload.url }}" width = 300 height=100>
       <h3><strong>{{event.name}}</strong></h3>
       <p>Place: {{event.place}}</p>
-      <p>Participant: 0/{{event.participant}}</p>
-      <p>Date: {{event.date}}</p>
-      <p>Time: {{event.time}}</p>
-      {% if event.type is not None %}
-      <p>Type: {{event.type}}</p>
-      {% endif %}
     </div>
   </div>
 </a>
