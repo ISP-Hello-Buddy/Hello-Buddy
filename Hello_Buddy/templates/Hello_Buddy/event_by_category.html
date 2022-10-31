@@ -2,10 +2,8 @@
 
 {% block content %}
 <div class="container" style="margin-top:50px">
-    <h1 class="d-inline">{{ category | capfirst }}</h1>
     {% if events_in_category %}
     {% for event in events_in_category %}
-    <div class="col-md-4 col-6">
         <div class="container">
             <div>
                 <h3>{{event.name}}</h3>
