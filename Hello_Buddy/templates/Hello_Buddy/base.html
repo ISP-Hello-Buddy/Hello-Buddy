@@ -24,11 +24,11 @@
       <li><a href="{% url 'home'%}">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Eating</a></li>
-          <li><a href="#">Sport</a></li>
-          <li><a href="#">Movie</a></li>
-          <li><a href="#">Party</a></li>
-          <li><a href="#">Education</a></li>
+          <li><a href="{%url 'event_category' 'eating' %}">Eating</a></li>
+          <li><a href="{%url 'event_category' 'sport' %}">Sport</a></li>
+          <li><a href="{%url 'event_category' 'movie' %}">Movie</a></li>
+          <li><a href="{%url 'event_category' 'party' %}">Party</a></li>
+          <li><a href="{%url 'event_category' 'education' %}">Education</a></li>
         </ul>
       </li>
       <li><a href="{% url 'aboutus'%}">About us</a></li>
