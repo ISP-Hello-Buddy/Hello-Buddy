@@ -5,5 +5,6 @@ urlpatterns = [
     path('', reverse_to_home),
     path('home',views.home, name='home'),
     path('aboutus', views.aboutus, name='aboutus'),
-    path('create', views.create, name='create')
+    path('create', views.create, name='create'),
+    path('<str:event_category>/', views.events_by_category, name='event_category'),
 ]
