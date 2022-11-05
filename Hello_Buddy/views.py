@@ -4,6 +4,7 @@ from .forms import CreateEventForm
 from .models import Event, HostOfEvent, ParticipantOfEvent
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 def home(request):
     all_event = Event.objects.all()
@@ -59,33 +60,38 @@ def event(request, event_id):
     event = Event.objects.filter(id=event_id).first()
     all_event = Event.objects.all()
     
+    host = HostOfEvent.objects.all()
+    for i in host:
+        if i.user == user and i.event.name == event.name:
+            event.status = False
+    
     # check that participant already join or not
     try:
         existing_par = ParticipantOfEvent.objects.get(event_id=id, user_id=user)
-        check = True
     except:
-        check = False
-        
-    # new participant        
-    if not check:
+        # new participant 
         context = {'event': event, 'events': all_event}
         if request.method == 'POST':
             person = ParticipantOfEvent()
             person.event = Event.objects.filter(id=event_id).first()
             person.user = user
             person.save()
-            person.check_par = True
-            context = {'event': event, 'par': person, 'events': all_event}
             
-    # already join
+            Event.objects.filter(id=event_id).update(joined=F('joined') + 1)
+            event = Event.objects.filter(id=event_id).first()
+            
+            context = {'event': event, 'par': person, 'events': all_event}
     else:
+        # already join
         par = ParticipantOfEvent.objects.filter(event_id=id, user_id=user).first()
-        par.check_par = True
         context = {'event': event, 'par': par, 'events': all_event}
         if request.method == 'POST':
             existing_par.delete()
-            par.check_par = False
-            context = {'event': event, 'par': par, 'events': all_event}
-    
+            
+            Event.objects.filter(id=event_id).update(joined=F('joined') - 1)
+            event = Event.objects.filter(id=event_id).first()
+            
+            context = {'event': event, 'events': all_event}
+
     return render(request, 'Hello_Buddy/event.html', context)
     

@@ -47,7 +47,7 @@
         <div class="thumbnail">
           <h1>{{event.name}}</h1>
           <p>Place: {{event.place}}</p>
-          <p>Participant: 0/{{event.participant}}</p>
+          <p>Participant: {{event.joined}}/{{event.participant}}</p>
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           {% if event.type is not None %}
@@ -57,10 +57,18 @@
           {% endif %}
 
           <form action="{% url 'event' event.id%}" method="post">
-            {% csrf_token %} {%if not par.check_par %}
-            <button type="submit" name="join">JOIN</button>
-            {% else %}
-            <button type="submit" name="join">CANCEL</button>
+
+            {% csrf_token %}
+            {%if event.status%} 
+              {%if event.full and not par.check_par%}
+              <button type="submit" name="join" disabled>FULL</button>
+              {%elif par.check_par %}
+              <button type="submit" name="join">CANCEL</button>
+              {% else %}
+              <button type="submit" name="join">JOIN</button>
+              {%endif%}
+            {%else%}
+            <button type="submit" name="join" disabled>YOU ARE THE OWNER</button>
             {%endif%}
           </form>
         </div>
