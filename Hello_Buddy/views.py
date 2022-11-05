@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.contrib import messages
 from .forms import CreateEventForm
 from .models import Event, HostOfEvent
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     all_event = Event.objects.all()
@@ -43,6 +44,19 @@ def create(request):
 def aboutus(request):
     return render(request, 'Hello_Buddy/aboutus.html')
 
+
+def events_by_category(request, event_category):
+    sorted_event = Event.objects.filter(type=event_category)
+    context = {'events_in_category': sorted_event}
+    return render(
+        request,
+        'Hello_Buddy/event_by_category.html',
+        context
+    )
+
+
+def index(request):
+    return render(request, 'events/index.html')
 
 def reverse_to_home(self):
     """redirect to homepage"""
