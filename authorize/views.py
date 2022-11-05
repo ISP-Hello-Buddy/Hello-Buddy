@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.http import HttpRequest, HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
 from authorize.forms import RegisterForm
+from Hello_Buddy.views import Profile
 
 
 def signup(request):
@@ -13,8 +14,10 @@ def signup(request):
         # if data can save == true
         if form.is_valid():
             user = form.save()
+            profile = Profile(user=user)
+            profile.save()
             login(request, user)
-            return redirect('home') # redirect is what to go name... page (setting.py) 
+            return redirect('home') # redirect is what to go name... page (setting.py)
             # return HttpResponseRedirect(reverse("home"))
     else:
         form = RegisterForm()
