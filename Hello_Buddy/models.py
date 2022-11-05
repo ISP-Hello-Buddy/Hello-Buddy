@@ -30,6 +30,7 @@ class Event(models.Model):
         return self.name
     
     def full(self):
+        """ check that event full or not"""
         return self.participant == self.joined
     
     def status(self):

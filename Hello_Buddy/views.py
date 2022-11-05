@@ -60,6 +60,7 @@ def event(request, event_id):
     event = Event.objects.filter(id=event_id).first()
     all_event = Event.objects.all()
     
+    # Host of event are not allow to join their own event
     host = HostOfEvent.objects.all()
     for i in host:
         if i.user == user and i.event.name == event.name:
