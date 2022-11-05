@@ -6,14 +6,15 @@ import datetime
 
 # Create your models here.
 
+
 class Event(models.Model):
     
     category = [
-        ('Eating', 'Eating'),
-        ('Sport', 'Sport'),
-        ('Movie', 'Movie'),
-        ('Party', 'Party'),
-        ('Education', 'Education'),
+        ('eating', 'Eating'),
+        ('sport', 'Sport'),
+        ('movie', 'Movie'),
+        ('party', 'Party'),
+        ('education', 'Education'),
         ]
 
     name = models.CharField("Name", max_length = 20)
@@ -24,6 +25,7 @@ class Event(models.Model):
     time = models.TimeField("Time", default=datetime.time(00, 00))
     type = models.CharField("Type", max_length = 20, null=True, blank = True, choices=category)
     image_upload = models.ImageField(null = True, blank = True, upload_to='event/images', default='event/images/default.jpg')  
+
     
     def __str__(self):
         """Return a  string representation of the name event object."""
@@ -36,7 +38,6 @@ class Event(models.Model):
     def status(self):
         """ host of event are not allow to join their own event"""
         return True
-    
     
 class HostOfEvent(models.Model):
     
