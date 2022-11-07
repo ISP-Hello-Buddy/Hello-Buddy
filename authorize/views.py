@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.http import HttpRequest, HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
 from authorize.forms import RegisterForm
-from Hello_Buddy.views import Profile
+from Hello_Buddy.models import Profile
 
 
 def signup(request):

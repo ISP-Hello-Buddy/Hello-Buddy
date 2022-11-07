@@ -89,8 +89,10 @@ def profile_user(request):
 
     user = request.user
     all_event = HostOfEvent.objects.filter(user_id=user) # Event objects
+    joined_events = ParticipantOfEvent.objects.filter(user_id=user)
     return render(request, 'Hello_Buddy/profile_user.html', context={
         'events': all_event,
+        'joined_events': joined_events,
         'profile': user.profile,
         'user_form': user_form,
         'profile_form': profile_form
