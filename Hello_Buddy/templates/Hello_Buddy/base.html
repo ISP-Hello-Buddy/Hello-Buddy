@@ -53,9 +53,9 @@
      {% if user.is_authenticated %}
      <ul class="nav navbar-nav navbar-right">
        <li>
-         <a href="#"
-           ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a
-         >
+         <a
+          href="{% url 'profile-user'%}"
+           ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a>
        </li>
        <li>
          <a href="{% url 'logout'%}?next={{request.path}}"

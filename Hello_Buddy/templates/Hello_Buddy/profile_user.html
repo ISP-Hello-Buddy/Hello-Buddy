@@ -1,0 +1,86 @@
+{% extends 'Hello_Buddy/base.html' %}
+
+{% block content %}
+
+<div class="row" style="margin-top:100px">
+    <!--profile-->
+    <form action='{% url "profile-user" %}' method='POST' enctype="multipart/form-data" class="col-sm-3">
+        {% csrf_token %}
+        <div class="card-body text-center">
+            <img src="{{ profile.avatar.url }}" alt="avatar"
+                 class="img-circle person" width="200" height="200">
+            <br>
+            <br>
+            {{ profile_form.avatar }}
+            <br>
+            {{ user_form.username}}
+            <br>
+            {{ user_form.email}}
+            <br>
+            {{ profile_form.bio }}
+            <div class="d-flex justify-content-center mb-2">
+                <br>
+                <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+                <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="text-center">
+        <h4>Created Event</h4>
+    </div>
+    <br>
+
+    <!--created event-->
+    <div class="col-sm-9">
+        {% for i in events %}
+        <div class="col-sm-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{i.event.image_upload.url}}" alt=""
+                             class="img-rounded img-responsive" width="142" height="98"/>
+                    </div>
+                    <h4 class="col-sm-19">{{ i.event.name }}</h4>
+                    <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                    <nav></nav>
+                    <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
+                    <nav></nav>
+                    <i><span class="glyphicon glyphicon-gift"></span> {{ i.event.date}}</i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <br>
+    <div class="text-center">
+        <h4>Joined Event</h4>
+    </div>
+    <br>
+
+    <!--joined event-->
+    <div class="col-sm-9">
+        {% for i in joined_events %}
+        <div class="col-sm-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{i.event.image_upload.url}}" alt=""
+                             class="img-rounded img-responsive" width="142" height="98"/>
+                    </div>
+                    <h4 class="col-sm-19">{{ i.event.name }}</h4>
+                    <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                    <nav></nav>
+                    <i><span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}</i>
+                    <nav></nav>
+                    <i><span class="glyphicon glyphicon-gift"></span> {{ i.event.date}}</i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
