@@ -22,9 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('Hello_Buddy.urls'),name = "home"),
-    path("accounts/", include("authorize.urls")),
+    path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
-    # path('signup/', views.signup, name='signup')
 ]
  
 if settings.DEBUG:  

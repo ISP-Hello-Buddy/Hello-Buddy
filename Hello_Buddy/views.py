@@ -3,7 +3,7 @@ from .forms import UpdateUserForm, UpdateProfileForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CreateEventForm
-from .models import Event, HostOfEvent, ParticipantOfEvent
+from .models import Event, HostOfEvent, ParticipantOfEvent, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
@@ -74,9 +74,14 @@ def reverse_to_home(request):
 
 @login_required
 def profile_user(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile(user=request.user)
+    
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user) # ModelForm
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile) # ModelForm
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile) # ModelForm
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
