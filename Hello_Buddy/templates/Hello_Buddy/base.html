@@ -58,7 +58,7 @@
            ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a>
        </li>
        <li>
-         <a href="{% url 'logout'%}?next={{request.path}}"
+         <a href="{%url 'account_logout'%}"
            ><span class="glyphicon glyphicon-log-out"></span> Logout</a
          >
        </li>
@@ -68,12 +68,12 @@
      {% else %}
      <ul class="nav navbar-nav navbar-right">
        <li>
-         <a href="{% url 'signup'%}"
+         <a href="#"
            ><span class="glyphicon glyphicon-user"></span> Sign Up</a
          >
        </li>
        <li>
-         <a href="{% url 'login'%}?next={{request.path}}" method="post"
+         <a href="{%url 'account_login'%}" method="post"
            ><span class="glyphicon glyphicon-log-in"></span> Login</a
          >
        </li>
