@@ -52,12 +52,11 @@ class HostOfEvent(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    avatar = models.ImageField(default='profile_images/default.jpg', upload_to='profile_images')
     bio = models.TextField(default='...',max_length=50)
 
     # resizing images
     def save(self, *args, **kwargs):
-
         img = Image.open(self.avatar.path)
 
         if img.height > 100 or img.width > 100:
