@@ -155,3 +155,6 @@ if DEBUG:
     
 # Sets the ID of your site's URL. 
 SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
