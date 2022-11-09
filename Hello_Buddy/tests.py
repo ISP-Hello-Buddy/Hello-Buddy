@@ -71,7 +71,7 @@ class RegisterTest(BaseSet):
         # To check Http response.
         self.assertEqual(response.status_code, 200)
         # To check template that url used.
-        # self.assertTemplateUsed(response, 'registration/register.html')
+        self.assertTemplateUsed(response, 'account/signup.html')
         
     def test_correct_register(self):
         """ Correctly information to register"""
@@ -79,13 +79,13 @@ class RegisterTest(BaseSet):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/home')
         
-#     def test_taken_username(self):
-#         """ Username already taken"""
-#         self.client.post(self.url_register, self.register1)
-#         response = self.client.post(self.url_register, self.register2)
-#         # Cilent should not error and should render the register page to fix information.
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'registration/register.html')
+    def test_taken_username(self):
+        """ Username already taken"""
+        self.client.post(self.url_register, self.register1)
+        response = self.client.post(self.url_register, self.register2)
+        # Cilent should not error and should render the register page to fix information.
+        # self.assertEqual(response.status_code, 200)
+        # self.assertTemplateUsed(response, 'registration/register.html')
         
 #     def test_taken_email(self):
 #         """ Email already taken"""
