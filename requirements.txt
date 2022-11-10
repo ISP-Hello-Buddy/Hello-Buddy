@@ -1,3 +1,20 @@
 Django>=4.1
 django-bootstrap-datepicker-plus
 django-allauth
+pillow
+django-crispy-forms
+
+django-geo
+folium
+geopy
+# geoip2
+geocoder
+
+
+# djgeojson 
+jsonfield
+psycopg2-binary
+#  brew install postgis    
+# pip install django-geojson
+
+

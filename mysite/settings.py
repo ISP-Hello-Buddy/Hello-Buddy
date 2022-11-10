@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     # Social/third party login provider for 
     'allauth.socialaccount.providers.google',
 
+    'crispy_forms',
+
+    'django.contrib.gis',
+
 ]
 
 MIDDLEWARE = [
