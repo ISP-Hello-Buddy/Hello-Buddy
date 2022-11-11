@@ -2,7 +2,7 @@ from .forms import UpdateUserForm, UpdateProfileForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CreateEventForm
-from .models import Event, HostOfEvent, ParticipantOfEvent, Profile
+from .models import Event, HostOfEvent, ParticipantOfEvent, Profile , Mapping
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 import folium
@@ -36,44 +36,65 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
-
 @login_required
 def create(request):
-    """Create event"""
-
     # get user object
     user = request.user
     # check user login
     if not user.is_authenticated:
-        return redirect("login")
+        return redirect('login')
 
     # create event and keep into database
-    if request.method == "POST":
+    if request.method == 'POST':
         form = CreateEventForm(request.POST, request.FILES)
+        nomi = Nominatim(user_agent="hi_buddy")
+        mapping = Mapping.objects.all()
         if form.is_valid():
             data = form.cleaned_data
-            event = Event()
-            event.name = data["name"]
-            event.place = data["place"]
-            event.participant = data["participant"]
-            event.date = data["date"]
-            event.time = data["time"]
-            event.type = data["type"]
-            event.image_upload = data["image_upload"]
-            event.save()
+            if "create_event" in request.POST:
+                location = nomi.geocode(data['place'])
+                if not location:
+                    form = CreateEventForm()
+                    messages.error(request,"This location is not on the map") # add text error
+                    context = {'form': form}
+                    return render(request, 'Hello_Buddy/create_event.html', context=context)
+                lst_address = [ loca.address for loca in mapping]
+                if location.address in lst_address:
+                    context = {'form': form}
+                    messages.error(request,"This location is used")
+                    return render(request, 'Hello_Buddy/create_event.html', context=context)
 
-            host = HostOfEvent()
-            host.user = user
-            host.event = event
-            host.save()
+                event = Event()
+                event.name = data['name']
+                event.place = data['place']
+                event.participant = data['participant']
+                event.date = data['date']
+                event.time = data['time']
+                event.type = data['type']
+                event.image_upload = data['image_upload']
+                event.save()
 
-            return redirect("home")
+                host = HostOfEvent()
+                host.user = user
+                host.event = event
+                host.save()
+
+                mapping = Mapping()
+                mapping.address = location.address
+                mapping.lon = float(location.longitude)
+                mapping.lat = float(location.latitude)
+                mapping.event = event
+                mapping.user = user
+                mapping.save()
+
+                return redirect('home')
+            elif "check_place" in request.POST:
+                loca = nomi.geocode(data['place'])
+                messages.warning(request,f"Location is {loca}")
     else:
         form = CreateEventForm()
-    context = {"form": form}
-    return render(request,
-                  "Hello_Buddy/create_event.html",
-                  context)
+    context = {'form': form}
+    return render(request, 'Hello_Buddy/create_event.html', context)
 
 
 @login_required
@@ -172,18 +193,11 @@ def event(request, event_id):
 
 
 def map(request):
-    all_obj = Event.objects.all()
+    all_obj = Mapping.objects.all()
     m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
-    nomi = Nominatim(user_agent="hi_buddy")
     for i in all_obj:
-        try:
-            file = nomi.geocode(i.place)
-        except:
-            print("Something went wrong")
-        else:
-            folium.Marker([float(file.latitude), float(file.longitude)], tooltip=i.name,
-                          popup=file.address).add_to(m)
-
+        folium.Marker([i.lat,i.lon], tooltip=i.event,
+                          popup=i.address).add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }

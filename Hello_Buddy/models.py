@@ -84,3 +84,13 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Mapping(models.Model):
+    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
+    lat = models.FloatField(name="lat",blank=True,null=True)
+    lon = models.FloatField(name="lon",blank=True,null=True)
+    address = models.CharField(name="address",blank=True,null=True,max_length=300)
+
+    
+    def __str__(self):
+        return self.address
