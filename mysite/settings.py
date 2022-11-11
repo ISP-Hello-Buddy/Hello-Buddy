@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'Hello_Buddy.apps.HelloBuddyConfig',
     'bootstrap_datepicker_plus',
-    
     'django.contrib.sites',
 	# Django-allauth apps
     'allauth',
@@ -49,10 +48,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'crispy_forms',
-
     'django.contrib.gis',
-
+    'bootstrap4',
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -162,3 +161,6 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
+
+# CRISPY_TEMPLATE
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

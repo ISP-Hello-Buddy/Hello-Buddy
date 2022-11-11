@@ -3,6 +3,7 @@ django-bootstrap-datepicker-plus
 django-allauth
 pillow
 django-crispy-forms
+django-bootstrap4
 
 django-geo
 folium
