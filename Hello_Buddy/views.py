@@ -5,6 +5,8 @@ from .forms import CreateEventForm
 from .models import Event, HostOfEvent, ParticipantOfEvent, Profile
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
+import folium
+from geopy.geocoders import Nominatim
 
 
 def home(request):
@@ -96,27 +98,35 @@ def profile_user(request):
             # Update profile
             user_form.save()
             profile_form.save()
-            messages.success(request, "Your profile is updated successfully")
+            messages.success(request,
+             "Your profile is updated successfully")
             return redirect(to="profile-user")
     else:
         user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user.profile)
+        profile_form = UpdateProfileForm(
+            instance=request.user.profile)
 
     user = request.user
-    all_event = HostOfEvent.objects.filter(user_id=user)  # Event objects
-    joined_events = ParticipantOfEvent.objects.filter(user_id=user)
+    all_event = HostOfEvent.objects.filter(
+        user_id=user)  # Event objects
+    joined_events = ParticipantOfEvent.objects.filter(
+        user_id=user)
     context = {"events": all_event,
                "joined_events": joined_events,
                "profile": user.profile,
                "user_form": user_form,
                "profile_form": profile_form,
                }
-    return render(request, "Hello_Buddy/profile_user.html", context=context)
+    return render(request, "Hello_Buddy/profile_user.html", 
+    context=context)
 
 
 @login_required
 def event(request, event_id):
-    """Each event page that show information and users can join and leave"""
+    """
+    Each event page that show information and users can join and 
+    leave
+    """
     id = event_id
     user = request.user
     event = Event.objects.filter(id=event_id).first()
@@ -131,7 +141,7 @@ def event(request, event_id):
     # check that participant already join or not
     try:
         existing_par = ParticipantOfEvent.objects.get(event_id=id,
-                                                      user_id=user)
+        user_id=user)
     except ParticipantOfEvent.DoesNotExist:
         # new participant
         context = {"event": event, "events": all_event}
@@ -159,3 +169,22 @@ def event(request, event_id):
             context = {"event": event, "events": all_event}
 
     return render(request, "Hello_Buddy/event.html", context)
+
+
+def map(request):
+    all_obj = Event.objects.all()
+    m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
+    nomi = Nominatim(user_agent="hi_buddy")
+    for i in all_obj:
+        try:
+            file = nomi.geocode(i.place)
+        except:
+            print("Something went wrong")
+        else:
+            folium.Marker([float(file.latitude), float(file.longitude)], tooltip=i.name,
+                          popup=file.address).add_to(m)
+
+    # Get HTML Representation of Map Object
+    m = m._repr_html_()
+    context = {'m': m, }
+    return render(request, 'Hello_Buddy/map.html', context)
