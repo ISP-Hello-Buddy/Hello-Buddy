@@ -55,14 +55,17 @@ def create(request):
                 location = nomi.geocode(data['place'])
                 if not location:
                     form = CreateEventForm()
-                    messages.error(request,"This location is not on the map") # add text error
+                    messages.error(request,
+                    "This location is not on the map") # add text error
                     context = {'form': form}
-                    return render(request, 'Hello_Buddy/create_event.html', context=context)
+                    return render(request, 
+                    'Hello_Buddy/create_event.html', context=context)
                 lst_address = [ loca.address for loca in mapping]
                 if location.address in lst_address:
                     context = {'form': form}
                     messages.error(request,"This location is used")
-                    return render(request, 'Hello_Buddy/create_event.html', context=context)
+                    return render(request, 
+                    'Hello_Buddy/create_event.html', context=context)
 
                 event = Event()
                 event.name = data['name']
