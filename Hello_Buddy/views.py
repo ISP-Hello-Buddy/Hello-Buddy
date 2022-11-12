@@ -36,7 +36,6 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
-
 @login_required
 def create(request):
     # get user object
@@ -229,36 +228,8 @@ def map(request):
 </center> </div>
           """
 
-        # html=f"""
-        #         <p>
-        #         {mp.address}
-        #         # {mp.event}
-        #         { mp.event.image_upload.url }
-        #         # {{mp.event.get_url}}
-        #            <a href="127.0.0.1:8000/event/1" > details </a>
-
-        #            <iframe src="{{ mp.event.image_upload.url }}" width = 300 height=100>
-
-        #        </p>
-        # #     """
-#         html = f"""
-#         <iframe frameborder="0" scrolling="no" width="100%" height="100%"
-#    src="{ mp.event.image_upload }" name="imgbox" id="imgbox">
-#    <p>iframes are not supported by your browser.</p>
-# </iframe><br />
-#         """
-
-        # html = '<img src="data:image/png;base64,{}">'.format
-        # picture1 = base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()
-        # html = f"""
-        # <img src="data:image/png;base64,{base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()}">
-        # """
-        # yo = IFrame(html  , width=300, height=300)
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
-        folium.Marker([mp.lat, mp.lon], popup=popup).add_to(m)
-
-        # folium.Marker([mp.lat, mp.lon], tooltip=mp.event,
-        #               popup="yo").add_to(m)
+        folium.Marker([mp.lat, mp.lon], popup=popup,tooltip=mp.event).add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
