@@ -242,7 +242,6 @@ def map(request):
              '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
              target="_blank"class="button" ></a></button>
              </div></center>
-                {mp.event.image_upload.url}
 
         """
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
