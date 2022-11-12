@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 import datetime
-from django.shortcuts import redirect, render
 
 
 # Create your models here.
@@ -46,8 +45,7 @@ class Event(models.Model):
         return True
 
     def get_url(self):
-        print("y0fqfqwfpmofmqwfmwqopfmqwpfmpfmqpfmqopfm")
-        return redirect("home")
+        """ Come to main your event """
         return reverse("event",kwargs={"id" : self.id})
         
 class HostOfEvent(models.Model):

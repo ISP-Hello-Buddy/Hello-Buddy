@@ -1,12 +1,14 @@
+import base64
+
 import folium
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.shortcuts import redirect, render
 from geopy.geocoders import Nominatim
+
 from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
 from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
-import base64
 
 
 def home(request):
@@ -228,8 +230,7 @@ def map(request):
                     max="{mp.event.participant}" 
                     value="{mp.event.joined}"> </progress>
             </center> </div>
-          """
-
+        """
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
                       tooltip=f"{mp.event} (click for see detail)").add_to(m)
