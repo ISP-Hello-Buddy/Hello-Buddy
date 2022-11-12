@@ -1,5 +1,9 @@
 {% load socialaccount %}
 
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
 {% get_providers as socialaccount_providers %}
 
 {% for provider in socialaccount_providers %}
@@ -13,8 +17,11 @@
 </li>
 {% endfor %}
 {% endif %}
-<li>
-  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{provider.name}}</a>
-</li>
+{%if provider.name == "Google"%}
+
+<a title="{{provider.name}}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" ><i class="fa fa-google" style="font-size:15px;" aria-hidden="true"></i></a>
+{% endif %} 
+{%if provider.name == "GitHub"%}
+<a title="{{provider.name}}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" ><i class="fa fa-github" style="font-size:15px;" aria-hidden="true"></i></a> 
+{% endif %}
 {% endfor %}
