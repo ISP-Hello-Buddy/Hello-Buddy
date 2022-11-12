@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-
+from django.urls import reverse
 import datetime
+from django.shortcuts import redirect, render
 
 
 # Create your models here.
@@ -21,7 +22,7 @@ class Event(models.Model):
     name = models.CharField("Name", max_length=20)
     place = models.CharField("Place", max_length=50)
     participant = models.PositiveIntegerField("Participant",
-                                              default=1)
+                                            default=1)
     joined = models.PositiveIntegerField(default=0)
     date = models.DateField("Date")
     time = models.TimeField("Time",
@@ -44,7 +45,11 @@ class Event(models.Model):
         """ host of event are not allow to join their own event"""
         return True
 
-
+    def get_url(self):
+        print("y0fqfqwfpmofmqwfmwqopfmqwpfmpfmqpfmqopfm")
+        return redirect("home")
+        return reverse("event",kwargs={"id" : self.id})
+        
 class HostOfEvent(models.Model):
     """model for record user with their own event"""
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
@@ -84,13 +89,14 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Mapping(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
-    lat = models.FloatField(name="lat",blank=True,null=True)
-    lon = models.FloatField(name="lon",blank=True,null=True)
-    address = models.CharField(name="address",blank=True,null=True,max_length=300)
+    lat = models.FloatField(name="lat", blank=True, null=True)
+    lon = models.FloatField(name="lon", blank=True, null=True)
+    address = models.CharField(
+        name="address", blank=True, null=True, max_length=300)
 
-    
     def __str__(self):
         return self.address

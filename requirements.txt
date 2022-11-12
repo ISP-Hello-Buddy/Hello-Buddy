@@ -15,6 +15,7 @@ geocoder
 # djgeojson 
 jsonfield
 psycopg2-binary
+base64
 #  brew install postgis    
 # pip install django-geojson
 

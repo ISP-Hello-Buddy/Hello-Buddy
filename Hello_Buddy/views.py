@@ -1,12 +1,12 @@
-from .forms import UpdateUserForm, UpdateProfileForm
-from django.shortcuts import render, redirect
+import folium
 from django.contrib import messages
-from .forms import CreateEventForm
-from .models import Event, HostOfEvent, ParticipantOfEvent, Profile , Mapping
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
-import folium
+from django.shortcuts import redirect, render
 from geopy.geocoders import Nominatim
+from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
+from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
+import base64
 
 
 def home(request):
@@ -36,6 +36,7 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
+
 @login_required
 def create(request):
     # get user object
@@ -56,16 +57,16 @@ def create(request):
                 if not location:
                     form = CreateEventForm()
                     messages.error(request,
-                    "This location is not on the map") # add text error
+                                   "This location is not on the map")  # add text error
                     context = {'form': form}
-                    return render(request, 
-                    'Hello_Buddy/create_event.html', context=context)
-                lst_address = [ loca.address for loca in mapping]
+                    return render(request,
+                                  'Hello_Buddy/create_event.html', context=context)
+                lst_address = [loca.address for loca in mapping]
                 if location.address in lst_address:
                     context = {'form': form}
-                    messages.error(request,"This location is used")
-                    return render(request, 
-                    'Hello_Buddy/create_event.html', context=context)
+                    messages.error(request, "This location is used")
+                    return render(request,
+                                  'Hello_Buddy/create_event.html', context=context)
 
                 event = Event()
                 event.name = data['name']
@@ -93,7 +94,7 @@ def create(request):
                 return redirect('home')
             elif "check_place" in request.POST:
                 loca = nomi.geocode(data['place'])
-                messages.warning(request,f"Location is {loca}")
+                messages.warning(request, f"Location is {loca}")
     else:
         form = CreateEventForm()
     context = {'form': form}
@@ -123,7 +124,7 @@ def profile_user(request):
             user_form.save()
             profile_form.save()
             messages.success(request,
-             "Your profile is updated successfully")
+                             "Your profile is updated successfully")
             return redirect(to="profile-user")
     else:
         user_form = UpdateUserForm(instance=request.user)
@@ -141,8 +142,8 @@ def profile_user(request):
                "user_form": user_form,
                "profile_form": profile_form,
                }
-    return render(request, "Hello_Buddy/profile_user.html", 
-    context=context)
+    return render(request, "Hello_Buddy/profile_user.html",
+                  context=context)
 
 
 @login_required
@@ -165,7 +166,7 @@ def event(request, event_id):
     # check that participant already join or not
     try:
         existing_par = ParticipantOfEvent.objects.get(event_id=id,
-        user_id=user)
+                                                      user_id=user)
     except ParticipantOfEvent.DoesNotExist:
         # new participant
         context = {"event": event, "events": all_event}
@@ -198,9 +199,66 @@ def event(request, event_id):
 def map(request):
     all_obj = Mapping.objects.all()
     m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
-    for i in all_obj:
-        folium.Marker([i.lat,i.lon], tooltip=i.event,
-                          popup=i.address).add_to(m)
+    # x = <a href="{% url 'aboutus'%}">About us</a>
+    # iframe = folium.element.IFrame(html=html, width=500, height=300)
+    # popup = folium.Popup(iframe, max_width=2650)
+    for mp in all_obj:
+        html = f"""
+       <center class="thumbnail"><img id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="250"
+    height="200"
+    frameborder="0" 
+    scrolling="no"
+    name="imgbox" 
+    id="imgbox"
+    src="data:image/png;base64,{base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()}"
+    
+    >
+    
+</img></center>
+<h3><center> {mp.event}</center></h3>
+<div><center> Place: {mp.address}</center> </div>
+ <div><center> </center></div>
+          
+          <div><center> Date: {mp.event.date}</center> </div>
+          <div><center> Time: {mp.event.time}</center> </div>
+          <div><center> Participant: {mp.event.joined}/{mp.event.participant}
+</center> </div>
+          <div><center><progress id="project" max="{mp.event.participant}" value="{mp.event.joined}"> </progress>
+</center> </div>
+          """
+
+        # html=f"""
+        #         <p>
+        #         {mp.address}
+        #         # {mp.event}
+        #         { mp.event.image_upload.url }
+        #         # {{mp.event.get_url}}
+        #            <a href="127.0.0.1:8000/event/1" > details </a>
+
+        #            <iframe src="{{ mp.event.image_upload.url }}" width = 300 height=100>
+
+        #        </p>
+        # #     """
+#         html = f"""
+#         <iframe frameborder="0" scrolling="no" width="100%" height="100%"
+#    src="{ mp.event.image_upload }" name="imgbox" id="imgbox">
+#    <p>iframes are not supported by your browser.</p>
+# </iframe><br />
+#         """
+
+        # html = '<img src="data:image/png;base64,{}">'.format
+        # picture1 = base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()
+        # html = f"""
+        # <img src="data:image/png;base64,{base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()}">
+        # """
+        # yo = IFrame(html  , width=300, height=300)
+        popup = folium.Popup(folium.Html(html, script=True), max_width=250)
+        folium.Marker([mp.lat, mp.lon], popup=popup).add_to(m)
+
+        # folium.Marker([mp.lat, mp.lon], tooltip=mp.event,
+        #               popup="yo").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
