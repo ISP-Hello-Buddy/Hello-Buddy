@@ -197,10 +197,6 @@ def event(request, event_id):
 
 def map(request):
     all_obj = Mapping.objects.all()
-    m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
-    # x = <a href="{% url 'aboutus'%}">About us</a>
-    # iframe = folium.element.IFrame(html=html, width=500, height=300)
-    # popup = folium.Popup(iframe, max_width=2650)
     for mp in all_obj:
         html = f"""
        <center class="thumbnail"><img id="inlineFrameExample"
