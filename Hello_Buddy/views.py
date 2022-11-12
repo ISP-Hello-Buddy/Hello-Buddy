@@ -38,7 +38,6 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
-
 @login_required
 def create(request):
     # get user object
@@ -236,6 +235,12 @@ def map(request):
                     max="{mp.event.participant}" 
                     value="{mp.event.joined}"> </progress>
             </center> </div>
+             <div><center>
+            <button class="btn btn-info" type="button" 
+            onclick="window.open('/event/{mp.event.id}',
+             '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
+             target="_blank"class="button" ></a></button>
+             </div></center>
         """
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
