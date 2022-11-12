@@ -58,7 +58,7 @@ def create(request):
                 if not location:
                     form = CreateEventForm()
                     messages.error(request,
-                                   "This location is not on the map")  # add text error
+                                   "This location has not on the map location")  # add text error
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
