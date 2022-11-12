@@ -216,7 +216,7 @@ def map(request):
     >
     
 </img></center>
-<h3><center> {mp.event}</center></h3>
+<h3><center> <a href="/event/{mp.event.id}" target="_blank">{mp.event}</a></center></h3>
 <div><center> Place: {mp.address}</center> </div>
  <div><center> </center></div>
           
