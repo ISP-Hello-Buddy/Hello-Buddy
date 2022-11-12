@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Social/third party login provider for 
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github'
 
 ]
 
@@ -158,3 +159,9 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
+
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+}
+
+ACCOUNT_FORMS = {'login': 'Hello_Buddy.forms.MyCustomLoginForm'}
