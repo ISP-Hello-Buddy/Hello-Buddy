@@ -232,7 +232,7 @@ def map(request):
 
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
-                      tooltip=mp.event).add_to(m)
+                      tooltip=f"{mp.event} (click for see detail)").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
