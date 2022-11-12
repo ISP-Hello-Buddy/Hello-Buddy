@@ -1,8 +1,18 @@
 from django import forms
-from .models import Event
+from .models import Event, Profile
 from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
+from django.contrib.auth.models import User
+from allauth.account.forms import LoginForm
 
 
+class MyCustomLoginForm(LoginForm):
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder ": "Password"}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['login'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "placeholder ": "Username"}))
+        
 class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True, label='Date', widget=DatePickerInput())
     time = forms.TimeField(required=True, label='Time', widget=TimePickerInput())
@@ -18,10 +28,6 @@ class CreateEventForm(forms.ModelForm):
             'image_upload': forms.ClearableFileInput(attrs={'class': 'form-control', "placeholder ": "image_upload"}),
             }
 
-from django import forms
-
-from django.contrib.auth.models import User
-from .models import Profile
 
 
 class UpdateUserForm(forms.ModelForm):
