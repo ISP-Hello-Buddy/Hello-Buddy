@@ -216,6 +216,7 @@ def map(request):
                 scrolling="no"
                 name="imgbox" 
                 id="imgbox"
+                {mp.event.image_upload.url}
                 src="data:image/png;base64,{base64.b64encode(
                     open(f'./{mp.event.image_upload.url}',
                     'rb').read()).decode()}"
@@ -241,6 +242,8 @@ def map(request):
              '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
              target="_blank"class="button" ></a></button>
              </div></center>
+                {mp.event.image_upload.url}
+
         """
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
