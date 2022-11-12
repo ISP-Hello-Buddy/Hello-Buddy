@@ -36,6 +36,7 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
+
 @login_required
 def create(request):
     # get user object
@@ -213,20 +214,25 @@ def map(request):
                     'rb').read()).decode()}"
                 >
             </img></center>
-            <h3><center> <a href="/event/{mp.event.id}" target="_blank">{mp.event}</a></center></h3>
+            <h3><center> <a href="/event/{mp.event.id}" target="_blank">
+            {mp.event}</a></center></h3>
             <div><center> Place: {mp.address}</center> </div>
             <div><center> </center></div>
                     
                     <div><center> Date: {mp.event.date}</center> </div>
                     <div><center> Time: {mp.event.time}</center> </div>
-                    <div><center> Participant: {mp.event.joined}/{mp.event.participant}
+                    <div><center> Participant: {mp.event.joined}/
+                    {mp.event.participant}
             </center> </div>
-                    <div><center><progress id="project" max="{mp.event.participant}" value="{mp.event.joined}"> </progress>
+                    <div><center><progress id="project" 
+                    max="{mp.event.participant}" 
+                    value="{mp.event.joined}"> </progress>
             </center> </div>
           """
 
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
-        folium.Marker([mp.lat, mp.lon], popup=popup,tooltip=mp.event).add_to(m)
+        folium.Marker([mp.lat, mp.lon], popup=popup,
+                      tooltip=mp.event).add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
