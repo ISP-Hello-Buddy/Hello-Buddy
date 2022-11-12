@@ -73,7 +73,6 @@
 </div  >
 </div>
           <p>Place: {{event.place}}</p>
-          <p>Participant: {{event.joined}}/{{event.participant}}</p>
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           
@@ -82,6 +81,12 @@
           {% else %}
           <p>Type: All</p>
           {% endif %}
+          <p>Participant: {{event.joined}}/{{event.participant}}</p>
+          <p><progress id="project" 
+            max="{{event.participant}}" 
+            value="{{event.joined}}"> </progress>
+          </p>
+          
 
           <form action="{% url 'event' event.id%}" method="post">
             {% csrf_token %}
