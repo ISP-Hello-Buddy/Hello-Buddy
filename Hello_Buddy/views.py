@@ -162,8 +162,8 @@ def event(request, event_id):
     mp = Mapping.objects.filter(id=event_id).first()
     print(mp.lon)
     # m = folium.Map(width=325,height=195,location=[mp.lat, mp.lon], zoom_start=16) # class center: idth: 50%;
-    m = folium.Map(width=400,height=250,location=[mp.lat, mp.lon], zoom_start=16)
-    folium.Marker([mp.lat, mp.lon]).add_to(m)
+    m = folium.Map(width=425,height=250,location=[mp.lat, mp.lon], zoom_start=16)
+    folium.Marker([mp.lat, mp.lon],popup=mp.address).add_to(m)
     m = m._repr_html_()
     # Host of event are not allow to join their own event
     host = HostOfEvent.objects.all()
@@ -206,7 +206,7 @@ def event(request, event_id):
 
 def map(request):
     all_obj = Mapping.objects.all()
-    m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
+    m = folium.Map(width=1120,height=650,location=[13.74492, 100.53378], zoom_start=9)
     for mp in all_obj:
         html = f"""
                 <center class="thumbnail"><img id="inlineFrameExample"

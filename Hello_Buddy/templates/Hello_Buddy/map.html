@@ -1,11 +1,18 @@
-{% extends 'Hello_Buddy/base.html' %} 
-{% block content %}
-{% csrf_token %}
-
+{% extends 'Hello_Buddy/base.html' %} {% block content %} {% csrf_token %}
+<head>
+  <style>
+    .center {
+      margin: auto;
+      width: 100%;
+      /* border: 3px solid #767676; */
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px 4px rgb(239, 239, 239);
+    }
+  </style>
+</head>
 <div class="container" style="margin-top: 70px">
-    <div class="col-6 col-md-18">
-      {{ m|safe }}
-  </div>
+  <div class="center">{{ m|safe }}</div>
 </div>
 
 <!-- Optional JavaScript; choose one of the two! -->
