@@ -197,31 +197,32 @@ def event(request, event_id):
 
 def map(request):
     all_obj = Mapping.objects.all()
+    m = folium.Map(location=[13.74492, 100.53378], zoom_start=12)
     for mp in all_obj:
         html = f"""
-       <center class="thumbnail"><img id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="250"
-    height="200"
-    frameborder="0" 
-    scrolling="no"
-    name="imgbox" 
-    id="imgbox"
-    src="data:image/png;base64,{base64.b64encode(open(f'/Users/reviseuc73/Desktop/coding project/Hello-Buddy-1/{mp.event.image_upload.url}','rb').read()).decode()}"
-    
-    >
-    
-</img></center>
-<h3><center> <a href="/event/{mp.event.id}" target="_blank">{mp.event}</a></center></h3>
-<div><center> Place: {mp.address}</center> </div>
- <div><center> </center></div>
-          
-          <div><center> Date: {mp.event.date}</center> </div>
-          <div><center> Time: {mp.event.time}</center> </div>
-          <div><center> Participant: {mp.event.joined}/{mp.event.participant}
-</center> </div>
-          <div><center><progress id="project" max="{mp.event.participant}" value="{mp.event.joined}"> </progress>
-</center> </div>
+                <center class="thumbnail"><img id="inlineFrameExample"
+                title="Inline Frame Example"
+                width="250"
+                height="200"
+                frameborder="0" 
+                scrolling="no"
+                name="imgbox" 
+                id="imgbox"
+                src="data:image/png;base64,{base64.b64encode(
+                    open(f'./{mp.event.image_upload.url}',
+                    'rb').read()).decode()}"
+                >
+            </img></center>
+            <h3><center> <a href="/event/{mp.event.id}" target="_blank">{mp.event}</a></center></h3>
+            <div><center> Place: {mp.address}</center> </div>
+            <div><center> </center></div>
+                    
+                    <div><center> Date: {mp.event.date}</center> </div>
+                    <div><center> Time: {mp.event.time}</center> </div>
+                    <div><center> Participant: {mp.event.joined}/{mp.event.participant}
+            </center> </div>
+                    <div><center><progress id="project" max="{mp.event.participant}" value="{mp.event.joined}"> </progress>
+            </center> </div>
           """
 
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
