@@ -1,0 +1,33 @@
+{% load i18n %}
+
+<div id="id01" class="modal">
+  <form class="modal-content" method="post" action="{% url 'account_logout' %}">
+    <div class="container container1">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+          <h1>{% trans "Sign Out" %}</h1>
+      
+          <p>{% trans 'Are you sure you want to sign out?' %}</p>
+          {% csrf_token %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+          <div style="margin-bottom: 25px">
+            <button type="submit" class="btn btn-primary">{% trans 'Sign Out' %}</button>
+            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="btn btn-danger">Cancel</button>
+          </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById('id01');
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  </script>
