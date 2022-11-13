@@ -8,9 +8,8 @@ django-bootstrap4
 django-geo
 folium
 geopy
-# geoip2
+# geoip2    
 geocoder
-
 
 # djgeojson 
 jsonfield
