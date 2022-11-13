@@ -61,14 +61,14 @@
             {% csrf_token %}
             {%if event.status%} 
               {%if event.full and not par.check_par%}
-              <button type="submit" name="join" disabled>FULL</button>
+              <button type="submit" name="full" disabled>FULL</button>
               {%elif par.check_par %}
-              <button type="submit" name="join">CANCEL</button>
+              <button type="submit" name="cancel" class="btn btn-danger">CANCEL</button>
               {% else %}
-              <button type="submit" name="join">JOIN</button>
+              <button type="submit" name = "join" class="btn btn-success">JOIN</button>
               {%endif%}
             {%else%}
-            <button type="submit" name="join" disabled>YOU ARE THE OWNER.</button>
+            <button type="submit" name="YOU ARE THE OWNER." disabled>YOU ARE THE OWNER.</button>
             {%endif%}
           </form>
         </div>

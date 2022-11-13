@@ -1,3 +1,4 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,8 +7,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="shortcut icon" type="image/png" href="{% static 'Hello-.ico' %}"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    
   <style>
     .navbar{
       box-shadow: 0 0 10px 4px rgb(235,235,235);
@@ -25,9 +29,89 @@
     .navbar li a:hover:not(.active) {
       background-color: #EEEEEE;
     }
+
+    .container {
+      padding-left: 130px;
+      padding-right: 130px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        width: auto;
+        padding-left: 130px;
+        padding-right: 130px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .container {
+        width: auto;
+        padding-left: 130px;
+        padding-right: 130px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: auto;
+        padding-left: 130px;
+        padding-right: 130px;
+      }
+    }
+
+    .container1 {padding-left: 30px;}
+
+
+
+    /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        {% comment %} overflow: auto; /* Enable scroll if needed */ {% endcomment %}
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 220px;
+      }
+
+      /* Modal Content/Box */
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5px auto; /* 15% from the top and centered */
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+      }
+
+      /* The Close Button */
+      .close {
+        /* Position it in the top right corner outside of the modal */
+        position: absolute;
+        right: 10px;
+        top: 0; 
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+      }
+
+      /* Close button on hover */
+      .close:hover,
+      .close:focus {
+        color: red;
+        cursor: pointer;
+      }
+
+
+      
+
   </style>
 </head>
-<body style="height:1500px">
+<body>
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -58,11 +142,12 @@
            ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a>
        </li>
        <li>
-         <a href="{%url 'account_logout'%}"
-           ><span class="glyphicon glyphicon-log-out"></span> Logout</a
-         >
-       </li>
-     </ul>
+         <a onclick="document.getElementById('id01').style.display='block'"
+         ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        </li>
+      </ul>
+
+      {% include "account/logout.html"%}
 
      <!-- when not login -->
      {% else %}
@@ -77,12 +162,15 @@
            ><span class="glyphicon glyphicon-log-in"></span> Login</a
          >
        </li>
+
+
      </ul>
      {% endif %}
    </div>
  </nav>
 
 {% block content %}{% endblock %}
+
 
 </body>
 </html>
