@@ -2,9 +2,16 @@ from django import forms
 from .models import Event, Profile
 from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
 from django.contrib.auth.models import User
-from allauth.account.forms import LoginForm
+from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
 
-
+class MyCustomSignupForm(SignupForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "placeholder ": "Username"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', "placeholder ": "Email"}))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'] = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder ": "Password"}))
+        self.fields['password2'] = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder ": "Password (again)"}))
+    
 class MyCustomLoginForm(LoginForm):
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder ": "Password"}))
@@ -12,6 +19,9 @@ class MyCustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['login'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "placeholder ": "Username"}))
+        
+class MyCustomResetPasswordForm(ResetPasswordForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', "placeholder ": "Email"}))
         
 class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True, label='Date', widget=DatePickerInput())
