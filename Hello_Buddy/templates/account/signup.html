@@ -19,14 +19,18 @@
 <div style="margin-top: 15px"><p>Password</p></div>
 <div>{{  form.password2  }}</div>
 
+<div style="margin-top: 15px">
+{{form.errors}}
+</div>
+
 {% if redirect_field_value %}
 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 {% endif %}
 <div style="margin-top: 15px">
   <button class='btn-block button' type="submit">SIGN UP</button>
 </div>
-<div style="margin-top: 40px">
-<p>Already have an account?  <a href="{{ login_url }}">Login</a> </p>
+<div class='row text-center'style="margin-top: 40px">
+<p>Already have an account?<a href="{{ login_url }}">   SIGN IN</a> </p>
 </div>
 
 {% endblock %}

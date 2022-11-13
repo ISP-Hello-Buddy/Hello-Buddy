@@ -14,6 +14,11 @@
 <div>{{  form.login  }}</div>
 <div style="margin-top: 15px"><p>Password</p></div>
 <div >{{ form.password }}</div>
+
+<div style="margin-top: 15px">
+  {{form.errors}}
+  </div>
+
 {% if redirect_field_value %}
 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 {% endif %}
