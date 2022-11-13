@@ -164,4 +164,8 @@ ACCOUNT_FORMS = {
     'login': 'allauth.account.forms.LoginForm',
 }
 
-ACCOUNT_FORMS = {'login': 'Hello_Buddy.forms.MyCustomLoginForm'}
+ACCOUNT_FORMS = {
+    'login': 'Hello_Buddy.forms.MyCustomLoginForm',
+    'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
+    'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
+}
