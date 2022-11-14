@@ -37,6 +37,27 @@
         <div class="col-sm-6">
             <div class="well well-sm">
                 <div class="row">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        close
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="createModal" data-backdrop="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Setting</h4>
+                                </div>
+                                <div class="modal-body">Are you sure to delete this event?</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-sm-4">
                         <img src="{{i.event.image_upload.url}}" alt=""
                              class="img-rounded img-responsive" width="142" height="98"/>
@@ -82,7 +103,7 @@
                         <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
                     </div>
                 </div>
-            </div><!---->
+            </div>
         </div>
         {% endfor %}
     </div>
