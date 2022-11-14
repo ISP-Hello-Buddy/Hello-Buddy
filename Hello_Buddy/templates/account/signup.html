@@ -1,0 +1,36 @@
+{% extends 'account/base.html' %}
+
+
+{% load i18n %}
+{%block form%}
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+{%endblock form%}
+
+{% block content %}
+
+
+{% csrf_token %}
+<div style="margin-top: 15px"><p>Username</p></div>
+<div>{{  form.username  }}</div>
+<div style="margin-top: 15px"><p>E-mail</p></div>
+<div>{{  form.email  }}</div>
+<div style="margin-top: 15px"><p>Password</p></div>
+<div>{{  form.password1  }}</div>
+<div style="margin-top: 15px"><p>Password</p></div>
+<div>{{  form.password2  }}</div>
+
+<div style="margin-top: 15px">
+{{form.errors}}
+</div>
+
+{% if redirect_field_value %}
+<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+{% endif %}
+<div style="margin-top: 15px">
+  <button class='btn-block button' type="submit">SIGN UP</button>
+</div>
+<div class='row text-center'style="margin-top: 40px">
+<p>Already have an account?<a href="{{ login_url }}">   SIGN IN</a> </p>
+</div>
+
+{% endblock %}

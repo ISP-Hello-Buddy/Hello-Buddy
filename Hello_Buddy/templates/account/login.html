@@ -1,0 +1,55 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{%block form%}
+<form class="login" method="POST" action="{% url 'account_login' %}">
+{%endblock form%}
+
+{%block content%}
+{% get_providers as socialaccount_providers %}
+{% csrf_token %}
+
+<div style="margin-top: 15px"><p>Username</p></div>
+<div>{{  form.login  }}</div>
+<div style="margin-top: 15px"><p>Password</p></div>
+<div >{{ form.password }}</div>
+
+<div style="margin-top: 15px">
+  {{form.errors}}
+  </div>
+
+{% if redirect_field_value %}
+<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+{% endif %}
+          
+          
+<div class="row text-center" style="margin-top: 15px">
+  <div class="col-sm-6">
+    {{form.remember}}  {{form.remember.label}}
+  </div>
+  <div class="col-sm-6">
+    <a class="secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  </div>
+</div>
+          
+                    
+                    
+  <div class="form-group" style="margin-top: 15px">
+    <button type="submit"  class="btn-block button">SIGN IN</button>
+  </div>
+  {% if socialaccount_providers %}
+                    
+  <div class="divider d-flex align-items-center my-4">
+    <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+  </div>
+  <div class="row text-center" class="socialaccount_ballot" style="margin-top: 15px">
+    <p class="socialaccount_providers">
+      {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    </p>
+    <div class="row text-center" style="margin-top: 55px;">
+      <p> Don't have an account? <a href="{%url 'account_signup'%}"> Click here </a> </p>
+    </div>
+  </div>
+  {% endif %}
+{%endblock content%}

@@ -37,9 +37,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "authorize.apps.AuthorizeConfig",
     'Hello_Buddy.apps.HelloBuddyConfig',
     'bootstrap_datepicker_plus',
+    
+    'django.contrib.sites',
+	# Django-allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # Social/third party login provider for 
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github'
 
 ]
 
@@ -136,3 +144,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+	  'allauth.account.auth_backends.AuthenticationBackend',
+    ]
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+    
+# Sets the ID of your site's URL. 
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
+
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+}
+
+ACCOUNT_FORMS = {
+    'login': 'Hello_Buddy.forms.MyCustomLoginForm',
+    'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
+    'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
+}
