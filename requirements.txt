@@ -4,18 +4,13 @@ django-allauth
 pillow
 django-crispy-forms
 django-bootstrap4
-
 django-geo
 folium
 geopy
-# geoip2    
 geocoder
-
-# djgeojson 
 jsonfield
 psycopg2-binary
 pybase64
-#  brew install postgis    
-# pip install django-geojson
+psycopg2
 
 
