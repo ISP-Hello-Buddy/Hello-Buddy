@@ -32,8 +32,9 @@ class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True,
                            label="Date",
                            widget=DatePickerInput(options={
-                               'minDate': (datetime.datetime.today() + datetime.timedelta(days=1)).date()
-                           }))
+                               'minDate': (datetime.datetime.today() + datetime.timedelta(days=1)).date(),
+                           }),
+                           initial=(datetime.datetime.today() + datetime.timedelta(days=1)).date())
     time = forms.TimeField(required=True,
                            label="Time",
                            widget=TimePickerInput())
