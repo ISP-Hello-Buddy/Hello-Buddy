@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.utils import timezone
 
-import datetime
-
 
 # Create your models here.
 
@@ -43,6 +41,14 @@ class Event(models.Model):
     def status(self):
         """ host of event are not allow to join their own event"""
         return True
+    
+    def is_active(self):
+        """ Return true if it's not yet time for the event"""
+        now = timezone.localtime()
+        date = now.date()
+        time = now.time()
+        return date < self.date or (date == self.date and time < self.time)
+        
 
 
 class HostOfEvent(models.Model):

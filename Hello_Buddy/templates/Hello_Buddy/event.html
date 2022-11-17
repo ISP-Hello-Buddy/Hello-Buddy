@@ -78,6 +78,8 @@
 
       {% for event in events %}
 
+      {%if event.is_active %}
+
       <a href="{% url 'event' event.id %}">
         <div class="col-sm-4">
           <div class="thumbnail", style='border: 1px solid #ddd;'>
@@ -87,6 +89,8 @@
           </div>
         </div>
       </a>
+
+      {%endif%}
       
       {%endfor%}
     </div>
