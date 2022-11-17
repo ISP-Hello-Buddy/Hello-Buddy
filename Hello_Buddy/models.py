@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils import timezone
 
 import datetime
 
@@ -24,8 +25,7 @@ class Event(models.Model):
                                               default=1)
     joined = models.PositiveIntegerField(default=0)
     date = models.DateField("Date")
-    time = models.TimeField("Time",
-                            default=datetime.time(00, 00))
+    time = models.TimeField("Time")
     type = models.CharField("Type", max_length=20,
                             null=True, blank=True, choices=category)
     image_upload = models.ImageField(null=True,
