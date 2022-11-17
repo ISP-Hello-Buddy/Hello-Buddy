@@ -27,7 +27,7 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         width: 100%;
-        height: 280px;
+        height: auto;
         box-shadow: 0 0 10px 4px rgb(239,239,239);
       }
       .thumbnail img {
@@ -48,6 +48,11 @@
           <h1>{{event.name}}</h1>
           <p>Place: {{event.place}}</p>
           <p>Participant: {{event.joined}}/{{event.participant}}</p>
+          {%for joined in pars%}
+          {%if joined.event.id == event.id%}
+          <p> {{joined.user.username}} <p>
+          {%endif%}
+          {%endfor%}
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           {% if event.type is not None %}
