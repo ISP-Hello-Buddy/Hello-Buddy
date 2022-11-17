@@ -91,7 +91,7 @@ xcode-select --install
 ```
 brew install wget
 ```
-Before running any install command in Homebrew, it's good to ensure you are up to date.
+- Before running any install command in Homebrew, it's good to ensure you are up to date.
 ```
 brew update
 ```
@@ -106,12 +106,12 @@ brew install postgis
 
 2. `For Windows OS`
 
-Download and Install `PostgreSQL` Spatial database  
+- Download and Install `PostgreSQL` Spatial database  
  - Download latest [PostgreSQL 12.x installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
   When the installer completes, it will ask to “Launch Stack Builder at exit?” 
  – keep this checked, as it is necessary to install PostGIS.
   
-Install `PostGIS` Geospatial libraries
+- Install `PostGIS` Geospatial libraries
 - From within the Stack Builder to run outside of the installer, 
 ```
 ‣ Start PostgreSQL 12 Application Stack Builder.
@@ -125,11 +125,11 @@ Install `PostGIS` Geospatial libraries
 ‣ The install process includes three Yes/No dialog boxes, the default option for all three is “No”.
 ```
 
-Install `psycopg2`
+- Install `psycopg2`
 - The psycopg2 Python module provides the interface between Python and the PostgreSQL database. psycopg2 can be installed via pip within your Python virtual environment.
 - Install  `psycopy2` run this commmand
 ```
 pip install psycopg2
 ```
-
+You can find more information on GeoDjango's [here](https://docs.djangoproject.com/en/4.1/ref/contrib/gis/install/#spatial-database).
 
