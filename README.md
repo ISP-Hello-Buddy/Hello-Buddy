@@ -47,6 +47,7 @@ Before install programs form requirements please make sure in your computer have
 
 - Geospatial libraries `Hint: PostGIS` 
 - Spatial database `Hint: PostgreSQL` 
+- `Note` : you can install program for GeoDjango Map Requirement from below [Click for see](https://github.com/ISP-Hello-Buddy/Hello-Buddy/tree/map#spacific-for-geodjango-map-requirement)
 
 make sure that you install all the requirements by run this command, its can be whether pip, pip3
 ```
