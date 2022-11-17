@@ -131,5 +131,5 @@ brew install postgis
 ```
 pip install psycopg2
 ```
-You can find more information on GeoDjango's [here](https://docs.djangoproject.com/en/4.1/ref/contrib/gis/install/#spatial-database).
+Note: You can find more detail on GeoDjango's [here](https://docs.djangoproject.com/en/4.1/ref/contrib/gis/install/#spatial-database).
 
