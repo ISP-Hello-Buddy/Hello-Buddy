@@ -47,12 +47,29 @@
         <div class="thumbnail">
           <h1>{{event.name}}</h1>
           <p>Place: {{event.place}}</p>
-          <p>Participant: {{event.joined}}/{{event.participant}}</p>
-          {%for joined in pars%}
-          {%if joined.event.id == event.id%}
-          <p> {{joined.user.username}} <p>
-          {%endif%}
-          {%endfor%}
+          <p><a data-toggle="modal" data-target="#createModal"><i class="fa fa-users" aria-hidden="true"></i></a>  Participant: {{event.joined}}/{{event.participant}}</p>
+
+
+            <div class="modal fade" id="createModal" data-backdrop="false">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4>Participant</h4>
+                      </div>
+                      {%for joined in pars%}
+                      {%if joined.event.id == event.id%}
+                      <div><i class="fa fa-user-circle" aria-hidden="true">  {{joined.user.username}}</i></div>
+                      {%endif%}
+                      {%endfor%}
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+    
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           {% if event.type is not None %}
