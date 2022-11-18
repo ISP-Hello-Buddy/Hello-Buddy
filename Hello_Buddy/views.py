@@ -87,7 +87,16 @@ def profile_user(request):
     except Profile.DoesNotExist:
         profile = Profile(user=request.user)
 
+    print(request.POST)
+
     if request.method == "POST":
+        if 'delete' in request.POST:
+            print("delete")
+            id = request.POST.get("delete")
+            print(id)
+            deleted_event = Event.objects.filter(id=id).first()
+            deleted_event.delete()
+
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST, request.FILES,
                                          instance=profile)
