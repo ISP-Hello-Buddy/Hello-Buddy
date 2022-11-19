@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 import datetime
+from geopy.geocoders import Nominatim
+
 
 
 # Create your models here.
@@ -97,4 +99,8 @@ class Mapping(models.Model):
         name="address", blank=True, null=True, max_length=300)
 
     def __str__(self):
-        return self.address
+        nomi = Nominatim(user_agent="hi_buddy")
+        location = nomi.geocode(self.address)
+        if not location:
+            return "Not_location"
+        return location.address
