@@ -62,12 +62,12 @@ def create(request):
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
-                lst_address = [loca.address for loca in mapping]
-                if location.address in lst_address:
-                    context = {'form': form}
-                    messages.error(request, "This location is used")
-                    return render(request,
-                                  'Hello_Buddy/create_event.html', context=context)
+                # lst_address = [loca.address for loca in mapping]
+                # if location.address in lst_address:
+                #     context = {'form': form}
+                #     messages.error(request, "This location is used")
+                #     return render(request,
+                #                   'Hello_Buddy/create_event.html', context=context)
 
                 event = Event()
                 event.name = data['name']
@@ -205,48 +205,63 @@ def event(request, event_id):
 
 def map(request):
     all_obj = Mapping.objects.all()
+    list_map_id = []
+    list_map = []
+    for i in all_obj:
+        if i.event.place in list_map_id:
+            continue
+        list_map_id.append(i.event.place)
+        
+    for i in list_map_id:
+        same_map = [j for j in all_obj if i == j.event.place]
+        list_map.append(same_map)
+        
+        
     m = folium.Map(width=1120,height=650,location=[13.74492, 100.53378], zoom_start=9)
-    for mp in all_obj:
-        html = f"""
-                <center class="thumbnail"><img id="inlineFrameExample"
-                title="Inline Frame Example"
-                width="250"
-                height="200"
-                frameborder="0" 
-                scrolling="no"
-                name="imgbox" 
-                id="imgbox"
-                {mp.event.image_upload.url}
-                src="data:image/png;base64,{base64.b64encode(
-                    open(f'./{mp.event.image_upload.url}',
-                    'rb').read()).decode()}"
-                >
-            </img></center>
-            <h3><center> <a href="/event/{mp.event.id}" target="_blank">
-            {mp.event}</a></center></h3>
-            <div><center> Place: {mp.address}</center> </div>
-            <div><center> </center></div>
-                    
-                    <div><center> Date: {mp.event.date}</center> </div>
-                    <div><center> Time: {mp.event.time}</center> </div>
-                    <div><center> Participant: {mp.event.joined}/
-                    {mp.event.participant}
-            </center> </div>
-                    <div><center><progress id="project" 
-                    max="{mp.event.participant}" 
-                    value="{mp.event.joined}"> </progress>
-            </center> </div>
-             <div><center>
-            <button class="btn btn-info" type="button" 
-            onclick="window.open('/event/{mp.event.id}',
-             '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
-             target="_blank"class="button" ></a></button>
-             </div></center>
+    for i in list_map:
+        html = ""
+        for mp in i:
+            html += f"""
+                    <center class="thumbnail"><img id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    width="250"
+                    height="200"
+                    frameborder="0" 
+                    scrolling="no"
+                    name="imgbox" 
+                    id="imgbox"
+                    {mp.event.image_upload.url}
+                    src="data:image/png;base64,{base64.b64encode(
+                        open(f'./{mp.event.image_upload.url}',
+                        'rb').read()).decode()}"
+                    >
+                </img></center>
+                <h3><center> <a href="/event/{mp.event.id}" target="_blank">
+                {mp.event}</a></center></h3>
+                <div><center> Place: {mp.address}</center> </div>
+                <div><center> </center></div>
+                        
+                        <div><center> Date: {mp.event.date}</center> </div>
+                        <div><center> Time: {mp.event.time}</center> </div>
+                        <div><center> Participant: {mp.event.joined}/
+                        {mp.event.participant}
+                </center> </div>
+                        <div><center><progress id="project" 
+                        max="{mp.event.participant}" 
+                        value="{mp.event.joined}"> </progress>
+                </center> </div>
+                <div><center>
+                <button class="btn btn-info" type="button" 
+                onclick="window.open('/event/{mp.event.id}',
+                '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
+                target="_blank"class="button" ></a></button>
+                </div></center>
 
-        """
+            """
+
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
-                      tooltip=f"{mp.event} (click for see detail)").add_to(m)
+                    tooltip=f"(click for see detail)").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
