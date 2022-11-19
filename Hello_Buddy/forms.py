@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
 import datetime
 
+def default(o):
+    if isinstance(o, (datetime.date, datetime.datetime)):
+        return o.isoformat()
+
 
 class MyCustomSignupForm(SignupForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "placeholder ": "Username"}))
@@ -32,7 +36,7 @@ class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True,
                            label="Date",
                            widget=DatePickerInput(options={
-                               'minDate': (datetime.datetime.today() + datetime.timedelta(days=1)).date(),
+                               'minDate': default((datetime.datetime.today() + datetime.timedelta(days=1)).date()),
                            }),
                            initial=(datetime.datetime.today() + datetime.timedelta(days=1)).date())
     time = forms.TimeField(required=True,
