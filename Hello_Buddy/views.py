@@ -121,6 +121,7 @@ def event(request, event_id):
     user = request.user
     event = Event.objects.filter(id=event_id).first()
     all_event = Event.objects.all()
+    all_par = ParticipantOfEvent.objects.all()
 
     # Host of event are not allow to join their own event
     host = HostOfEvent.objects.all()
@@ -134,7 +135,7 @@ def event(request, event_id):
                                                       user_id=user)
     except ParticipantOfEvent.DoesNotExist:
         # new participant
-        context = {"event": event, "events": all_event}
+        context = {"event": event, "events": all_event, "pars": all_par}
         if request.method == "POST":
             person = ParticipantOfEvent()
             person.event = Event.objects.filter(id=event_id).first()
@@ -144,18 +145,18 @@ def event(request, event_id):
             Event.objects.filter(id=event_id).update(joined=F("joined") + 1)
             event = Event.objects.filter(id=event_id).first()
 
-            context = {"event": event, "par": person, "events": all_event}
+            context = {"event": event, "par": person, "events": all_event, "pars": all_par}
     else:
         # already join
         par = ParticipantOfEvent.objects.filter(event_id=id,
                                                 user_id=user).first()
-        context = {"event": event, "par": par, "events": all_event}
+        context = {"event": event, "par": par, "events": all_event, "pars": all_par}
         if request.method == "POST":
             existing_par.delete()
 
             Event.objects.filter(id=event_id).update(joined=F("joined") - 1)
             event = Event.objects.filter(id=event_id).first()
 
-            context = {"event": event, "events": all_event}
+            context = {"event": event, "events": all_event, "pars": all_par}
 
     return render(request, "Hello_Buddy/event.html", context)

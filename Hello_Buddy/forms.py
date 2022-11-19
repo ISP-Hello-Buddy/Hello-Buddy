@@ -3,6 +3,7 @@ from .models import Event, Profile
 from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
 from django.contrib.auth.models import User
 from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
+import datetime
 
 
 class MyCustomSignupForm(SignupForm):
@@ -30,7 +31,10 @@ class MyCustomResetPasswordForm(ResetPasswordForm):
 class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True,
                            label="Date",
-                           widget=DatePickerInput())
+                           widget=DatePickerInput(options={
+                               'minDate': (datetime.datetime.today() + datetime.timedelta(days=1)).date(),
+                           }),
+                           initial=(datetime.datetime.today() + datetime.timedelta(days=1)).date())
     time = forms.TimeField(required=True,
                            label="Time",
                            widget=TimePickerInput())

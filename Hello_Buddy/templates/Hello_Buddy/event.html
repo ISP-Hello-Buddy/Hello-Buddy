@@ -27,7 +27,7 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         width: 100%;
-        height: 280px;
+        height: auto;
         box-shadow: 0 0 10px 4px rgb(239,239,239);
       }
       .thumbnail img {
@@ -47,7 +47,29 @@
         <div class="thumbnail">
           <h1>{{event.name}}</h1>
           <p>Place: {{event.place}}</p>
-          <p>Participant: {{event.joined}}/{{event.participant}}</p>
+          <p><a data-toggle="modal" data-target="#createModal"><i class="fa fa-users" aria-hidden="true"></i></a>  Participant: {{event.joined}}/{{event.participant}}</p>
+
+
+            <div class="modal fade" id="createModal" data-backdrop="false">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4>Participant</h4>
+                      </div>
+                      {%for joined in pars%}
+                      {%if joined.event.id == event.id%}
+                      <div><i class="fa fa-user-circle" aria-hidden="true">  {{joined.user.username}}</i></div>
+                      {%endif%}
+                      {%endfor%}
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+    
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           {% if event.type is not None %}
@@ -78,6 +100,8 @@
 
       {% for event in events %}
 
+      {%if event.is_active %}
+
       <a href="{% url 'event' event.id %}">
         <div class="col-sm-4">
           <div class="thumbnail", style='border: 1px solid #ddd;'>
@@ -87,6 +111,8 @@
           </div>
         </div>
       </a>
+
+      {%endif%}
       
       {%endfor%}
     </div>
