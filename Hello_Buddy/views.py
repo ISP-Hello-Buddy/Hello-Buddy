@@ -87,8 +87,6 @@ def profile_user(request):
     except Profile.DoesNotExist:
         profile = Profile(user=request.user)
 
-    print(request.POST)
-
     if request.method == "POST":
         if 'delete' in request.POST:
             print("delete")
