@@ -36,7 +36,7 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         width: 100%;
-        height: 280px;
+        height: auto;
         box-shadow: 0 0 10px 4px rgb(239,239,239);
       }
       .thumbnail img {
@@ -73,6 +73,30 @@
 </div >
 </div>
           <p>Place: {{event.place}}</p>
+          
+          <p><a data-toggle="modal" data-target="#createModal"><i class="fa fa-users" aria-hidden="true"></i></a>  Participant: {{event.joined}}/{{event.participant}}</p>
+
+
+            <div class="modal fade" id="createModal" data-backdrop="false">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4>Participant</h4>
+                      </div>
+                      {%for joined in pars%}
+                      {%if joined.event.id == event.id%}
+                      <div><i class="fa fa-user-circle" aria-hidden="true">  {{joined.user.username}}</i></div>
+                      {%endif%}
+                      {%endfor%}
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+    
           <p>Date: {{event.date}}</p>
           <p>Time: {{event.time}}</p>
           
@@ -92,14 +116,14 @@
             {% csrf_token %}
             {%if event.status%} 
               {%if event.full and not par.check_par%}
-              <button type="submit" name="join" disabled>FULL</button>
+              <button type="submit" name="full" disabled>FULL</button>
               {%elif par.check_par %}
-              <button type="submit" name="join">CANCEL</button>
+              <button type="submit" name="cancel" class="btn btn-danger">CANCEL</button>
               {% else %}
-              <button type="submit" name="join">JOIN</button>
+              <button type="submit" name = "join" class="btn btn-success">JOIN</button>
               {%endif%}
             {%else%}
-            <button type="submit" name="join" disabled>YOU ARE THE OWNER.</button>
+            <button type="submit" name="YOU ARE THE OWNER." disabled>YOU ARE THE OWNER.</button>
             {%endif%}
           </form>
         </div>
@@ -108,6 +132,8 @@
       </div>
 
       {% for event in events %}
+
+      {%if event.is_active %}
 
       <a href="{% url 'event' event.id %}">
         <div class="col-sm-4">
@@ -119,6 +145,8 @@
           </div>
         </div>
       </a>
+
+      {%endif%}
       
       {%endfor%}
     </div>

@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
-import datetime
 from geopy.geocoders import Nominatim
+
+from django.utils import timezone
 
 
 
@@ -26,8 +27,7 @@ class Event(models.Model):
                                             default=1)
     joined = models.PositiveIntegerField(default=0)
     date = models.DateField("Date")
-    time = models.TimeField("Time",
-                            default=datetime.time(00, 00))
+    time = models.TimeField("Time")
     type = models.CharField("Type", max_length=20,
                             null=True, blank=True, choices=category)
     image_upload = models.ImageField(null=True,
@@ -45,6 +45,14 @@ class Event(models.Model):
     def status(self):
         """ host of event are not allow to join their own event"""
         return True
+    
+    def is_active(self):
+        """ Return true if it's not yet time for the event"""
+        now = timezone.localtime()
+        date = now.date()
+        time = now.time()
+        return date < self.date or (date == self.date and time < self.time)
+        
 
     def get_url(self):
         """ Come to main your event """

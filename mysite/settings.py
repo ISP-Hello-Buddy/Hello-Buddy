@@ -46,9 +46,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Social/third party login provider for 
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     
     'crispy_forms',
     'bootstrap4',
+    
+
 ]
 
 
@@ -112,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -163,5 +166,16 @@ SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
 
+
 # CRISPY_TEMPLATE
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+}
+
+ACCOUNT_FORMS = {
+    'login': 'Hello_Buddy.forms.MyCustomLoginForm',
+    'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
+    'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
+}

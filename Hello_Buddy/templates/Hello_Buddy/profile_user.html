@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="row" style="margin-top:100px">
+<div class="container" style="margin-top:100px">
     <!--profile-->
     <form action='{% url "profile-user" %}' method='POST' enctype="multipart/form-data" class="col-sm-3">
         {% csrf_token %}
@@ -41,12 +41,14 @@
                         <img src="{{i.event.image_upload.url}}" alt=""
                             class="img-rounded img-responsive" width="142" height="98"/>
                     </div>
-                    <h4 class="col-sm-19">{{ i.event.name }}</h4>
-                    <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
-                    <nav></nav>
-                    <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
-                    <nav></nav>
-                    <i><span class="glyphicon glyphicon-gift"></span> {{ i.event.date}}</i>
+                    <div class="col-sm-8">
+                        <h4>{{ i.event.name }}</h4>
+                        <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                        <nav></nav>
+                        <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
+                        <nav></nav>
+                        <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +65,7 @@
     <!--joined event-->
     <div class="col-sm-9">
         {% for i in joined_events %}
+
         <div class="col-sm-6">
             <div class="well well-sm">
                 <div class="row">
@@ -70,14 +73,16 @@
                         <img src="{{i.event.image_upload.url}}" alt=""
                              class="img-rounded img-responsive" width="142" height="98"/>
                     </div>
-                    <h4 class="col-sm-19">{{ i.event.name }}</h4>
-                    <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
-                    <nav></nav>
-                    <i><span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}</i>
-                    <nav></nav>
-                    <i><span class="glyphicon glyphicon-gift"></span> {{ i.event.date}}</i>
+                    <div class="col-sm-8">
+                        <h4 class="col-sm-19">{{ i.event.name }}</h4>
+                        <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                        <nav></nav>
+                        <i><span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}</i>
+                        <nav></nav>
+                        <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
+                    </div>
                 </div>
-            </div>
+            </div><!---->
         </div>
         {% endfor %}
     </div>
