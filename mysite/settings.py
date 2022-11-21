@@ -46,9 +46,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Social/third party login provider for 
     'allauth.socialaccount.providers.google',
-
+    
     'crispy_forms',
-    'django.contrib.gis',
     'bootstrap4',
 ]
 

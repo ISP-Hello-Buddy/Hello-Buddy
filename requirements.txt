@@ -4,13 +4,9 @@ django-allauth
 pillow
 django-crispy-forms
 django-bootstrap4
-django-geo
 folium
 geopy
 geocoder
-jsonfield
-psycopg2-binary
-pybase64
-psycopg2
+
 
 
