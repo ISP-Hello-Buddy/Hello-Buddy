@@ -1,45 +1,80 @@
 {% extends 'Hello_Buddy/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
+
+<div class='container'>
+    <div class="container-fluid text-center bg-grey">
+      <div class="row text-center">
+
+      <script>
+        //close alert after 3 seconds
+        window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+          });
+        }, 3000);
+      </script>    
+          </div></div></div>
+          
 <div class="container" style="margin-top:50px">
     <h3>Create Event</h3>
 <form action = '{% url "create" %}' method = 'POST' enctype="multipart/form-data">
     {% csrf_token %}
+    <!-- {{form|crispy}} -->
 
 <div style="margin-top:10px">
-    {{form.name.label_tag}}
-    {{form.name}}
+    <!-- {{form.name.label_tag}} -->
+    <!-- {{form.name}} -->
+    {{form.name | as_crispy_field }}
+
 </div>
 <div style="margin-top:10px">
-    {{form.place.label_tag}}
-    {{form.place}}
+    <!-- {{form.place.label_tag}} -->
+    {{form.place | as_crispy_field }}
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+        {% else %}
+        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+        {% endif %}
+      {% endfor %}
 </div>
 <div style="margin-top:10px">
-    {{form.participant.label_tag}}
-    {{form.participant}}
+    <!-- {{form.participant.label_tag}} -->
+    <!-- {{form.}} -->
+    {{form.participant| as_crispy_field }}
+
     {{form.errors}}
 </div>
 <div style="margin-top:10px">
-    {{form.date.label_tag}}
-    {{form.date}}
+    <!-- {{form.date.label_tag}}
+    {{form.date}} -->
+    {{form.date | as_crispy_field }}
     {{form.media}}
 </div>
 <div style="margin-top:10px">
-    {{form.time.label_tag}}
-    {{form.time}}
+    <!-- {{form.time.label_tag}}
+    {{form.time}} -->
+    {{form.time | as_crispy_field }}
     {{form.media}}
 </div>
 <div style="margin-top:10px">
-    {{form.type.label_tag}}
-    {{form.type}}
+    <!-- {{form.type.label_tag}}
+    {{form.type}} -->
+    {{form.type | as_crispy_field }}
+
 </div>
 <div style="margin-top:10px">
-    {{form.image_upload.label_tag}}
-    {{form.image_upload}}
+    <!-- {{form.image_upload.label_tag}} -->
+    <!-- {{form.image_upload}} -->
+    {{form.image_upload | as_crispy_field }}
+
 </div>
      
 <div style="margin-top:10px">
-    <button type='submit'>SUBMIT</button>
+    <button type="submit" name="check_place" class="btn btn-primary">Check Place</button>
+
+    <button type='submit' name="create_event" class="btn btn-primary">SUBMIT</button>
 </div>
 </form>
 
