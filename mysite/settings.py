@@ -99,12 +99,12 @@ ON_HEROKU = config('LIVE', default=False)
 if ON_HEROKU:
     DATABASES = {
         'default': {
-            'ENGINE': config('ENGINE', ''),
-            'NAME': config('NAME_DB', ''),
-            'USER': config('USER_DB', ''),
-            'PASSWORD': config('PASS_DB', ''),
-            'HOST': config('HOST_DB', ''),
-            'PORT': config('PORT_DB', '')
+            'ENGINE': os.getenv('ENGINE', ''),
+            'NAME': os.geten('NAME_DB', ''),
+            'USER': os.geten('USER_DB', ''),
+            'PASSWORD': os.geten('PASS_DB', ''),
+            'HOST': os.geten('HOST_DB', ''),
+            'PORT': os.geten('PORT_DB', '')
         }
         
         
