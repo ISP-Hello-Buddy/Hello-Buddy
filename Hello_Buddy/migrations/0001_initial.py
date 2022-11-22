@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import os
 
 
 class Migration(migrations.Migration):
@@ -11,6 +12,24 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
+    
+    def generate_superuser(apps, schema_editor):
+        from django.contrib.auth.models import User
+
+        DJANGO_SU_NAME = os.environ.get('USER_HOST')
+        DJANGO_SU_EMAIL = os.environ.get('MAIL_HOST')
+        DJANGO_SU_PASSWORD = os.environ.get('PASS_HOST')
+
+        superuser = User.objects.create_superuser(
+            username=DJANGO_SU_NAME,
+            email=DJANGO_SU_EMAIL,
+            password=DJANGO_SU_PASSWORD)
+
+        superuser.save()
+
+    operations = [
+        migrations.RunPython(generate_superuser),
     ]
 
     operations = [

@@ -188,7 +188,3 @@ ACCOUNT_FORMS = {
     'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
     'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
 }
-
-DJANGO_SUPERUSER_PASSWORD= os.environ.get('PASS_HOST')
-DJANGO_SUPERUSER_USERNAME= os.environ.get('USER_HOST')
-DJANGO_SUPERUSER_EMAIL= os.environ.get('MAIL_HOST')
