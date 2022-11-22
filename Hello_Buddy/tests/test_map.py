@@ -3,7 +3,12 @@ from django.urls import reverse, resolve
 from Hello_Buddy.views import  map
 from Hello_Buddy.models import Mapping, Event 
 from django.contrib.auth import get_user_model
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
+# from .until import new_user
+# from selenium.webdriver import Chrome, ChromeOptions
+# from selenium.webdriver.common.by import By
+# import time
 UserModel = get_user_model()
 
 class TestMap(TestCase):
@@ -13,12 +18,12 @@ class TestMap(TestCase):
         self.user = UserModel.objects.create_user(
             "test_user", "test@example.com", "admin1234")
         self.event = Event.objects.create(
-            name="event", place="มหาลัยเกษตร", participant=4, joined=1, date="2022-11-22", type="", image_upload="")
+            name="event", place="มหาลัยเกษตร", participant=4, joined=1, date="2022-11-22", type="", image_upload="",time = "14:52:48")
         self.event_2 = Event.objects.create(
-            name="event_2", place="ประเทศไทย", participant=7, joined=2, date="2021-10-21", type="", image_upload="")
+            name="event_2", place="ประเทศไทย", participant=7, joined=2, date="2021-10-21", type="", image_upload="",time = "14:52:48")
         self.event_3 = Event.objects.create(
-            name="event_3", place="เกษตร", participant=7, joined=2, date="2021-10-21", type="", image_upload="")
-
+            name="event_3", place="เกษตร", participant=7, joined=2, date="2020-9-21", type="", image_upload="",time ="14:52:48")
+        
     def test_map_url_is_resolved(self):
         """test url resolve of map from url_patterm"""
         url = self.map_url
@@ -122,3 +127,8 @@ class TestMap(TestCase):
         Mapping.objects.all()
         num_map_after = len(Mapping.objects.all())
         self.assertEqual(num_map_after,3)
+
+
+
+
+     
