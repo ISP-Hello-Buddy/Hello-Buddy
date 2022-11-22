@@ -187,7 +187,3 @@ ACCOUNT_FORMS = {
     'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
     'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
 }
-
-DJANGO_SUPERUSER_USERNAME = "admin"
-DJANGO_SUPERUSER_PASSWORD = "admin123456" 
-DJANGO_SUPERUSER_EMAIL ="admin@admin.com" 

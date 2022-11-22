@@ -7,4 +7,4 @@ pip install 'whitenoise[brotli]'
 
 python manage.py collectstatic --no-input
 python manage.py migrate
-python manage.py createsuperuser --noinput
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@mail.com', 'admin123456')" | python manage.py shell
