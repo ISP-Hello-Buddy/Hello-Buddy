@@ -1,4 +1,4 @@
-Django>=4.1
+Django
 django-bootstrap-datepicker-plus
 django-allauth
 pillow
