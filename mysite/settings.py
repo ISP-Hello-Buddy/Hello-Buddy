@@ -100,11 +100,11 @@ if ON_HEROKU:
     DATABASES = {
         'default': {
             'ENGINE': os.getenv('ENGINE', ''),
-            'NAME': os.geten('NAME_DB', ''),
-            'USER': os.geten('USER_DB', ''),
-            'PASSWORD': os.geten('PASS_DB', ''),
-            'HOST': os.geten('HOST_DB', ''),
-            'PORT': os.geten('PORT_DB', '')
+            'NAME': os.getenv('NAME_DB', ''),
+            'USER': os.getenv('USER_DB', ''),
+            'PASSWORD': os.getenv('PASS_DB', ''),
+            'HOST': os.getenv('HOST_DB', ''),
+            'PORT': os.getenv('PORT_DB', '')
         }
         
         
