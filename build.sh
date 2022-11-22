@@ -3,6 +3,7 @@
 set -o errexit
 
 pip install -r requirements.txt
+pip install 'whitenoise[brotli]'
 
 python manage.py collectstatic --no-input
 python manage.py migrate
