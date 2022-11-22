@@ -10,4 +10,5 @@ geocoder
 mysql-connector-python
 gunicorn
 python-decouple
+whitenoise
 
