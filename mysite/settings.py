@@ -101,7 +101,7 @@ if ON_HEROKU:
         'default': {
             'ENGINE': 'mysql.connector.django',
             'NAME': config('NAME_DB', ''),
-            'USER': config('ROOT_DB', ''),
+            'USER': config('USER_DB', ''),
             'PASSWORD': config('PASS_DB', ''),
             'HOST': config('HOST_DB', ''),
             'PORT': config('PORT_DB', '')
