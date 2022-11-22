@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+HOST = config('HOST')
+if HOST:
+    ALLOWED_HOSTS.append(HOST)
+
 
 # Application definition
 
