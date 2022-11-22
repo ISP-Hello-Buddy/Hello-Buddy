@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-HOST = config('HOST')
+HOST = config('HOST',None)
 if HOST:
     ALLOWED_HOSTS.append(HOST)
 
