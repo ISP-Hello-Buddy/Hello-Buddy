@@ -7,8 +7,7 @@ django-bootstrap4
 folium
 geopy
 geocoder
-dj-database-url
-psycopg2-binary
+mysql-connector-python
 gunicorn
-
+python-decouple
 

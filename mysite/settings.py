@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
-import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,15 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+SECRET_KEY = config('SECRET_KEY', default='missing-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-# if RENDER_EXTERNAL_HOSTNAME:
-#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,15 +90,28 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+ON_HEROKU = config('LIVE', default=False)
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600
-    )
-    
-}
+if ON_HEROKU:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'mysql.connector.django',
+            'NAME': config('NAME_DB', ''),
+            'USER': config('ROOT_DB', ''),
+            'PASSWORD': config('PASS_DB', ''),
+            'HOST': config('HOST_DB', ''),
+            'PORT': config('PORT_DB', '')
+        }
+        
+        
+    }   
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation
@@ -126,7 +136,7 @@ TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -179,9 +189,6 @@ ACCOUNT_EMAIL_UNIQUE = True
 # CRISPY_TEMPLATE
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ACCOUNT_FORMS = {
-    'login': 'allauth.account.forms.LoginForm',
-}
 
 ACCOUNT_FORMS = {
     'login': 'Hello_Buddy.forms.MyCustomLoginForm',

@@ -4,7 +4,7 @@ from PIL import Image
 from django.urls import reverse
 from geopy.geocoders import Nominatim
 
-from django.utils import timezone
+import datetime
 
 
 
@@ -48,7 +48,7 @@ class Event(models.Model):
     
     def is_active(self):
         """ Return true if it's not yet time for the event"""
-        now = timezone.localtime()
+        now = datetime.datetime.now()
         date = now.date()
         time = now.time()
         return date < self.date or (date == self.date and time < self.time)
