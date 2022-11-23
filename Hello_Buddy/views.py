@@ -237,7 +237,16 @@ def map(request):
                 {mp.event}</a></center></h3>
                 <div><center> Place: {mp.address}</center> </div>
                 <div><center> </center></div>
-                
+                        
+                        <div><center> Date: {mp.event.date}</center> </div>
+                        <div><center> Time: {mp.event.time}</center> </div>
+                        <div><center> Participant: {mp.event.joined}/
+                        {mp.event.participant}
+                </center> </div>
+                        <div><center><progress id="project" 
+                        max="{mp.event.participant}" 
+                        value="{mp.event.joined}"> </progress>
+                </center> </div>
                 <div><center>
                 <button class="btn btn-info" type="button" 
                 onclick="window.open('/event/{mp.event.id}',
