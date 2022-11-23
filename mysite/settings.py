@@ -14,7 +14,7 @@ from pathlib import Path
 from decouple import config
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -150,7 +150,7 @@ USE_TZ = False
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
@@ -205,6 +205,5 @@ ACCOUNT_FORMS = {
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUND_NAME', ''),
     'API_KEY': config('API_KEY', ''),
-    'API_SECRET': config('API_SECRET', ''),
-    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory')
+    'API_SECRET': config('API_SECRET', '')
 }
