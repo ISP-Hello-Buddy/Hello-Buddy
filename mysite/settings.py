@@ -99,7 +99,7 @@ ON_HEROKU = config('LIVE', default=False)
 if ON_HEROKU:
     DATABASES = {
         'default': {
-            'ENGINE': config('ENGINE', ''),
+            'ENGINE': 'mysql.connector.django',
             'NAME': config('NAME_DB', ''),
             'USER': config('USER_DB', ''),
             'PASSWORD': config('PASS_DB', ''),
