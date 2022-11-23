@@ -243,10 +243,6 @@ def map(request):
                         <div><center> Participant: {mp.event.joined}/
                         {mp.event.participant}
                 </center> </div>
-                        <div><center><progress id="project" 
-                        max="{mp.event.participant}" 
-                        value="{mp.event.joined}"> </progress>
-                </center> </div>
                 <div><center>
                 <button class="btn btn-info" type="button" 
                 onclick="window.open('/event/{mp.event.id}',
