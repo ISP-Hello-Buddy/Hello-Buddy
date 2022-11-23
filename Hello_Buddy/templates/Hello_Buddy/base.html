@@ -3,29 +3,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Hello Buddy</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="shortcut icon" type="image/png" href="{% static 'Hello-Buddy-icon.ico' %}"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Hello Buddy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E">
+    <link rel="shortcut icon" type="image/png" href="{% static 'Hello-Buddy-icon.ico' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    
-  <style>
+
+    <style>
     .navbar{
       box-shadow: 0 0 10px 4px rgb(235,235,235);
     }
-    
+
     .nav.navbar-nav li a {
       color: black;
     }
-    
+
     .navbar-header div{
       color: black;
     }
-    
-    
+
+
     .navbar li a:hover:not(.active) {
       background-color: #EEEEEE;
     }
@@ -93,7 +95,7 @@
         /* Position it in the top right corner outside of the modal */
         position: absolute;
         right: 10px;
-        top: 0; 
+        top: 0;
         color: #000;
         font-size: 35px;
         font-weight: bold;
@@ -107,67 +109,70 @@
       }
 
 
-      
 
-  </style>
+
+
+    </style>
 </head>
 <body>
 
 
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" style='color:black' href="#">Hello Buddy</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="{% url 'home'%}">Home</a></li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="{%url 'event_category' 'eating' %}">Eating</a></li>
-          <li><a href="{%url 'event_category' 'sport' %}">Sport</a></li>
-          <li><a href="{%url 'event_category' 'movie' %}">Movie</a></li>
-          <li><a href="{%url 'event_category' 'party' %}">Party</a></li>
-          <li><a href="{%url 'event_category' 'education' %}">Education</a></li>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" style='color:black' href="#">Hello Buddy</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'home'%}">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{%url 'event_category' 'eating' %}">Eating</a></li>
+                    <li><a href="{%url 'event_category' 'sport' %}">Sport</a></li>
+                    <li><a href="{%url 'event_category' 'movie' %}">Movie</a></li>
+                    <li><a href="{%url 'event_category' 'party' %}">Party</a></li>
+                    <li><a href="{%url 'event_category' 'education' %}">Education</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'aboutus'%}">About us</a></li>
+            <li><a href="{% url 'create' %}">Create</a></li>
+            <li><a href="{% url 'map' %}">Map</a></li>
         </ul>
-      </li>
-      <li><a href="{% url 'aboutus'%}">About us</a></li>
-      <li><a href="{% url 'create' %}">Create</a></li>
-    </ul>
-     <!-- when login -->
-     {% if user.is_authenticated %}
-     <ul class="nav navbar-nav navbar-right">
-       <li>
-         <a
-          href="{% url 'profile-user'%}"
-           ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a>
-       </li>
-       <li>
-         <a onclick="document.getElementById('id01').style.display='block'"
-         ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-        </li>
-      </ul>
+        <!-- when login -->
+        {% if user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a
+                        href="{% url 'profile-user'%}"
+                ><span class="glyphicon glyphicon-user"></span> {{ user.username}}</a>
+            </li>
+            <li>
+                <a onclick="document.getElementById('id01').style.display='block'"
+                ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            </li>
+        </ul>
 
-      {% include "account/logout.html"%}
+        {% include "account/logout.html"%}
 
-     <!-- when not login -->
-     {% else %}
-     <ul class="nav navbar-nav navbar-right">
-       <li>
-         <a href="{%url 'account_signup'%}"
-           ><span class="glyphicon glyphicon-user"></span> Sign Up</a
-         >
-       </li>
-       <li>
-         <a href="{%url 'account_login'%}" method="post"
-           ><span class="glyphicon glyphicon-log-in"></span> Login</a
-         >
-       </li>
+        <!-- when not login -->
+        {% else %}
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="{%url 'account_signup'%}"
+                ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                >
+            </li>
+            <li>
+                <a href="{%url 'account_login'%}" method="post"
+                ><span class="glyphicon glyphicon-log-in"></span> Login</a
+                >
+            </li>
 
 
-     </ul>
-     {% endif %}
-   </div>
- </nav>
+        </ul>
+        {% endif %}
+    </div>
+</nav>
 
 {% block content %}{% endblock %}
 

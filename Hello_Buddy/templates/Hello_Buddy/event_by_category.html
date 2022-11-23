@@ -43,6 +43,7 @@
     <div class="row text-center">
       {% for event in events_in_category %}
 
+      {%if event.is_active %}
       <a href="{% url 'event' event.id %}">
         <div class="col-sm-4">
           <div class="thumbnail">
@@ -52,6 +53,8 @@
           </div>
         </div>
       </a>
+      {%endif%}
+      
       {%endfor%}
     </div>
   </div>

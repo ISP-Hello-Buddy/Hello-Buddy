@@ -1,6 +1,48 @@
 # Hello-Buddy
 a web application for those who need some companion.
 
+## How to install 
+make sure that you have python in your computer
+first, clone this repository by type this command in your terminal at your choosen path
+```
+git clone https://github.com/ISP-Hello-Buddy/Hello-Buddy.git
+```
+go to project directory
+```
+cd Hallo-Buddy
+```
+
+Start the virtual environment.
+- python3 -m venv env
+
+Activate env
+- on macos and linux
+```
+source env/bin/activate 
+```
+- on windows
+```
+env\Scripts\activate.bat
+```
+
+make sure that you install all the requirements by run this command, its can be whether pip, pip3
+```
+pip install -r requirements.txt
+```
+Create a new database by running migrations the database.
+```
+python3 manage.py migrate
+```
+In this time you can run server by use command 
+```
+python manage.py runserver
+```
+but you have python3 use command
+```
+python3 manage.py runserver
+```
+next you go to `http://127.0.0.1:8000/` or `localhost:8000/` for application.
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
@@ -21,3 +63,4 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 ## Code Review
 - [Code Review Docs](https://docs.google.com/document/d/1RFhCYMuJuZ3QQoBI4gucfbdxvh8CyPY8-IAQZVW8HFE/edit#) and [Code Review Wiki](../../wiki/Code%20Review)
 - [Code Review Summary](https://docs.google.com/document/d/1nu7uUv_mmL0KtEfbb8aDok8sVXAqvJvsyUHIno5fWPY/edit)
+

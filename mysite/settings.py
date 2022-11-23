@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'Hello_Buddy.apps.HelloBuddyConfig',
     'bootstrap_datepicker_plus',
-    
     'django.contrib.sites',
 	# Django-allauth apps
     'allauth',
@@ -47,9 +46,14 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Social/third party login provider for 
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github'
+    'allauth.socialaccount.providers.github',
+    
+    'crispy_forms',
+    'bootstrap4',
+    
 
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -111,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -144,6 +148,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+# LOGIN_REDIRECT_URL = "home"
+
 
 
 AUTHENTICATION_BACKENDS = [
@@ -159,6 +165,10 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
+
+
+# CRISPY_TEMPLATE
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ACCOUNT_FORMS = {
     'login': 'allauth.account.forms.LoginForm',
