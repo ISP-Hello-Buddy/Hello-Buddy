@@ -32,7 +32,7 @@ class Event(models.Model):
                             null=True, blank=True, choices=category)
     image_upload = models.ImageField(null=True,
                                      blank=True, upload_to='event/images',
-                                     default='event/images/default_i5zu2p.jpg')
+                                     default='event/images/default_e.jpg')
 
     def __str__(self):
         """Return a  string representation of the name event object."""
@@ -80,7 +80,7 @@ class ParticipantOfEvent(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
-    avatar = models.ImageField(default="profile/images/default_cwudrj.jpg",
+    avatar = models.ImageField(default="profile/images/default_ava.jpg",
                                upload_to="profile/images")
     bio = models.TextField(default='...', max_length=50)
 
