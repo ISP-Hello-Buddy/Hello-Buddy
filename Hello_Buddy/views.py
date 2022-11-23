@@ -233,20 +233,6 @@ def map(request):
         html = ""
         for mp in i:
             html += f"""
-                    <center class="thumbnail"><img id="inlineFrameExample"
-                    title="Inline Frame Example"
-                    width="250"
-                    height="200"
-                    frameborder="0" 
-                    scrolling="no"
-                    name="imgbox" 
-                    id="imgbox"
-                    {mp.event.image_upload.url}
-                    src="data:image/png;base64,{base64.b64encode(
-                        open(f'./{mp.event.image_upload.url}',
-                        'rb').read()).decode()}"
-                    >
-                </img></center>
                 <h3><center> <a href="/event/{mp.event.id}" target="_blank">
                 {mp.event}</a></center></h3>
                 <div><center> Place: {mp.address}</center> </div>
