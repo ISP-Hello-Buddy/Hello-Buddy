@@ -7,6 +7,6 @@ django-bootstrap4
 folium
 geopy
 geocoder
-
+selenium
 
 
