@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'cloudinary_storage',
     "django.contrib.staticfiles",
+    'cloudinary',
     'Hello_Buddy.apps.HelloBuddyConfig',
     'bootstrap_datepicker_plus',
     'django.contrib.sites',
@@ -157,6 +159,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Base url to serve media files
 MEDIA_URL = '/media/'
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 
 
@@ -196,4 +200,10 @@ ACCOUNT_FORMS = {
     'login': 'Hello_Buddy.forms.MyCustomLoginForm',
     'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
     'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
+}
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUND_NAME', ''),
+    'API_KEY': config('API_KEY', ''),
+    'API_SECRET': config('API_SECRET', '')
 }
