@@ -139,7 +139,7 @@ def profile_user(request):
         user_id=user)
     context = {"events": all_event,
                "joined_events": joined_events,
-               "profile": user.profile,
+               "profile": profile,
                "user_form": user_form,
                "profile_form": profile_form,
                }
