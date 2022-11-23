@@ -1,5 +1,5 @@
 {% extends 'Hello_Buddy/base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="jumbotron text-center">
@@ -14,7 +14,7 @@
 
       <div class="col-sm-3">
         <a href="#demo" data-toggle="collapse">
-        <img src="/media/profile/b.png"
+        <img src="{% static 'images/b.png'%}"
               class="img-circle person" alt="Random Name" width="255" height="255">
                   </a>
           <div id="demo" class="collapse">
