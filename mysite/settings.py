@@ -99,7 +99,7 @@ ON_HEROKU = config('LIVE', default=False)
 if ON_HEROKU:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': config('NAME_DB', ''),
             'USER': config('USER_DB', ''),
             'PASSWORD': config('PASS_DB', ''),
@@ -151,7 +151,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR,"static"),]
 
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
