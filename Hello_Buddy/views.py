@@ -229,51 +229,51 @@ def map(request):
         
         
     m = folium.Map(width=1120,height=650,location=[13.74492, 100.53378], zoom_start=9)
-    for i in list_map:
-        html = ""
-        for mp in i:
-            html += f"""
-                    <center class="thumbnail"><img id="inlineFrameExample"
-                    title="Inline Frame Example"
-                    width="250"
-                    height="200"
-                    frameborder="0" 
-                    scrolling="no"
-                    name="imgbox" 
-                    id="imgbox"
-                    {mp.event.image_upload.url}
-                    src="data:image/png;base64,{base64.b64encode(
-                        open(f'./{mp.event.image_upload.url}',
-                        'rb').read()).decode()}"
-                    >
-                </img></center>
-                <h3><center> <a href="/event/{mp.event.id}" target="_blank">
-                {mp.event}</a></center></h3>
-                <div><center> Place: {mp.address}</center> </div>
-                <div><center> </center></div>
+    # for i in list_map:
+    #     html = ""
+    #     for mp in i:
+    #         html += f"""
+    #                 <center class="thumbnail"><img id="inlineFrameExample"
+    #                 title="Inline Frame Example"
+    #                 width="250"
+    #                 height="200"
+    #                 frameborder="0" 
+    #                 scrolling="no"
+    #                 name="imgbox" 
+    #                 id="imgbox"
+    #                 {mp.event.image_upload.url}
+    #                 src="data:image/png;base64,{base64.b64encode(
+    #                     open(f'./{mp.event.image_upload.url}',
+    #                     'rb').read()).decode()}"
+    #                 >
+    #             </img></center>
+    #             <h3><center> <a href="/event/{mp.event.id}" target="_blank">
+    #             {mp.event}</a></center></h3>
+    #             <div><center> Place: {mp.address}</center> </div>
+    #             <div><center> </center></div>
                         
-                        <div><center> Date: {mp.event.date}</center> </div>
-                        <div><center> Time: {mp.event.time}</center> </div>
-                        <div><center> Participant: {mp.event.joined}/
-                        {mp.event.participant}
-                </center> </div>
-                        <div><center><progress id="project" 
-                        max="{mp.event.participant}" 
-                        value="{mp.event.joined}"> </progress>
-                </center> </div>
-                <div><center>
-                <button class="btn btn-info" type="button" 
-                onclick="window.open('/event/{mp.event.id}',
-                '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
-                target="_blank"class="button" ></a></button>
-                </div></center>
+    #                     <div><center> Date: {mp.event.date}</center> </div>
+    #                     <div><center> Time: {mp.event.time}</center> </div>
+    #                     <div><center> Participant: {mp.event.joined}/
+    #                     {mp.event.participant}
+    #             </center> </div>
+    #                     <div><center><progress id="project" 
+    #                     max="{mp.event.participant}" 
+    #                     value="{mp.event.joined}"> </progress>
+    #             </center> </div>
+    #             <div><center>
+    #             <button class="btn btn-info" type="button" 
+    #             onclick="window.open('/event/{mp.event.id}',
+    #             '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
+    #             target="_blank"class="button" ></a></button>
+    #             </div></center>
 
-            """
+    #         """
 
-        popup = folium.Popup(folium.Html(html, script=True), max_width=250)
-        folium.Marker([mp.lat, mp.lon], popup=popup,
-                    tooltip=f"(click for see detail)").add_to(m)
-    # Get HTML Representation of Map Object
+    #     popup = folium.Popup(folium.Html(html, script=True), max_width=250)
+    #     folium.Marker([mp.lat, mp.lon], popup=popup,
+    #                 tooltip=f"(click for see detail)").add_to(m)
+    # # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
     return render(request, 'Hello_Buddy/map.html', context)
