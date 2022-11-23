@@ -182,7 +182,7 @@ AUTHENTICATION_BACKENDS = [
 	  'allauth.account.auth_backends.AuthenticationBackend',
     ]
 
-if DEBUG:
+if DEBUG or ON_HEROKU:
     EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
     
 # Sets the ID of your site's URL. 
