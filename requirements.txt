@@ -11,4 +11,4 @@ mysql-connector-python
 gunicorn
 python-decouple
 whitenoise
-
+psycopg2
