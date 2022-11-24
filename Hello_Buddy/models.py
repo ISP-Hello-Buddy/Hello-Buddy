@@ -60,17 +60,17 @@ class Event(models.Model):
         
 class HostOfEvent(models.Model):
     """model for record user with their own event"""
-    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE, null=True)
     event = models.ForeignKey('Hello_Buddy.Event',
-                              on_delete=models.SET_NULL, null=True)
+                              on_delete=models.CASCADE, null=True)
 
 
 class ParticipantOfEvent(models.Model):
     """model for record user with joined event"""
     user = models.ForeignKey('auth.user',
-                             on_delete=models.SET_NULL, null=True)
+                             on_delete=models.CASCADE, null=True)
     event = models.ForeignKey('Hello_Buddy.Event',
-                              on_delete=models.SET_NULL, null=True)
+                              on_delete=models.CASCADE, null=True)
 
     def check_par(self):
         """ To check participant and use for create button. """

@@ -7,9 +7,11 @@ django-bootstrap4
 folium
 geopy
 geocoder
-mysql-connector-python
 gunicorn
 python-decouple
 whitenoise
 psycopg2
 django-cloudinary-storage
+
+
+
