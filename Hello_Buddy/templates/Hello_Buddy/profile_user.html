@@ -85,8 +85,12 @@
 
                                 </div>
                             </div>
-
-                            <h4>{{ i.event.name }}</h4>
+                            
+                            {% if i.event.is_active %}
+                            <i><span class="glyphicon glyphicon-stop" style='color: green;'></span><h4>{{ i.event.name }}</h4></i>
+                            {%else%}
+                            <i><span class="glyphicon glyphicon-stop" style='color: red;'></span><h4>{{ i.event.name }}</h4></i>
+                            {%endif%}
                             <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
                             <nav></nav>
                             <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
