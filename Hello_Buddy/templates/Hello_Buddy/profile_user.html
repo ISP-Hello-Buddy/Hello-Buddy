@@ -1,6 +1,12 @@
 {% extends 'Hello_Buddy/base.html' %}
 
 {% block content %}
+<style>
+    .img-responsive {
+        max-width: 120px;
+        height: 100px;
+    }
+</style>
 
 <div class="container" style="margin-top:100px">
     <!--profile-->
@@ -62,29 +68,7 @@
                             <img src="{{i.event.image_upload.url}}" alt=""
                                  class="img-rounded img-responsive" width="142" height="98"/>
                         </div>
-                        <div class="col-sm-8">
-                            <!-- close button trigger modal -->
-                            <div class="row">
-                                <div class="col-sm-9"></div>
-                                <div class="col-sm-3">
-
-                                    <!--    edit dropdown button   -->
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#" data-toggle="modal"
-                                                   data-target="#createModal">Delete</a></li>
-                                            <li><a href="#">Edit</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#">Close</a></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
+                        <div class="col-sm-7">
                             
                             {% if i.event.is_active %}
                             <i><h4><span class="glyphicon glyphicon-stop" style='color: green;'></span> {{ i.event.name }}</h4></i>
@@ -96,6 +80,25 @@
                             <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
                             <nav></nav>
                             <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
+                        </div>
+                        <div class="col-sm-1">
+                                <!-- close button trigger modal -->
+    
+                                        <!--    edit dropdown button   -->
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#" data-toggle="modal"
+                                                       data-target="#createModal">Delete</a></li>
+                                                <li><a href="#">Edit</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#">Close</a></li>
+                                            </ul>
+                                         
+                                        </div>
                         </div>
                     </div>
                 </div>
