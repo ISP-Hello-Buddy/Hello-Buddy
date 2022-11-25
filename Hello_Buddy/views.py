@@ -1,5 +1,4 @@
 import base64
-
 import folium
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -13,10 +12,13 @@ from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile , K
 
 def home(request):
     """Display all event on home page"""
-    user = request.user
-    card =  Key_card.objects.get(user_id=user)
     all_event = Event.objects.all()
-    context= {"events": all_event,"key": card.Key_card}
+    if request.user.is_authenticated:
+        user = request.user
+        card =  Key_card.objects.get(user_id=user)
+        context= {"events": all_event,"key": card.Key_card}
+    else:
+        context = {"events": all_event}
     return render(request,
                   "Hello_Buddy/home.html",
                   context=context)
@@ -24,9 +26,12 @@ def home(request):
 
 def about_us(request):
     """Display information about us"""
-    user = request.user
-    card =  Key_card.objects.get(user_id=user)
-    context = {"key": card.Key_card}
+    if request.user.is_authenticated:
+        user = request.user
+        card =  Key_card.objects.get(user_id=user)
+        context = {"key": card.Key_card}
+    else :
+        context={}
     return render(request,
                   "Hello_Buddy/aboutus.html",context= context)
 
@@ -39,9 +44,13 @@ def reverse_to_home(request):
 def events_by_category(request, event_category):
     """Sort event by type"""
     sorted_event = Event.objects.filter(type=event_category)
-    user = request.user
-    card =  Key_card.objects.get(user_id=user)
-    context = {"events_in_category": sorted_event,"key": card.Key_card}
+    
+    if request.user.is_authenticated:
+        user = request.user
+        card =  Key_card.objects.get(user_id=user)
+        context = {"events_in_category": sorted_event,"key": card.Key_card}
+    else:
+        context = {"events_in_category": sorted_event,}
     return render(request,
                   "Hello_Buddy/event_by_category.html",
                   context)
@@ -49,12 +58,12 @@ def events_by_category(request, event_category):
 @login_required
 def create(request):
     # get user object
-    user = request.user
-    card =  Key_card.objects.get(user_id=user)
+    
     # check user login
     if not user.is_authenticated:
         return redirect('login')
     
+    user = request.user
     card =  Key_card.objects.get(user_id=user)
 
     # create event and keep into database
@@ -307,8 +316,10 @@ def map(request):
                     tooltip=f"(click for see detail)").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
-    user = request.user
-    card =  Key_card.objects.get(user_id=user)
-
-    context = {'m': m,"key": card.Key_card }
+    if request.user.is_authenticated:
+        user = request.user
+        card =  Key_card.objects.get(user_id=user)
+        context = {'m': m,"key": card.Key_card }
+    else:
+        context = {'m': m,}
     return render(request, 'Hello_Buddy/map.html', context)
