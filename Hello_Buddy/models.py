@@ -76,7 +76,10 @@ class ParticipantOfEvent(models.Model):
         """ To check participant and use for create button. """
         return True
 
-
+class Key_card(models.Model):
+    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    num_key = models.IntegerField(name="Key_card",on_delete=models.CASCADE, null=True,default="3")
+    
 class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
