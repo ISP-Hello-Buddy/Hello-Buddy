@@ -120,7 +120,11 @@
               {%elif par.check_par %}
               <button type="submit" name="cancel" class="btn btn-danger">CANCEL</button>
               {% else %}
-              <button type="submit" name = "join" class="btn btn-success">JOIN</button>
+                {%if key ==  0%} 
+                  <button type="submit" name = "join"  disabled class="btn btn-danger">NOT ENOUGH KEYCARDS</button>
+                {% else %}
+                  <button type="submit" name = "join" class="btn btn-success">JOIN</button>
+                {%endif%}
               {%endif%}
             {%else%}
             <button type="submit" name="YOU ARE THE OWNER." disabled>YOU ARE THE OWNER.</button>
