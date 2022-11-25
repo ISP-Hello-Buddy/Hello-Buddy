@@ -9,7 +9,7 @@ git clone https://github.com/ISP-Hello-Buddy/Hello-Buddy.git
 ```
 go to project directory
 ```
-cd Hallo-Buddy
+cd Hello-Buddy
 ```
 
 Start the virtual environment.
