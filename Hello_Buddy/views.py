@@ -180,8 +180,10 @@ def event(request, event_id):
     for i in host:
         if i.user == user and i.event.name == event.name:
             event.status = False
-    key_card = Key_card.objects.get(user_id=user)
-    print(key_card)
+    
+    
+    card =  Key_card.objects.get(user_id=user)
+    
     # check that participant already join or not
     try:
         existing_par = ParticipantOfEvent.objects.get(event_id=id,
@@ -190,8 +192,8 @@ def event(request, event_id):
         # new participant
 
         context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
-
-        if request.method == "POST":
+        print("Joint of event")
+        if request.method == "POST" and card.status_card():
             person = ParticipantOfEvent()
             person.event = Event.objects.filter(id=event_id).first()
             person.user = user
@@ -199,12 +201,14 @@ def event(request, event_id):
 
             Event.objects.filter(id=event_id).update(joined=F("joined") + 1)
             event = Event.objects.filter(id=event_id).first()
-
-
+            
+            card.Key_card -= 1
+            card.save()
 
             context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m}
     else:
         # already join
+        print("Cancelled event")
         par = ParticipantOfEvent.objects.filter(event_id=id,
                                                 user_id=user).first()
 
@@ -214,6 +218,10 @@ def event(request, event_id):
 
             Event.objects.filter(id=event_id).update(joined=F("joined") - 1)
             event = Event.objects.filter(id=event_id).first()
+            
+            if not card.full():
+                card.Key_card += 1
+                card.save()
 
 
             context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
