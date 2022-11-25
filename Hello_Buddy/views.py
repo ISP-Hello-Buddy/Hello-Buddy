@@ -167,7 +167,7 @@ def event(request, event_id):
 
     # print(all_event)
     mp = Mapping.objects.filter(id=event_id).first()
-    print(mp.lon)
+    # print(mp.lon)
     # m = folium.Map(width=325,height=195,location=[mp.lat, mp.lon], zoom_start=16) # class center: idth: 50%;
     m = folium.Map(width=425,height=250,location=[mp.lat, mp.lon], zoom_start=16)
     folium.Marker([mp.lat, mp.lon],popup=mp.address).add_to(m)

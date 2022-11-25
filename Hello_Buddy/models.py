@@ -3,13 +3,16 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 from geopy.geocoders import Nominatim
-
 from django.utils import timezone
+from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver 
 
-
-# Create your models here.
-
+@receiver(post_save, sender=User)
+def create_user_key_card(sender, instance, created, **kwargs):
+    if created:
+        Key_card.objects.create(user=instance)
 
 class Event(models.Model):
     """model for each event"""
@@ -78,7 +81,16 @@ class ParticipantOfEvent(models.Model):
 
 class Key_card(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
-    num_key = models.IntegerField(name="Key_card",on_delete=models.CASCADE, null=True,default="3")
+    num_key = models.IntegerField(name="Key_card", null=True,default=3)
+    
+    def status_card(self):
+        """Check status card of user"""
+        return float(self.num_key) > 0
+            
+        
+    def __str__(self):
+        """Return a  string representation of the name key card object."""
+        return self.num_key
     
 class Profile(models.Model):
     user = models.OneToOneField(User,
