@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event, Profile
+from .models import Event, Profile ,Key_card
 from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
 from django.contrib.auth.models import User
 from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
@@ -30,8 +30,13 @@ class MyCustomLoginForm(LoginForm):
         
 class MyCustomResetPasswordForm(ResetPasswordForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', "placeholder ": "Email"}))
-
-
+class KeycardForm(forms.ModelForm):
+    class Meta:
+        model = Key_card
+        fields = [
+            "user",
+            "Key_card",
+        ]
 class CreateEventForm(forms.ModelForm):
     date = forms.DateField(required=True,
                            label="Date",

@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from geopy.geocoders import Nominatim
 
 from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
-from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
+from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile , Key_card
 
 
 def home(request):
@@ -180,7 +180,8 @@ def event(request, event_id):
     for i in host:
         if i.user == user and i.event.name == event.name:
             event.status = False
-
+    key_card = Key_card.objects.get(user_id=user)
+    print(key_card)
     # check that participant already join or not
     try:
         existing_par = ParticipantOfEvent.objects.get(event_id=id,

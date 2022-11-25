@@ -85,13 +85,12 @@ class Key_card(models.Model):
     
     def status_card(self):
         """Check status card of user"""
-        return float(self.num_key) > 0
+        return int(self.num_key) > 0
             
         
     def __str__(self):
         """Return a  string representation of the name key card object."""
-        return self.num_key
-    
+        return str(self.Key_card)
 class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
