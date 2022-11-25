@@ -123,7 +123,7 @@
             <a class="navbar-brand" style='color:black' href="#">Hello Buddy</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="{% url 'home'%}">Home</a></li>
+            <li ><a href="{% url 'home'%}"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category <span
                     class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -140,7 +140,25 @@
         </ul>
         <!-- when login -->
         {% if user.is_authenticated %}
+      <script>    
+        $(".my-tooltip").tooltip();
+      </script>    
         <ul class="nav navbar-nav navbar-right">
+          {% if key == 0 %}
+          <li>
+            <a>
+              <span class="glyphicon glyphicon-alert my-tooltip"  style="color: #D0342C "></span> {{ key }} / 3
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a>
+              <span class="glyphicon glyphicon-ok-sign my-tooltip" title="You have only 1 Key Card" style="color:#2112ebd"></span> {{ key }} / 3
+            </a>
+          </li>
+          {% endif %}
+
+          <li>
             <li>
                 <a
                         href="{% url 'profile-user'%}"

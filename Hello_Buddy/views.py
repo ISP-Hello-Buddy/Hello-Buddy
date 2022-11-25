@@ -13,16 +13,22 @@ from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile , K
 
 def home(request):
     """Display all event on home page"""
+    user = request.user
+    card =  Key_card.objects.get(user_id=user)
     all_event = Event.objects.all()
+    context= {"events": all_event,"key": card.Key_card}
     return render(request,
                   "Hello_Buddy/home.html",
-                  context={"events": all_event})
+                  context=context)
 
 
 def about_us(request):
     """Display information about us"""
+    user = request.user
+    card =  Key_card.objects.get(user_id=user)
+    context = {"key": card.Key_card}
     return render(request,
-                  "Hello_Buddy/aboutus.html")
+                  "Hello_Buddy/aboutus.html",context= context)
 
 
 def reverse_to_home(request):
@@ -33,7 +39,9 @@ def reverse_to_home(request):
 def events_by_category(request, event_category):
     """Sort event by type"""
     sorted_event = Event.objects.filter(type=event_category)
-    context = {"events_in_category": sorted_event}
+    user = request.user
+    card =  Key_card.objects.get(user_id=user)
+    context = {"events_in_category": sorted_event,"key": card.Key_card}
     return render(request,
                   "Hello_Buddy/event_by_category.html",
                   context)
@@ -42,9 +50,12 @@ def events_by_category(request, event_category):
 def create(request):
     # get user object
     user = request.user
+    card =  Key_card.objects.get(user_id=user)
     # check user login
     if not user.is_authenticated:
         return redirect('login')
+    
+    card =  Key_card.objects.get(user_id=user)
 
     # create event and keep into database
     if request.method == 'POST':
@@ -59,7 +70,7 @@ def create(request):
                     form = CreateEventForm()
                     messages.error(request,
                                    "This location has not on the map location")  # add text error
-                    context = {'form': form}
+                    context = {'form': form,"key": card.Key_card}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
                 # lst_address = [loca.address for loca in mapping]
@@ -98,7 +109,7 @@ def create(request):
                 messages.warning(request, f"Location is {loca}")
     else:
         form = CreateEventForm()
-    context = {'form': form}
+    context = {'form': form,"key": card.Key_card}
     return render(request, 'Hello_Buddy/create_event.html', context)
 
 
@@ -110,6 +121,7 @@ def profile_user(request):
     """
 
     # Create Profile model
+    
     try:
         profile = request.user.profile
     except Profile.DoesNotExist:
@@ -139,16 +151,20 @@ def profile_user(request):
         profile_form = UpdateProfileForm(
             instance=request.user.profile)
 
+
     user = request.user
+    card =  Key_card.objects.get(user_id=user)
     all_event = HostOfEvent.objects.filter(
         user_id=user)  # Event objects
     joined_events = ParticipantOfEvent.objects.filter(
         user_id=user)
+    
     context = {"events": all_event,
                "joined_events": joined_events,
                "profile": user.profile,
                "user_form": user_form,
                "profile_form": profile_form,
+                "key": card.Key_card
                }
     return render(request, "Hello_Buddy/profile_user.html",
                   context=context)
@@ -291,5 +307,8 @@ def map(request):
                     tooltip=f"(click for see detail)").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
-    context = {'m': m, }
+    user = request.user
+    card =  Key_card.objects.get(user_id=user)
+
+    context = {'m': m,"key": card.Key_card }
     return render(request, 'Hello_Buddy/map.html', context)
