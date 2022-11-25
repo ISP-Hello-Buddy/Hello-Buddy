@@ -191,7 +191,7 @@ def event(request, event_id):
     except ParticipantOfEvent.DoesNotExist:
         # new participant
 
-        context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
+        context = {"event": event, "events": all_event, "pars": all_par, "m" : m , "key": card.Key_card}
         print("Joint of event")
         if request.method == "POST" and card.status_card():
             person = ParticipantOfEvent()
@@ -205,14 +205,14 @@ def event(request, event_id):
             card.Key_card -= 1
             card.save()
 
-            context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m}
+            context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m, "key": card.Key_card}
     else:
         # already join
         print("Cancelled event")
         par = ParticipantOfEvent.objects.filter(event_id=id,
                                                 user_id=user).first()
 
-        context = {"event": event, "par": par, "events": all_event, "pars": all_par, "m" : m}
+        context = {"event": event, "par": par, "events": all_event, "pars": all_par, "m" : m, "key": card.Key_card}
         if request.method == "POST":
             existing_par.delete()
 
@@ -224,7 +224,7 @@ def event(request, event_id):
                 card.save()
 
 
-            context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
+            context = {"event": event, "events": all_event, "pars": all_par, "m" : m, "key": card.Key_card}
 
 
     return render(request, "Hello_Buddy/event.html", context)
