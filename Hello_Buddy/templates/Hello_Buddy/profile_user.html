@@ -39,7 +39,7 @@
                 <div class="well well-sm">
                     <div class="row">
 
-                        <!-- Modal -->
+                        <!-- Modal for delete -->
                         <div class="modal fade" id="createModal" data-backdrop="false">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -57,6 +57,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal for edit -->
+                        <div class="modal fade" id="createModal2" data-backdrop="false">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Edit</h4>
+                                    </div>
+                                    <div class="modal-body">body</div>
+                                    <div class="modal-footer">
+                                        <button name="delete" value="{{i.event.id}}" type="submit"
+                                                class="btn btn-default">Save
+                                        </button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!--event photo-->
                         <div class="col-sm-4">
                             <img src="{{i.event.image_upload.url}}" alt=""
@@ -77,15 +97,16 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="#" data-toggle="modal"
                                                    data-target="#createModal">Delete</a></li>
-                                            <li><a href="#">Edit</a></li>
+                                            <li><a href="#" data-toggle="modal"
+                                                   data-target="#createModal2">Edit</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="#">Close</a></li>
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
 
+                            <!--create event-->
                             <h4>{{ i.event.name }}</h4>
                             <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
                             <nav></nav>
