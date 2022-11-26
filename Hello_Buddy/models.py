@@ -55,12 +55,14 @@ class Event(models.Model):
         date = now.date()
         time = now.time()
         return date < self.date or (date == self.date and time < self.time)
-        
+    
+    def get_absolute_url(self):     
+        return reverse('event_detail', kwargs={'pk': self.pk})
 
     def get_url(self):
         """ Come to main your event """
         return reverse("event",kwargs={"id" : self.id})
-        
+    
 class HostOfEvent(models.Model):
     """model for record user with their own event"""
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE, null=True)

@@ -159,12 +159,12 @@ AUTHENTICATION_BACKENDS = [
     ]
 
 if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default="")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default="")
+    EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+    # EMAIL_HOST = "smtp.gmail.com"
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default="")
+    # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default="")
     
 # Sets the ID of your site's URL. 
 SITE_ID = 1
