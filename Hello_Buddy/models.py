@@ -76,11 +76,26 @@ class ParticipantOfEvent(models.Model):
                              on_delete=models.CASCADE, null=True)
     event = models.ForeignKey('Hello_Buddy.Event',
                               on_delete=models.CASCADE, null=True)
-
+    get_key = models.BooleanField(null=True)
+    
+    def check_get_key(self):
+        """check if user get key or not when event is cloased"""
+        if self.get_keys:
+            return True
+        return False
+    
+    def get_keys(self):
+        """get key of event"""
+        if self.check_get_key():
+            return Key_card.objects.filter(user=self.user)
+        
     def check_par(self):
         """ To check participant and use for create button. """
         return True
-
+    
+    def __str__(self):
+        return f"user : {self.user} : event : {self.event}"
+    
 class Key_card(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
     num_key = models.IntegerField(name="Key_card", null=True,default=3)
@@ -97,10 +112,7 @@ class Key_card(models.Model):
         """Return a  string representation of the name key card object."""
         # return str(self.Key_card)
         return str(self.user.username)
-    
-    
-    
-    
+        
 class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)

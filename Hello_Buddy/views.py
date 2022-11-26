@@ -10,28 +10,31 @@ from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
 from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile, Key_card
 
 def check_active_card(request):
-    # all_event = Event.objects.all()
-    # print("rewrtwr ")
-    # print(all_event.objects.get(event_id= 3).first())
-    # print(Event.objects.get(id= 3))
-    
-    # print(Event.objects.get(id=7),Event.objects.get(id=7).is_active())
-    
-    # for event_ in all_event:
-    #     if not event_.is_active():
-    #         try:
-    #             parti = ParticipantOfEvent.objects.get(event=event_)
-    #             print(parti)
-                
-    #             for i in parti:
-    #                 print(i)
-    #                 card = Key_card.objects.get(user_id=i.user)
-    #                 print("rwddwwddwdwdwdwdwdwdwd")
-    #                 if not card.full():
-    #                     card.Key_card += 1
-    #                     card.save()
-    #         except:
-    #             continue
+    all_event = Event.objects.all()
+    # print(Event.objects.filter(id=7).first().is_active(),Event.objects.get(id=7).is_active())
+    # print(Event.objects.filter(id=7).first(),Event.objects.get(id=7))
+    for event_ in all_event:
+        if not event_.is_active():
+            try:
+                parti = ParticipantOfEvent.objects.get(event=event_)
+                for i in parti:
+                    card = Key_card.objects.filter(user_id=i.user.id).first()
+                    print("ffwefwf")
+                    
+                    if not card.full():
+                        card.Key_card += 1
+                        print(i.get_key) 
+                        print("ffwefwf")
+                        
+                        if i.get_key: 
+                            print("ffwefwf")
+                            card.Key_card += 1
+                            i.get_key = False
+                            i.save()
+                            card.save()
+                            print(i.get_key) 
+            except:
+                continue
     pass
 def home(request):
     """Display all event on home page"""
@@ -73,7 +76,6 @@ def about_us(request):
         context = {}
     return render(request,
                   "Hello_Buddy/aboutus.html", context=context)
-
 
 def reverse_to_home(request):
     """Redirect to homepage"""
@@ -253,9 +255,10 @@ def event(request, event_id):
     card = Key_card.objects.get(user_id=user)
 
     # check that participant already join or not
+    print(event_id)
+    
     try:
-        existing_par = ParticipantOfEvent.objects.get(event_id=id,
-                                                      user_id=user)
+        existing_par = ParticipantOfEvent.objects.get(event_id=id,user_id=user)
     except ParticipantOfEvent.DoesNotExist:
         # new participant
 
@@ -263,9 +266,18 @@ def event(request, event_id):
                    "pars": all_par, "m": m, "key": card.Key_card}
         # print("Joint of event")
         if request.method == "POST" and card.status_card():
-            person = ParticipantOfEvent()
+            # create a new participant (only one)
+            person = ParticipantOfEvent() #
+            # print(event_id)
+            # print(person.objects.filter(user_id = user).first())
+            # print((person.objects.filter(user_id = user).first)())
+            # print(type(person.objects.filter(user_id = user).first)())
+            
+            # set the new participant
             person.event = Event.objects.filter(id=event_id).first()
             person.user = user
+            person.get_key = True
+            # print(person)
             person.save()
 
             Event.objects.filter(id=event_id).update(joined=F("joined") + 1)
