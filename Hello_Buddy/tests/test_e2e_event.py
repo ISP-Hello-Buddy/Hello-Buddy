@@ -1,13 +1,10 @@
 from django.test import Client
 from Hello_Buddy.views import map
-from Hello_Buddy.models import Mapping, Event
 from .temp import new_user
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.urls import resolve
 
 
 class TestCreateEvent(StaticLiveServerTestCase):
@@ -27,10 +24,10 @@ class TestCreateEvent(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # options = ChromeOptions()
-        # options.add_argument("--headless")
-        cls.browser = Chrome()
-        # cls.browser.get(cls.live_server_url)
+        options = ChromeOptions()
+        options.add_argument("--headless")
+        cls.browser = Chrome(options=options)
+        cls.browser.get(cls.live_server_url)
 
     def login_id1(self):
         self.client.login(username=self.username1, password=self.password1)
