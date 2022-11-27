@@ -82,7 +82,6 @@ class EventModelTest(BaseSet):
             name='Badminton',
             place='Kaset',
             participant=10,
-            joined=10,
             date=(datetime.datetime.today() -
                   datetime.timedelta(days=1)).date(),
             time=datetime.datetime.today().time(),
@@ -92,8 +91,8 @@ class EventModelTest(BaseSet):
             name='Badminton',
             place='Kaset',
             participant=10,
-            joined=10,
-            date=datetime.datetime.today().date(),
+            date=(datetime.datetime.today() -
+                  datetime.timedelta(days=1)).date(),
             time=(datetime.datetime.today() -
                   datetime.timedelta(hours=1)).time(),
         )
