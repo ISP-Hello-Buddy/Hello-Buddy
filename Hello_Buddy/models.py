@@ -3,13 +3,17 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 from geopy.geocoders import Nominatim
-
 from django.utils import timezone
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
-# Create your models here.
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 class Event(models.Model):
     """model for each event"""

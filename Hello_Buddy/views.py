@@ -62,12 +62,6 @@ def create(request):
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
-                # lst_address = [loca.address for loca in mapping]
-                # if location.address in lst_address:
-                #     context = {'form': form}
-                #     messages.error(request, "This location is used")
-                #     return render(request,
-                #                   'Hello_Buddy/create_event.html', context=context)
 
                 event = Event()
                 event.name = data['name']
@@ -110,10 +104,7 @@ def profile_user(request):
     """
 
     # Create Profile model
-    try:
-        profile = request.user.profile
-    except Profile.DoesNotExist:
-        profile = Profile(user=request.user)
+    profile = request.user.profile
 
     if request.method == "POST":
         if 'delete' in request.POST:
@@ -165,10 +156,7 @@ def event(request, event_id):
     event = Event.objects.filter(id=event_id).first()
     all_event = Event.objects.all()
 
-    # print(all_event)
     mp = Mapping.objects.filter(id=event_id).first()
-    print(mp.lon)
-    # m = folium.Map(width=325,height=195,location=[mp.lat, mp.lon], zoom_start=16) # class center: idth: 50%;
     m = folium.Map(width=425,height=250,location=[mp.lat, mp.lon], zoom_start=16)
     folium.Marker([mp.lat, mp.lon],popup=mp.address).add_to(m)
     m = m._repr_html_()
