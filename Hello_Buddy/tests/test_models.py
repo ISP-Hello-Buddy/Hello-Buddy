@@ -242,29 +242,17 @@ class ProfileModelTest(BaseSet):
 
     def test_create_user_profie(self):
         """ test create user profile"""
-        user = Profile.objects.create(
-            user=self.user1,
-            bio='HELLO'
-        )
+        # Auto create profile when user is created
+        user = Profile.objects.filter(id=1).first()
         self.assertEqual(user.user.username, 'breeze')
-        self.assertEqual(user.avatar, "profile/images/default.jpg")
-        self.assertEqual(user.bio, 'HELLO')
-
-    def test_null_field_of_model(self):
-        """ test null field of madel"""
-        user = Profile.objects.create(
-            user=self.user1
-        )
-        # default of user profile
         self.assertEqual(user.avatar, "profile/images/default.jpg")
         self.assertEqual(user.bio, '...')
 
     def test_delete_user(self):
         """ test delete user"""
-        Profile.objects.create(
-            user=self.user1
-        )
 
-        self.assertEqual(len(Profile.objects.all()), 1)
+        self.assertEqual(len(Profile.objects.all()), 2)
         self.user1.delete()
+        self.assertEqual(len(Profile.objects.all()), 1)
+        self.user2.delete()
         self.assertEqual(len(Profile.objects.all()), 0)
