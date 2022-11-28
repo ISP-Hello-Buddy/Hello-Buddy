@@ -8,6 +8,22 @@
     }
 </style>
 
+{% for message in messages %}
+{% if 'success' in message.tags %}
+<script type="text/javascript"> 
+  var message = "{{ message }}"
+</script>
+<script>
+Swal.fire({
+  icon: 'success',
+  title: message,
+  showConfirmButton: false,
+  timer: 2000
+})
+</script>
+{%endif%}
+{%endfor%}
+
 <div class="container" style="margin-top:100px">
     <!--profile-->
     <form action='{% url "profile-user" %}' method='POST' enctype="multipart/form-data">
