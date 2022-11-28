@@ -1,4 +1,9 @@
+<p align="center"><img src='https://user-images.githubusercontent.com/92836354/204365674-a3b8e4c0-39a0-46d3-a4c3-9cf105bd6f2a.png' width=300></p>
+
+
 # Hello-Buddy
+[![Django CI](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml/badge.svg)](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml)
+
 a web application for those who need some companion.
 
 ## How to install 
