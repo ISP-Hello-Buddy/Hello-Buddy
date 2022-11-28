@@ -58,9 +58,27 @@
   </style>
 </head>
 
+
 <div class="container" style="margin-top: 100px;margin-bottom: 100px;">
-  <div class="container-fluid bg-grey">
-    <div class="row">
+
+  <div class="container-fluid text-center bg-grey">
+    <div class="row text-center">
+      {% for message in messages %}
+      {% if 'success' in message.tags %}
+      <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+      {% else %}
+      <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+      {% endif %}
+      {% endfor %}
+      <script>
+        //close alert after 3 seconds
+        window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+          });
+        }, 3000);
+      </script> 
+
       <div class="col-sm-2">
       </div>
       <div class="col-sm-8">
@@ -69,7 +87,7 @@
               {% csrf_token %}
               <div class="container center">
                 {{ m |safe }}
-                <p>Event created by <i class="fa fa-user" aria-hidden="true"></i>  {{user.username}}</p>
+                <p>Event created by <i class="fa fa-user" aria-hidden="true"></i>  {{host.username}}</p>
                 </div>
           </div>
           <div class='col-sm-4'>

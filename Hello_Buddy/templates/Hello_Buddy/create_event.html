@@ -5,6 +5,11 @@
 <div class='container'>
     <div class="container-fluid text-center bg-grey">
       <div class="row text-center">
+        {% for message in messages %}
+        {% if 'info' in message.tags %}
+        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+        {% endif %}
+      {% endfor %}
 
       <script>
         //close alert after 3 seconds
@@ -32,9 +37,10 @@
     <!-- {{form.place.label_tag}} -->
     {{form.place | as_crispy_field }}
     {% for message in messages %}
-        {% if 'success' in message.tags %}
+        {% if 'error' in message.tags %}
         <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-        {% else %}
+        {% endif %}
+        {% if 'warning' in message.tags %}
         <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
         {% endif %}
       {% endfor %}
@@ -77,5 +83,13 @@
     <button type='submit' name="create_event" class="btn btn-primary">SUBMIT</button>
 </div>
 </form>
+<script>
+    //close alert after 3 seconds
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+      });
+    }, 3000);
+  </script> 
 
 {% endblock %}

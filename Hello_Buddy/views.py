@@ -11,6 +11,22 @@ from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
 from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
 
 
+def check_date(user, date, type):
+    """ To check date that equal or not """
+    try:
+        if type == 'parti':
+            participant = ParticipantOfEvent.objects.filter(user_id=user)
+            for i in participant:
+                if i.event.date == date:
+                    return True
+        else:
+            host = HostOfEvent.objects.filter(user_id=user)
+            for i in host:
+                if i.event.date == date:
+                    return True
+    except:
+        return False
+
 def home(request):
     """Display all event on home page"""
     all_event = Event.objects.all()
@@ -57,12 +73,20 @@ def create(request):
                 location = nomi.geocode(data['place'])
                 if not location:
                     form = CreateEventForm()
-                    messages.error(request,
+                    messages.warning(request,
                                    "This location has not on the map location")  # add text error
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
 
+                if check_date(user, data['date'], 'host'):
+                    messages.info(request, 'WARNING')
+                    messages.info(request, 'You are allow to create 1 event per day.')
+                    messages.info(request, 'Choose another day to create event')
+                    context = {'form': form}
+                    return render(request,
+                                  'Hello_Buddy/create_event.html', context=context)
+                    
                 event = Event()
                 event.name = data['name']
                 event.place = data['place']
@@ -177,9 +201,16 @@ def event(request, event_id):
     except ParticipantOfEvent.DoesNotExist:
         # new participant
 
-        context = {"event": event, "events": all_event, "pars": all_par, "m" : m, 'user': hostevent.user}
+        context = {"event": event, "events": all_event, "pars": all_par, "m" : m, 'host': hostevent.user}
 
+        # join click
         if request.method == "POST":
+            if check_date(user, event.date, 'parti'):
+                messages.info(request, "You are allow to join 1 event per day.")
+                messages.info(request, 'Choose another event to join.')
+                context = {"event": event, "events": all_event, "pars": all_par, "m" : m, 'host': hostevent.user}
+                return render(request, "Hello_Buddy/event.html", context)
+            
             person = ParticipantOfEvent()
             person.event = Event.objects.filter(id=event_id).first()
             person.user = user
@@ -188,23 +219,22 @@ def event(request, event_id):
             Event.objects.filter(id=event_id).update(joined=F("joined") + 1)
             event = Event.objects.filter(id=event_id).first()
 
-
-
-            context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m, 'user': hostevent.user}
+            messages.success(request, f"You already join {event.name} event.")
+            context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m, 'host': hostevent.user}
     else:
         # already join
         par = ParticipantOfEvent.objects.filter(event_id=id,
                                                 user_id=user).first()
 
-        context = {"event": event, "par": par, "events": all_event, "pars": all_par, "m" : m, 'user': hostevent.user}
+        context = {"event": event, "par": par, "events": all_event, "pars": all_par, "m" : m, 'host': hostevent.user}
         if request.method == "POST":
             existing_par.delete()
 
             Event.objects.filter(id=event_id).update(joined=F("joined") - 1)
             event = Event.objects.filter(id=event_id).first()
 
-
-            context = {"event": event, "events": all_event, "pars": all_par, "m" : m, 'user': hostevent.user}
+            messages.success(request, f"You already cancel {event.name} event.")
+            context = {"event": event, "events": all_event, "pars": all_par, "m" : m, 'host': hostevent.user}
 
 
     return render(request, "Hello_Buddy/event.html", context)

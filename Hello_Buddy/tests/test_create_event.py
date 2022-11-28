@@ -64,12 +64,28 @@ class CreateEventTest(TestCase):
                      datetime.timedelta(hours=1)).time(),
             'create_event': ''
         }
+        
+        create_event2 = {
+            'name': 'Badminton2',
+            'place': 'Kaset',
+            'participant': 10,
+            'joined': 10,
+            'date': (datetime.datetime.today() + datetime.timedelta(days=1)).date(),
+            'time': (datetime.datetime.today() +
+                     datetime.timedelta(hours=1)).time(),
+            'create_event': ''
+        }
 
         self.client.post(self.register, self.register1)
 
         response = self.client.post(self.create_url, create_event)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/home')
+        
+        # not allow to create same day.
+        response = self.client.post(self.create_url, create_event2)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'Hello_Buddy/create_event.html')
 
         # check event that already created
         event = Event.objects.get(id=2)
