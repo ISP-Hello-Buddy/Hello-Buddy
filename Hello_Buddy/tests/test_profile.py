@@ -37,6 +37,5 @@ class ProfileUserViewTest(TestCase):
         response = self.client.post(self.profile_url, {'username': 'test123','email':'b@mail.com', 'bio':'Hello', 'save':''})
         self.assertEqual(response.status_code, 302)
         profile = Profile.objects.all().first()
-        self.assertEqual(profile.avatar, "profile/images/default.jpg")
         self.assertEqual(profile.bio, 'Hello')
         self.assertEqual(profile.user.email, 'b@mail.com')

@@ -44,7 +44,6 @@ class EventModelTest(BaseSet):
     def test_null_field(self):
         """ to test null field of the event"""
         self.assertEqual(self.event1.joined, 0)
-        self.assertEqual(self.event1.image_upload, 'event/images/default.jpg')
         self.assertEqual(self.event1.type, None)
 
     def test_full_event(self):
@@ -244,7 +243,6 @@ class ProfileModelTest(BaseSet):
         # Auto create profile when user is created
         user = Profile.objects.filter(id=1).first()
         self.assertEqual(user.user.username, 'breeze')
-        self.assertEqual(user.avatar, "profile/images/default.jpg")
         self.assertEqual(user.bio, '...')
 
     def test_delete_user(self):
