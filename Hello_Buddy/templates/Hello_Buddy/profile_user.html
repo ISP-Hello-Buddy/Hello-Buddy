@@ -72,7 +72,7 @@
                             {% if i.event.is_active %}
                             <h4><i class="fa fa-circle" aria-hidden="true" style='color: #6CEB3F;'></i> {{ i.event.name }}</h4>
                             {%else%}
-                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #FC1F1F;'></i></span> {{ i.event.name }}</h4>
+                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #FC1F1F;'></i> {{ i.event.name }}</h4>
                             {%endif%}
                             <span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}
                             <nav></nav>
@@ -124,15 +124,15 @@
                         </div>
                         <div class="col-sm-8">
                             {% if i.event.is_active %}
-                            <i><h4><span class="glyphicon glyphicon-stop" style='color: green;'></span> {{ i.event.name }}</h4></i>
+                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #6CEB3F;'></i> {{ i.event.name }}</h4>
                             {%else%}
-                            <i><h4><span class="glyphicon glyphicon-stop" style='color: red;'></span> {{ i.event.name }}</h4></i>
+                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #FC1F1F;'></i> {{ i.event.name }}</h4>
                             {%endif%}
-                            <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                            <span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}
                             <nav></nav>
-                            <i><span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}</i>
+                            <span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}
                             <nav></nav>
-                            <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
+                            <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
                     </div>
                 </div>
