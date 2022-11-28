@@ -2,7 +2,7 @@
 
 
 # Hello-Buddy
-[![Django CI](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml/badge.svg)](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml)
+[![Django CI](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml/badge.svg)](https://github.com/ISP-Hello-Buddy/Hello-Buddy/actions/workflows/django.yml) [![codecov](https://codecov.io/gh/ISP-Hello-Buddy/Hello-Buddy/branch/main/graph/badge.svg?token=CKHG7U406C)](https://codecov.io/gh/ISP-Hello-Buddy/Hello-Buddy)
 
 a web application for those who need some companion.
 
