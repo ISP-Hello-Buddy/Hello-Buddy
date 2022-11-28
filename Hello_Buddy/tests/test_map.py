@@ -127,8 +127,3 @@ class TestMap(TestCase):
         Mapping.objects.all()
         num_map_after = len(Mapping.objects.all())
         self.assertEqual(num_map_after,3)
-
-
-
-
-     

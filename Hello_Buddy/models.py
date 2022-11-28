@@ -1,15 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
 from django.urls import reverse
 from geopy.geocoders import Nominatim
-
-from django.utils import timezone
-
+import datetime
 
 
-# Create your models here.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 class Event(models.Model):
     """model for each event"""
@@ -32,7 +36,7 @@ class Event(models.Model):
                             null=True, blank=True, choices=category)
     image_upload = models.ImageField(null=True,
                                      blank=True, upload_to='event/images',
-                                     default='event/images/default.jpg')
+                                     default='event/images/default_e.jpg')
 
     def __str__(self):
         """Return a  string representation of the name event object."""
@@ -48,7 +52,7 @@ class Event(models.Model):
     
     def is_active(self):
         """ Return true if it's not yet time for the event"""
-        now = timezone.localtime()
+        now = datetime.datetime.now()
         date = now.date()
         time = now.time()
         return date < self.date or (date == self.date and time < self.time)
@@ -60,17 +64,17 @@ class Event(models.Model):
         
 class HostOfEvent(models.Model):
     """model for record user with their own event"""
-    user = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE, null=True)
     event = models.ForeignKey('Hello_Buddy.Event',
-                              on_delete=models.SET_NULL, null=True)
+                              on_delete=models.CASCADE, null=True)
 
 
 class ParticipantOfEvent(models.Model):
     """model for record user with joined event"""
     user = models.ForeignKey('auth.user',
-                             on_delete=models.SET_NULL, null=True)
+                             on_delete=models.CASCADE, null=True)
     event = models.ForeignKey('Hello_Buddy.Event',
-                              on_delete=models.SET_NULL, null=True)
+                              on_delete=models.CASCADE, null=True)
 
     def check_par(self):
         """ To check participant and use for create button. """
@@ -80,19 +84,9 @@ class ParticipantOfEvent(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
-    avatar = models.ImageField(default="profile/images/default.jpg",
+    avatar = models.ImageField(default="profile/images/default_ava.jpg",
                                upload_to="profile/images")
     bio = models.TextField(default='...', max_length=50)
-
-    # resizing images
-    def save(self, *args, **kwargs):
-        super(Profile, self).save(*args, **kwargs)
-        img = Image.open(self.avatar.path)
-
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
 
     def __str__(self):
         return self.user.username

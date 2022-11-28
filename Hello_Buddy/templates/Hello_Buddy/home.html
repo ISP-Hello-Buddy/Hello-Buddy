@@ -37,47 +37,148 @@
     height: 70%;
     margin-bottom: 10px;
   }
+
+  .person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+  }
+  .person:hover {
+    border-color: #f1f1f1;
+  }
+  .carousel-inner img {
+    -webkit-filter: grayscale(90%);
+    filter: grayscale(90%); /* make all photos black and white */ 
+    width: 100%; /* Set width to 100% */
+    margin: auto;
+  }
+  .carousel-caption h3 {
+    color: #fff !important;
+  }
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  }  
   </style>
   </head>
 
-  <div class='container' style="margin-top:100px">
-    <div class="container-fluid text-center bg-grey">
-      <div class="row text-center">
-        {% for message in messages %}
-        {% if 'success' in message.tags %}
-        <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-        {% else %}
-        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-        {% endif %}
-      {% endfor %}
-      
   
-{% for event in events %}
-{%if event.is_active %}
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+  
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="https://res.cloudinary.com/hezzrzdnb/image/upload/v1669630733/party-2_ak3ldg.jpg" alt="Los Angeles" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Party</h3>
+          <p>It's time to party!</p>
+        </div>      
+      </div>
+      
+      <div class="item">
+        <img src="https://res.cloudinary.com/hezzrzdnb/image/upload/v1669629792/movie-2_zo0qmg.jpg" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Movie</h3>
+          <p>Let's go to watch some movie!</p>
+        </div>      
+      </div>
+      
+      <div class="item">
+        <img src="https://res.cloudinary.com/hezzrzdnb/image/upload/v1669630517/players_impactheader-2_twwhub.jpg" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Sport</h3>
+          <p>It's time to exercise!</p>
+        </div>      
+      </div>
+    </div>
+  
+        
+  
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+  </div>
 
-<a href="{% url 'event' event.id %}">
-  <div class="col-sm-4">
-    <div class="thumbnail">
-      <img src="{{ event.image_upload.url }}" width = 300 height=100>
-      <h3><strong>{{event.name}}</strong></h3>
-      <p>Place: {{event.place}}</p>
+
+
+
+  <div class="container text-center" style="margin-top:50px">
+    <h3>HELLO BUDDY</h3>
+    <p><em>We love to go outside!</em></p>
+    <p>Find anothers to do the things that you love.</p>
+  </div>
+
+
+
+    <div class='container' style="margin-top:50px">
+      <div class="container-fluid text-center bg-grey">
+        <div class="row text-center">
+          {% for message in messages %}
+          {% if 'success' in message.tags %}
+                    
+          <script type="text/javascript"> 
+            var message = "{{ message }}"
+         </script>
+          <script>
+          Swal.fire({
+            icon: 'success',
+            title: message,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        </script>
+          {% comment %} <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p> {% endcomment %}
+          {% else %}
+          
+          <script type="text/javascript"> 
+            var message = "{{ message }}"
+         </script>
+          <script>
+          Swal.fire({
+            icon: 'warning',
+            title: message,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        </script>
+          {% comment %} <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p> {% endcomment %}
+          {% endif %}
+        {% endfor %}
+        
+    
+  {% for event in events %}
+  {%if event.is_active %}
+
+  <a href="{% url 'event' event.id %}">
+    <div class="col-sm-4">
+      <div class="thumbnail">
+        <img src="{{ event.image_upload.url }}" width = 300 height=100>
+        <h3><strong>{{event.name}}</strong></h3>
+        <p>Place: {{event.place}}</p>
+      </div>
+    </div>
+  </a>
+  {%endif%}
+
+  {%endfor%}
+      </div></div></div>
     </div>
   </div>
-</a>
-{%endif%}
-
-{%endfor%}
-<script>
-  //close alert after 3 seconds
-  window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-      $(this).remove();
-    });
-  }, 3000);
-</script>    
-    </div></div></div>
   </div>
-</div>
-</div>
 
 {% endblock %}

@@ -28,15 +28,16 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         width: 100%;
-        height: 280+500px;
+        height: auto;
         box-shadow: 0 0 10px 4px rgb(239,239,239);
+        margin-bottom: 45px;
       }
       .thumbnail {
         padding: 0 0 15px 0;
         border: 1px solid #ddd;
         border-radius: 4px;
         width: 100%;
-        height: auto;
+        height: 280px;
         box-shadow: 0 0 10px 4px rgb(239,239,239);
       }
       .thumbnail img {
@@ -46,89 +47,119 @@
       }
       .center {
         
-        margin: auto;
-        width: 50%;
+        margin-top: 10px;
+        width: auto;
         /* border: 3px solid #767676; */
-        padding: 10px;
+        padding: 1px;
         text-align: center;
-        box-shadow: 0 0 10px 4px rgb(239,239,239);
-        
+        {% comment %} box-shadow: 0 0 10px 4px rgb(239,239,239); {% endcomment %}
       }
+
   </style>
 </head>
 
+
 <div class="container" style="margin-top: 100px;margin-bottom: 100px;">
+
   <div class="container-fluid text-center bg-grey">
     <div class="row text-center">
-      <div class="col-sm-1">
+      {% for message in messages %}
+      {% if 'success' in message.tags %}
+      <script type="text/javascript"> 
+        var message = "{{ message }}"
+     </script>
+      <script>
+      Swal.fire({
+        icon: 'success',
+        title: message,
+        showConfirmButton: false,
+        timer: 2000
+      })
+    </script>
+      {% else %}
+      <script type="text/javascript"> 
+        var message = "{{ message }}"
+     </script>
+      <script>
+        Swal.fire({
+          icon: 'warning',
+          title: message,
+        })
+    </script>
+      {% endif %}
+      {% endfor %}
+
+      <div class="col-sm-2">
       </div>
-      <div class="col-sm-10">
+      <div class="col-sm-8">
         <div class="thumbnail-main">
-
-          <h1>{{event.name}}</h1>
-          {% csrf_token %}
-<div class="container" style="margin-top:10px;width:100%;margin-bottom: 10px;">
-  <div class="center" >
-    {{ m |safe }}
-</div >
-</div>
-          <p>Place: {{event.place}}</p>
-          
-          <p><a data-toggle="modal" data-target="#createModal"><i class="fa fa-users" aria-hidden="true"></i></a>  Participant: {{event.joined}}/{{event.participant}}</p>
-
-
-            <div class="modal fade" id="createModal" data-backdrop="false">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h4>Participant</h4>
-                      </div>
-                      {%for joined in pars%}
-                      {%if joined.event.id == event.id%}
-                      <div><i class="fa fa-user-circle" aria-hidden="true">  {{joined.user.username}}</i></div>
-                      {%endif%}
-                      {%endfor%}
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                          </button>
-                      </div>
-                  </div>
-              </div>
+          <div class='col-sm-8'>
+              {% csrf_token %}
+              <div class="container center">
+                {{ m |safe }}
+                <p>Event created by <i class="fa fa-user" aria-hidden="true"></i>  {{host.username}}</p>
+                </div>
           </div>
+          <div class='col-sm-4'>
+            <h1>{{event.name}}</h1>
+
+            <p>Place: {{event.place}}</p>
+            
+            <p><a data-toggle="modal" data-target="#createModal"><i class="fa fa-users" aria-hidden="true"></i></a>  Participant: {{event.joined}}/{{event.participant}}</p>
+
+
+              <div class="modal fade" id="createModal" data-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Participant</h4>
+                        </div>
+                        {%for joined in pars%}
+                        {%if joined.event.id == event.id%}
+                        <div><i class="fa fa-user-circle" aria-hidden="true">  {{joined.user.username}}</i></div>
+                        {%endif%}
+                        {%endfor%}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     
-          <p>Date: {{event.date}}</p>
-          <p>Time: {{event.time}}</p>
-          
-          {% if event.type is not None %}
-          <p>Type: {{event.type}}</p>
-          {% else %}
-          <p>Type: All</p>
-          {% endif %}
-          <p>Participant: {{event.joined}}/{{event.participant}}</p>
-          <p><progress id="project" 
-            max="{{event.participant}}" 
-            value="{{event.joined}}"> </progress>
-          </p>
-          
-
-          <form action="{% url 'event' event.id%}" method="post">
-            {% csrf_token %}
-            {%if event.status%} 
-              {%if event.full and not par.check_par%}
-              <button type="submit" name="full" disabled>FULL</button>
-              {%elif par.check_par %}
-              <button type="submit" name="cancel" class="btn btn-danger">CANCEL</button>
-              {% else %}
-              <button type="submit" name = "join" class="btn btn-success">JOIN</button>
+            <p>Date: {{event.date}}</p>
+            <p>Time: {{event.time}}</p>
+            
+            {% if event.type is not None %}
+            <p>Type: {{event.type}}</p>
+            {% else %}
+            <p>Type: All</p>
+            {% endif %}
+            <p>Participant: {{event.joined}}/{{event.participant}}</p>
+            <p><progress id="project" 
+              max="{{event.participant}}" 
+              value="{{event.joined}}"> </progress>
+            </p>
+          </div>
+        
+            <form action="{% url 'event' event.id%}" method="post">
+              {% csrf_token %}
+              {%if event.status%} 
+                {%if event.full and not par.check_par%}
+                <button type="submit" name="full" disabled>FULL</button>
+                {%elif par.check_par %}
+                <button type="submit" name="cancel" class="btn btn-danger">CANCEL</button>
+                {% else %}
+                <button type="submit" name = "join" class="btn btn-success">JOIN</button>
+                {%endif%}
+              {%else%}
+              <button type="submit" name="YOU ARE THE OWNER."class="btn btn-warning" disabled>YOU ARE THE OWNER.</button>
               {%endif%}
-            {%else%}
-            <button type="submit" name="YOU ARE THE OWNER." disabled>YOU ARE THE OWNER.</button>
-            {%endif%}
-          </form>
+            </form>
         </div>
       </div>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
       </div>
 
       {% for event in events %}
@@ -137,7 +168,7 @@
 
       <a href="{% url 'event' event.id %}">
         <div class="col-sm-4">
-          <div class="thumbnail", style='border: 1px solid #ddd;'>
+          <div class="thumbnail text-center", style='border: 1px solid #ddd;'>
             <img src="{{ event.image_upload.url }}" width = 300 height=100>
             <h3><strong>{{event.name}}</strong></h3>
             <p>Place: {{event.place}}</p>
