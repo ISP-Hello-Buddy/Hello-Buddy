@@ -165,7 +165,7 @@ def profile_user(request):
         user_id=user)
     context = {"events": all_event,
                "joined_events": joined_events,
-               "profile": user.profile,
+               "profile": profile,
                "user_form": user_form,
                "profile_form": profile_form,
                }
@@ -278,20 +278,6 @@ def map(request):
         html = ""
         for mp in i:
             html += f"""
-                    <center class="thumbnail"><img id="inlineFrameExample"
-                    title="Inline Frame Example"
-                    width="250"
-                    height="200"
-                    frameborder="0" 
-                    scrolling="no"
-                    name="imgbox" 
-                    id="imgbox"
-                    {mp.event.image_upload.url}
-                    src="data:image/png;base64,{base64.b64encode(
-                        open(f'./{mp.event.image_upload.url}',
-                        'rb').read()).decode()}"
-                    >
-                </img></center>
                 <h3><center> <a href="/event/{mp.event.id}" target="_blank">
                 {mp.event}</a></center></h3>
                 <div><center> Place: {mp.address}</center> </div>
@@ -301,10 +287,6 @@ def map(request):
                         <div><center> Time: {mp.event.time}</center> </div>
                         <div><center> Participant: {mp.event.joined}/
                         {mp.event.participant}
-                </center> </div>
-                        <div><center><progress id="project" 
-                        max="{mp.event.participant}" 
-                        value="{mp.event.joined}"> </progress>
                 </center> </div>
                 <div><center>
                 <button class="btn btn-info" type="button" 

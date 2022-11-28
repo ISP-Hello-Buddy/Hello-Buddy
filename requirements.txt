@@ -1,4 +1,4 @@
-Django>=4.1
+Django
 django-bootstrap-datepicker-plus
 django-allauth
 pillow
@@ -7,6 +7,11 @@ django-bootstrap4
 folium
 geopy
 geocoder
-decouple
+gunicorn
+python-decouple
+whitenoise
+psycopg2
+django-cloudinary-storage
+
 
 

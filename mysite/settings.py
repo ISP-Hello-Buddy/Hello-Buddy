@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,12 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-1q)co1x)5c2+$zvpeetyljx2iec3!fwuof)k^*6-wo%!-j)-2k"
+SECRET_KEY = config('SECRET_KEY', default='missing-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
+
+HOST = config('HOST',None)
+if HOST:
+    ALLOWED_HOSTS.append(HOST)
 
 
 # Application definition
@@ -37,7 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'cloudinary_storage',
     "django.contrib.staticfiles",
+    'cloudinary',
     'Hello_Buddy.apps.HelloBuddyConfig',
     'bootstrap_datepicker_plus',
     'django.contrib.sites',
@@ -58,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -89,13 +97,28 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+ON_HEROKU = config('LIVE', default=False)
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if ON_HEROKU:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': config('NAME_DB', ''),
+            'USER': config('USER_DB', ''),
+            'PASSWORD': config('PASS_DB', ''),
+            'HOST': config('HOST_DB', ''),
+            'PORT': config('PORT_DB', '')
+        }
+        
+        
+    }   
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 
 # Password validation
@@ -120,25 +143,30 @@ TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_ROOT = "/static"
+if ON_HEROKU:
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+
 
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Base url to serve media files
 MEDIA_URL = '/media/'
 
+if ON_HEROKU:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR,"static"),]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 # Default primary key field type
@@ -157,7 +185,7 @@ AUTHENTICATION_BACKENDS = [
 	  'allauth.account.auth_backends.AuthenticationBackend',
     ]
 
-if DEBUG:
+if DEBUG or ON_HEROKU:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
@@ -176,12 +204,15 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 # CRISPY_TEMPLATE
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ACCOUNT_FORMS = {
-    'login': 'allauth.account.forms.LoginForm',
-}
 
 ACCOUNT_FORMS = {
     'login': 'Hello_Buddy.forms.MyCustomLoginForm',
     'signup': 'Hello_Buddy.forms.MyCustomSignupForm',
     'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
+}
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUND_NAME', ''),
+    'API_KEY': config('API_KEY', ''),
+    'API_SECRET': config('API_SECRET', '')
 }
