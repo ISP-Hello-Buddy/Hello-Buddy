@@ -92,7 +92,7 @@ Swal.fire({
                             {%endif%}
                             <span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}
                             <nav></nav>
-                            <span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}
+                            <span class="glyphicon glyphicon-user"></span> {{ i.user.username}}
                             <nav></nav>
                             <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
@@ -145,8 +145,6 @@ Swal.fire({
                             <h4><i class="fa fa-circle" aria-hidden="true" style='color: #FC1F1F;'></i> {{ i.event.name }}</h4>
                             {%endif%}
                             <span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}
-                            <nav></nav>
-                            <span class="glyphicon glyphicon-envelope"></span> {{ i.event.email}}
                             <nav></nav>
                             <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
