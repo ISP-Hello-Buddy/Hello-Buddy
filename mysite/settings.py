@@ -185,7 +185,9 @@ AUTHENTICATION_BACKENDS = [
 	  'allauth.account.auth_backends.AuthenticationBackend',
     ]
 
-if DEBUG or ON_HEROKU:
+USE_EMAIL_HOST = config('USER_EMAIL_HOST', default=False)
+
+if (DEBUG or ON_HEROKU) and USE_EMAIL_HOST:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
@@ -211,8 +213,9 @@ ACCOUNT_FORMS = {
     'reset_password': 'Hello_Buddy.forms.MyCustomResetPasswordForm',
 }
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUND_NAME', ''),
-    'API_KEY': config('API_KEY', ''),
-    'API_SECRET': config('API_SECRET', '')
-}
+if ON_HEROKU:
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': config('CLOUND_NAME', ''),
+        'API_KEY': config('API_KEY', ''),
+        'API_SECRET': config('API_SECRET', '')
+    }

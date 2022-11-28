@@ -136,9 +136,7 @@ def profile_user(request):
 
     if request.method == "POST":
         if 'delete' in request.POST:
-            print("delete")
             id = request.POST.get("delete")
-            print(id)
             deleted_event = Event.objects.filter(id=id).first()
             deleted_event.delete()
 
