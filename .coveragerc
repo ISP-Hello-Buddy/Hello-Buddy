@@ -1,0 +1,14 @@
+[run]
+branch = True
+cover_pylib = False
+omit =
+    /usr/*
+    manage.py
+    */__init__.py
+    mysite/*
+    Hello_Buddy/migrations/*
+    
+[report]
+exclude_lines =
+    def __str__
+    def __repr__
