@@ -7,7 +7,15 @@
       <div class="row text-center">
         {% for message in messages %}
         {% if 'info' in message.tags %}
-        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+        <script type="text/javascript"> 
+          var message = "{{ message }}"
+       </script>
+        <script>
+        Swal.fire({
+          icon: 'warning',
+          title: message,
+        })
+      </script>
         {% endif %}
       {% endfor %}
 

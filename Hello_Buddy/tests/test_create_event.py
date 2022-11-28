@@ -80,7 +80,7 @@ class CreateEventTest(TestCase):
 
         response = self.client.post(self.create_url, create_event)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/home')
+        self.assertEqual(response.url, '/all')
         
         # not allow to create same day.
         response = self.client.post(self.create_url, create_event2)

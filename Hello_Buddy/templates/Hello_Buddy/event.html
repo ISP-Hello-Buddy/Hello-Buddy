@@ -65,19 +65,29 @@
     <div class="row text-center">
       {% for message in messages %}
       {% if 'success' in message.tags %}
-      <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+      <script type="text/javascript"> 
+        var message = "{{ message }}"
+     </script>
+      <script>
+      Swal.fire({
+        icon: 'success',
+        title: message,
+        showConfirmButton: false,
+        timer: 2000
+      })
+    </script>
       {% else %}
-      <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+      <script type="text/javascript"> 
+        var message = "{{ message }}"
+     </script>
+      <script>
+        Swal.fire({
+          icon: 'warning',
+          title: message,
+        })
+    </script>
       {% endif %}
       {% endfor %}
-      <script>
-        //close alert after 3 seconds
-        window.setTimeout(function() {
-          $(".alert").fadeTo(500, 0).slideUp(500, function(){
-            $(this).remove();
-          });
-        }, 3000);
-      </script> 
 
       <div class="col-sm-2">
       </div>

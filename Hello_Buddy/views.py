@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.shortcuts import redirect, render
 from geopy.geocoders import Nominatim
-
+from django.urls import reverse
 from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
 from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
 
@@ -49,7 +49,20 @@ def reverse_to_home(request):
 
 def events_by_category(request, event_category):
     """Sort event by type"""
+    if event_category == 'all':
+        all = Event.objects.all()
+        if len(all) == 0:
+            messages.info(request, 'No event in this category')
+            return redirect('home')
+        context = {"events_in_category": all}
+        return render(request,
+                  "Hello_Buddy/event_by_category.html",
+                  context)
+        
     sorted_event = Event.objects.filter(type=event_category)
+    if len(sorted_event) == 0:
+        messages.info(request, 'No event in this category')
+        return redirect('home')
     context = {"events_in_category": sorted_event}
     return render(request,
                   "Hello_Buddy/event_by_category.html",
@@ -86,7 +99,7 @@ def create(request):
                     messages.info(
                         request, 'You are allow to create 1 event per day.')
                     messages.info(
-                        request, 'Choose another day to create event')
+                        request, 'You are allow to create 1 event per day. So, choose another day to create event')
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
@@ -114,7 +127,7 @@ def create(request):
                 mapping.user = user
                 mapping.save()
 
-                return redirect('home')
+                return redirect(reverse('event_category', args=['all']))
             elif "check_place" in request.POST:
                 loca = nomi.geocode(data['place'])
                 messages.warning(request, f"Location is {loca}")
@@ -212,8 +225,7 @@ def event(request, event_id):
             if request.method == "POST":
                 if check_date(user, event.date, 'parti'):
                     messages.info(
-                        request, "You are allow to join 1 event per day.")
-                    messages.info(request, 'Choose another event to join.')
+                        request, "You are allow to join 1 event per day. So, choose another event to join.")
                     context = {"event": event, "events": all_event,
                                "pars": all_par, "m": m, 'host': hostevent.user}
                     return render(request, "Hello_Buddy/event.html", context)
