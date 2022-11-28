@@ -139,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Asia/Bangkok'
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -194,6 +194,8 @@ if (DEBUG or ON_HEROKU) and USE_EMAIL_HOST:
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default="")
     EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default="")
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
     
 # Sets the ID of your site's URL. 
 SITE_ID = 1
