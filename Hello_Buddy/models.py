@@ -1,15 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
 from django.urls import reverse
 from geopy.geocoders import Nominatim
-
 import datetime
 
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# Create your models here.
 
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 class Event(models.Model):
     """model for each event"""
@@ -83,16 +87,6 @@ class Profile(models.Model):
     avatar = models.ImageField(default="profile/images/default_ava.jpg",
                                upload_to="profile/images")
     bio = models.TextField(default='...', max_length=50)
-
-    # resizing images
-    # def save(self, *args, **kwargs):
-    #     super(Profile, self).save(*args, **kwargs)
-    #     img = Image.open(self.avatar.path)
-
-    #     if img.height > 100 or img.width > 100:
-    #         new_img = (100, 100)
-    #         img.thumbnail(new_img)
-    #         img.save(self.avatar.path)
 
     def __str__(self):
         return self.user.username

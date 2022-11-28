@@ -11,6 +11,23 @@ from .forms import CreateEventForm, UpdateProfileForm, UpdateUserForm
 from .models import Event, HostOfEvent, Mapping, ParticipantOfEvent, Profile
 
 
+def check_date(user, date, type):
+    """ To check date that equal or not """
+    try:
+        if type == 'parti':
+            participant = ParticipantOfEvent.objects.filter(user_id=user)
+            for i in participant:
+                if i.event.date == date:
+                    return True
+        else:
+            host = HostOfEvent.objects.filter(user_id=user)
+            for i in host:
+                if i.event.date == date:
+                    return True
+    except:
+        return False
+
+
 def home(request):
     """Display all event on home page"""
     all_event = Event.objects.all()
@@ -38,6 +55,7 @@ def events_by_category(request, event_category):
                   "Hello_Buddy/event_by_category.html",
                   context)
 
+
 @login_required
 def create(request):
     # get user object
@@ -57,17 +75,21 @@ def create(request):
                 location = nomi.geocode(data['place'])
                 if not location:
                     form = CreateEventForm()
-                    messages.error(request,
-                                   "This location has not on the map location")  # add text error
+                    messages.warning(request,
+                                     "This location has not on the map location")  # add text error
                     context = {'form': form}
                     return render(request,
                                   'Hello_Buddy/create_event.html', context=context)
-                # lst_address = [loca.address for loca in mapping]
-                # if location.address in lst_address:
-                #     context = {'form': form}
-                #     messages.error(request, "This location is used")
-                #     return render(request,
-                #                   'Hello_Buddy/create_event.html', context=context)
+
+                if check_date(user, data['date'], 'host'):
+                    messages.info(request, 'WARNING')
+                    messages.info(
+                        request, 'You are allow to create 1 event per day.')
+                    messages.info(
+                        request, 'Choose another day to create event')
+                    context = {'form': form}
+                    return render(request,
+                                  'Hello_Buddy/create_event.html', context=context)
 
                 event = Event()
                 event.name = data['name']
@@ -110,10 +132,7 @@ def profile_user(request):
     """
 
     # Create Profile model
-    try:
-        profile = request.user.profile
-    except Profile.DoesNotExist:
-        profile = Profile(user=request.user)
+    profile = request.user.profile
 
     if request.method == "POST":
         if 'delete' in request.POST:
@@ -162,63 +181,82 @@ def event(request, event_id):
     """
     id = event_id
     user = request.user
-    event = Event.objects.filter(id=event_id).first()
-    all_event = Event.objects.all()
-
-    # print(all_event)
-    mp = Mapping.objects.filter(id=event_id).first()
-    print(mp.lon)
-    # m = folium.Map(width=325,height=195,location=[mp.lat, mp.lon], zoom_start=16) # class center: idth: 50%;
-    m = folium.Map(width=425,height=250,location=[mp.lat, mp.lon], zoom_start=16)
-    folium.Marker([mp.lat, mp.lon],popup=mp.address).add_to(m)
-    m = m._repr_html_()
-
-    all_par = ParticipantOfEvent.objects.all()
-
-    # Host of event are not allow to join their own event
-    host = HostOfEvent.objects.all()
-    for i in host:
-        if i.user == user and i.event.name == event.name:
-            event.status = False
-
-    # check that participant already join or not
     try:
-        existing_par = ParticipantOfEvent.objects.get(event_id=id,
-                                                      user_id=user)
-    except ParticipantOfEvent.DoesNotExist:
-        # new participant
-
-        context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
-
-        if request.method == "POST":
-            person = ParticipantOfEvent()
-            person.event = Event.objects.filter(id=event_id).first()
-            person.user = user
-            person.save()
-
-            Event.objects.filter(id=event_id).update(joined=F("joined") + 1)
-            event = Event.objects.filter(id=event_id).first()
-
-
-
-            context = {"event": event, "par": person, "events": all_event, "pars": all_par, "m" : m}
+        event = Event.objects.filter(id=event_id).first()
+    except:
+        messages.error(request, 'Event does not exit.')
+        return redirect('home')
     else:
-        # already join
-        par = ParticipantOfEvent.objects.filter(event_id=id,
-                                                user_id=user).first()
+        all_event = Event.objects.all()
 
-        context = {"event": event, "par": par, "events": all_event, "pars": all_par, "m" : m}
-        if request.method == "POST":
-            existing_par.delete()
+        mp = Mapping.objects.filter(id=event_id).first()
+        m = folium.Map(width=425, height=250, location=[
+                       mp.lat, mp.lon], zoom_start=16)
+        folium.Marker([mp.lat, mp.lon], popup=mp.address).add_to(m)
+        m = m._repr_html_()
 
-            Event.objects.filter(id=event_id).update(joined=F("joined") - 1)
-            event = Event.objects.filter(id=event_id).first()
+        all_par = ParticipantOfEvent.objects.all()
 
+        # Host of event are not allow to join their own event
+        host = HostOfEvent.objects.all()
+        for i in host:
+            if i.user == user and i.event.name == event.name:
+                event.status = False
 
-            context = {"event": event, "events": all_event, "pars": all_par, "m" : m}
+        hostevent = HostOfEvent.objects.filter(event_id=id).first()
+        # check that participant already join or not
+        try:
+            existing_par = ParticipantOfEvent.objects.get(event_id=id,
+                                                          user_id=user)
+        except ParticipantOfEvent.DoesNotExist:
+            # new participant
 
+            context = {"event": event, "events": all_event,
+                       "pars": all_par, "m": m, 'host': hostevent.user}
 
-    return render(request, "Hello_Buddy/event.html", context)
+            # join click
+            if request.method == "POST":
+                if check_date(user, event.date, 'parti'):
+                    messages.info(
+                        request, "You are allow to join 1 event per day.")
+                    messages.info(request, 'Choose another event to join.')
+                    context = {"event": event, "events": all_event,
+                               "pars": all_par, "m": m, 'host': hostevent.user}
+                    return render(request, "Hello_Buddy/event.html", context)
+
+                person = ParticipantOfEvent()
+                person.event = Event.objects.filter(id=event_id).first()
+                person.user = user
+                person.save()
+
+                Event.objects.filter(id=event_id).update(
+                    joined=F("joined") + 1)
+                event = Event.objects.filter(id=event_id).first()
+
+                messages.success(
+                    request, f"You already join {event.name} event.")
+                context = {"event": event, "par": person, "events": all_event,
+                           "pars": all_par, "m": m, 'host': hostevent.user}
+        else:
+            # already join
+            par = ParticipantOfEvent.objects.filter(event_id=id,
+                                                    user_id=user).first()
+
+            context = {"event": event, "par": par, "events": all_event,
+                       "pars": all_par, "m": m, 'host': hostevent.user}
+            if request.method == "POST":
+                existing_par.delete()
+
+                Event.objects.filter(id=event_id).update(
+                    joined=F("joined") - 1)
+                event = Event.objects.filter(id=event_id).first()
+
+                messages.success(
+                    request, f"You already cancel {event.name} event.")
+                context = {"event": event, "events": all_event,
+                           "pars": all_par, "m": m, 'host': hostevent.user}
+
+        return render(request, "Hello_Buddy/event.html", context)
 
 
 def map(request):
@@ -229,13 +267,13 @@ def map(request):
         if i.event.place in list_map_id:
             continue
         list_map_id.append(i.event.place)
-        
+
     for i in list_map_id:
         same_map = [j for j in all_obj if i == j.event.place]
         list_map.append(same_map)
-        
-        
-    m = folium.Map(width=1120,height=650,location=[13.74492, 100.53378], zoom_start=9)
+
+    m = folium.Map(width=1120, height=650, location=[
+                   13.74492, 100.53378], zoom_start=9)
     for i in list_map:
         html = ""
         for mp in i:
@@ -261,7 +299,7 @@ def map(request):
 
         popup = folium.Popup(folium.Html(html, script=True), max_width=250)
         folium.Marker([mp.lat, mp.lon], popup=popup,
-                    tooltip=f"(click for see detail)").add_to(m)
+                      tooltip=f"(click for see detail)").add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {'m': m, }
