@@ -28,7 +28,6 @@
                 <div class="d-flex justify-content-center mb-2">
                     <br>
                     <button type="submit" name='save'class="btn btn-dark btn-lg">Save Changes</button>
-                    <button type="reset" class="btn btn-dark btn-lg">Reset</button>
                 </div>
             </div>
         </div>
@@ -71,15 +70,15 @@
                         <div class="col-sm-6">
                             
                             {% if i.event.is_active %}
-                            <i><h4><span class="glyphicon glyphicon-stop" style='color: green;'></span> {{ i.event.name }}</h4></i>
+                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #6CEB3F;'></i> {{ i.event.name }}</h4>
                             {%else%}
-                            <i><h4><span class="glyphicon glyphicon-stop" style='color: red;'></span> {{ i.event.name }}</h4></i>
+                            <h4><i class="fa fa-circle" aria-hidden="true" style='color: #FC1F1F;'></i></span> {{ i.event.name }}</h4>
                             {%endif%}
-                            <i><span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}</i>
+                            <span class="glyphicon glyphicon-map-marker"></span> {{ i.event.place }}
                             <nav></nav>
-                            <i><span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}</i>
+                            <span class="glyphicon glyphicon-envelope"></span> {{ i.user.email}}
                             <nav></nav>
-                            <i><span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}</i>
+                            <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
                         <div class="col-sm-2">
                                 <!-- close button trigger modal -->
@@ -93,7 +92,6 @@
                                             <ul class="dropdown-menu">
                                                 <li><a href="#" data-toggle="modal"
                                                        data-target="#{{i.event.id}}">Delete</a></li>
-                                                <li><a href="#">Edit</a></li>
                                                 <li role="separator" class="divider"></li>
                                                 <li><a href="#">Close</a></li>
                                             </ul>
