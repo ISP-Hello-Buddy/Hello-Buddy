@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from Hello_Buddy.models import Event
+from Hello_Buddy.models import Event, HostOfEvent
 import datetime
+from django.contrib.auth.models import User
 
 class EventTest(TestCase):
     
@@ -11,29 +12,24 @@ class EventTest(TestCase):
         self.login = reverse('account_login')
         self.logout = reverse('account_logout')
         
-        self.register1 = {
-            'username': 'demo12',
-            'password1': 'admin123456',
-            'password2': 'admin123456',
-            'email': 'admin@mail.com'
-        }
         
-        self.event2 = Event.objects.create(
-            name='Movie',
-            place='Central',
-            participant=2,
-            date=datetime.datetime.today().date(),
-            time=(datetime.datetime.today() +
-                  datetime.timedelta(hours=1)).time(),
-
+        self.user1 = User.objects.create(
+            username= 'breeze',
+            password= 'demo123456',
+            email = 'a@mail.com'
         )
         
-        self.register2 = {
-            'username': 'demo123',
-            'password1': 'admin54343',
-            'password2': 'admin54343',
-            'email': 'admin1@mail.com'
-        }
+        self.user2 = User.objects.create(
+            username= 'breeze2',
+            password= 'demo123456',
+            email = 'b@mail.com'
+        )
+        
+        self.user3 = User.objects.create(
+            username= 'breeze3',
+            password= 'demo123456',
+            email = 'c@mail.com'
+        )
 
     def test_event_page_response_before_login(self):
         """ event page will redirect you to login"""
@@ -57,7 +53,7 @@ class EventTest(TestCase):
             'create_event': ''
         }
 
-        self.client.post(self.register, self.register1)
+        self.client.force_login(self.user1)
         self.client.post(self.create_url, create_event)
 
         # go to see on event page
@@ -81,11 +77,12 @@ class EventTest(TestCase):
         }
 
         # create event
-        self.client.post(self.register, self.register1)
+        # self.client.post(self.register, self.register1)
+        self.client.force_login(self.user1)
         self.client.post(self.create_url, create_event)
-        self.client.post(self.logout)
+        self.client.logout()
         # login another accout
-        self.client.post(self.register, self.register2)
+        self.client.force_login(self.user2)
         
         event_url = reverse('event', args=[1])
         # check participant before join
@@ -102,4 +99,42 @@ class EventTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Event.objects.get(id=1).joined, 0)
         self.assertTemplateUsed(response, 'Hello_Buddy/event.html')
+        
+    def test_join_one_event_per_day(self):
+        """ User allow to join one event per day"""
+        # create event first
+        create_event = {
+            'name': 'Badminton',
+            'place': 'Kaset',
+            'participant': 1,
+            'date': (datetime.datetime.today() + datetime.timedelta(days=1)).date(),
+            'time': datetime.datetime.today().time(),
+            'create_event': ''
+        }
+
+        
+        # create event
+        # self.client.post(self.register, self.register1)
+        self.client.force_login(self.user1)
+        self.client.post(self.create_url, create_event)
+        self.client.logout()
+        # login another accout
+        self.client.force_login(self.user2)
+        self.client.post(self.create_url, create_event)
+        self.client.logout()
+        
+        
+        self.client.force_login(self.user3)
+        
+        event_url = reverse('event', args=[1])
+        response = self.client.post(event_url, {'join': ''})
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertEqual(Event.objects.get(id=1).joined, 1)
+        
+        event_url1 = reverse('event', args=[2])
+        response = self.client.post(event_url1, {'join': ''})
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertEqual(Event.objects.get(id=2).joined, 0)
         
