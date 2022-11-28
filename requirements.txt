@@ -12,6 +12,6 @@ python-decouple
 whitenoise
 psycopg2
 django-cloudinary-storage
-
+coverage
 
 
