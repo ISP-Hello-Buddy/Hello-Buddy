@@ -13,7 +13,9 @@ cd Hallo-Buddy
 ```
 
 Start the virtual environment.
-- python3 -m venv env
+``` 
+python3 -m venv env
+```
 
 Activate env
 - on macos and linux
@@ -29,6 +31,12 @@ make sure that you install all the requirements by run this command, its can be 
 ```
 pip install -r requirements.txt
 ```
+
+Create file .env
+``` 
+Create file name .env and follow the sample.env file in this repository 
+```
+
 Create a new database by running migrations the database.
 ```
 python3 manage.py migrate
@@ -59,6 +67,8 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 4](../../wiki/Iteration%204) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/8)
 - [Iteration 5](../../wiki/Iteration%205) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/9)
 - [Iteration 6](../../wiki/Iteration%206) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/10)
+- [Iteration 7](../../wiki/Iteration%207) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/11)
+- [Iteration 8](../../wiki/Iteration%208) and [Task Board](https://github.com/orgs/ISP-Hello-Buddy/projects/1/views/12)
 
 ## Code Review
 - [Code Review Docs](https://docs.google.com/document/d/1RFhCYMuJuZ3QQoBI4gucfbdxvh8CyPY8-IAQZVW8HFE/edit#) and [Code Review Wiki](../../wiki/Code%20Review)
