@@ -181,10 +181,6 @@ def event(request, event_id):
     user = request.user
     try:
         event = Event.objects.filter(id=event_id).first()
-    except:
-        messages.error(request, 'Event does not exit.')
-        return redirect('home')
-    else:
         all_event = Event.objects.all()
 
         mp = Mapping.objects.filter(id=event_id).first()
@@ -255,6 +251,9 @@ def event(request, event_id):
                            "pars": all_par, "m": m, 'host': hostevent.user}
 
         return render(request, "Hello_Buddy/event.html", context)
+    except:
+        messages.error(request, 'Event does not exit.')
+        return redirect('home')
 
 
 def map(request):
