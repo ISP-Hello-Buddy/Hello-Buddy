@@ -41,7 +41,7 @@
     {{form.name | as_crispy_field }}
 
 </div>
-<div style="margin-top:10px">
+<div type="hidden" style="margin-top:10px">
     <!-- {{form.place.label_tag}} -->
     {{form.place | as_crispy_field }}
     {% for message in messages %}
@@ -60,13 +60,13 @@
 
     {{form.errors}}
 </div>
-<div style="margin-top:10px">
+<div type="hidden" style="margin-top:10px">
     <!-- {{form.date.label_tag}}
     {{form.date}} -->
     {{form.date | as_crispy_field }}
     {{form.media}}
 </div>
-<div style="margin-top:10px">
+<div  style="margin-top:10px">
     <!-- {{form.time.label_tag}}
     {{form.time}} -->
     {{form.time | as_crispy_field }}
@@ -78,17 +78,11 @@
     {{form.type | as_crispy_field }}
 
 </div>
-<div style="margin-top:10px">
-    <!-- {{form.image_upload.label_tag}} -->
-    <!-- {{form.image_upload}} -->
-    {{form.image_upload | as_crispy_field }}
 
-</div>
      
 <div style="margin-top:10px">
-    <button type="submit" name="check_place" class="btn btn-primary">Check Place</button>
-
-    <button type='submit' name="create_event" class="btn btn-primary">SUBMIT</button>
+    <button type='submit' name="check_place" class="btn btn-primary">CHECK PLACE</button>
+    <button type='submit' name="edit_event" class="btn btn-primary">SUBMIT</button>
 </div>
 </form>
 <script>

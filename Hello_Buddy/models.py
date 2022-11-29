@@ -25,8 +25,8 @@ class Event(models.Model):
         ('education', 'Education'),
     ]
 
-    name = models.CharField("Name", max_length=20)
-    place = models.CharField("Place", max_length=50)
+    name = models.CharField("Name", max_length=15)
+    place = models.CharField("Place", max_length=30)
     participant = models.PositiveIntegerField("Participant",
                                             default=1)
     joined = models.PositiveIntegerField(default=0)

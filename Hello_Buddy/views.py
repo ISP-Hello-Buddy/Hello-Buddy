@@ -317,6 +317,7 @@ def map(request):
 
 
 def edit(request, event_id):
+    """ edit event feature"""
     user = request.user
     try:
         event = Event.objects.filter(id=event_id).first()
@@ -330,7 +331,7 @@ def edit(request, event_id):
             nomi = Nominatim(user_agent="hi_buddy")
             if form.is_valid():
                 data = form.cleaned_data
-                if "create_event" in request.POST:
+                if "edit_event" in request.POST:
                     location = nomi.geocode(data['place'])
                     if not location:
                         messages.warning(request,
