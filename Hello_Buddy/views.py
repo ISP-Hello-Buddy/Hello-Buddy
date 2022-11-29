@@ -192,6 +192,10 @@ def event(request, event_id):
     """
     id = event_id
     user = request.user
+    event_active = Event.objects.filter(id=event_id).first().is_active()
+    if not event_active:
+        messages.error(request, 'Event is already end.')
+        return redirect ('home')
     try:
         event = Event.objects.filter(id=event_id).first()
         all_event = Event.objects.all()

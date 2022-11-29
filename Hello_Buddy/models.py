@@ -32,9 +32,9 @@ class Event(models.Model):
     joined = models.PositiveIntegerField(default=0)
     date = models.DateField("Date")
     time = models.TimeField("Time")
-    type = models.CharField("Type", max_length=20,
+    type = models.CharField("Type (optional)", max_length=20,
                             null=True, blank=True, choices=category)
-    image_upload = models.ImageField(null=True,
+    image_upload = models.ImageField('Image upload (optional)' ,null=True,
                                      blank=True, upload_to='event/images',
                                      default='event/images/default_e.jpg')
 
