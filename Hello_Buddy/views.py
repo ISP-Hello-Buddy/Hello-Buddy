@@ -52,7 +52,7 @@ def events_by_category(request, event_category):
     if event_category == 'all':
         all = Event.objects.all()
         if len(all) == 0:
-            messages.info(request, 'No event in this category')
+            messages.info(request, 'No event has been created yet.')
             return redirect('home')
         context = {"events_in_category": all}
         return render(request,
