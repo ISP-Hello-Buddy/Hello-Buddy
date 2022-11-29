@@ -25,7 +25,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = ChromeOptions()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         cls.browser = Chrome(options=options)
         cls.browser.get(cls.live_server_url)
 
@@ -60,7 +60,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         assert "Image upload" in self.browser.page_source
@@ -68,7 +68,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
     def test_not_login_create_event(self):
         self.browser.get(self.live_server_url)
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         assert "Image upload" not in self.browser.page_source
@@ -78,7 +78,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         name = self.browser.find_element(
@@ -105,7 +105,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         name = self.browser.find_element(
@@ -131,7 +131,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         name = self.browser.find_element(
@@ -157,7 +157,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         name = self.browser.find_element(
@@ -177,7 +177,8 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         time.sleep(2)
         assert "e2e_test2" in self.browser.page_source
-
+        
+        # join event handlers
         event_ = self.browser.find_element(
             By.XPATH, "/html/body/div/div/div/a/div/div/img")
         event_.click()
@@ -191,7 +192,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
 
         self.login_id1()
         but_create = self.browser.find_element(
-            By.XPATH, "/html/body/nav/div/ul[1]/li[4]/a")
+            By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
         but_create.click()
 
         name = self.browser.find_element(
