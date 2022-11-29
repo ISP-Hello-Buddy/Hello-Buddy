@@ -57,10 +57,6 @@ class Event(models.Model):
         time = now.time()
         return date < self.date or (date == self.date and time < self.time)
         
-
-    def get_url(self):
-        """ Come to main your event """
-        return reverse("event",kwargs={"id" : self.id})
         
 class HostOfEvent(models.Model):
     """model for record user with their own event"""
