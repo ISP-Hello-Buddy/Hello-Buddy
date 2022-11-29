@@ -126,8 +126,11 @@ def create(request):
 
                 return redirect(reverse('event_category', args=['all']))
             elif "check_place" in request.POST:
-                loca = nomi.geocode(data['place'])
-                messages.warning(request, f"Location is {loca}")
+                try:
+                    loca = nomi.geocode(data['place'])
+                    messages.warning(request, f"Location is {loca}")
+                except:
+                    messages.warning(request, f"Location is {loca}")
     else:
         form = CreateEventForm()
     context = {'form': form}
