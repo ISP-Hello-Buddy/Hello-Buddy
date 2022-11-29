@@ -8,7 +8,8 @@ from selenium.webdriver.common.keys import Keys
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import namegenerator
-
+# from selenium.webdriver.support.wait import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 class TestAuth_E2E(StaticLiveServerTestCase):
 
     def setUp(self):
@@ -19,7 +20,6 @@ class TestAuth_E2E(StaticLiveServerTestCase):
     
         self.username = namegenerator.gen()
         self.password = "Admin1234@"
-        
         self.user = new_user(self.username, self.password)
         self.user.save()
 
@@ -51,7 +51,7 @@ class TestAuth_E2E(StaticLiveServerTestCase):
         cls.my_web = cls.live_server_url
         # cls.my_web = "https://hello-buddy-th.herokuapp.com/home"
         # cls.browser.set_window_size(1920, 1080)
-
+    
     # @override_settings(DEBUG=True)
     def login(self):
         self.client.login(username=self.username, password=self.password)
@@ -66,108 +66,75 @@ class TestAuth_E2E(StaticLiveServerTestCase):
         )
         self.browser.refresh()
 
-    # def test_login(self):
-    #     """check login function in web form """
-    #     self.browser.get(self.my_web)
-    #     but_login = self.browser.find_element(
-    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]")
-    #     but_login.click()
-    #     # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
-    #     username = self.browser.find_element(By.ID, "id_login")
-    #     password = self.browser.find_element(By.ID, "id_password")
-    #     submit = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[7]/button")
-    #     # send data input
-    #     time.sleep(1)
-    #     username.send_keys(self.username2)
-    #     password.send_keys(self.password2)
-    #     submit.send_keys(Keys.RETURN)
+    def test_login(self):
+        """check login function in web form """
+        self.browser.get(self.my_web)
+        but_login = self.browser.find_element(
+            By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]")
+        but_login.click()
+        # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
+        username = self.browser.find_element(By.ID, "id_login")
+        password = self.browser.find_element(By.ID, "id_password")
+        submit = self.browser.find_element(
+            By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[7]/button")
+        # send data input
+        time.sleep(1)
+        username.send_keys(self.username2)
+        password.send_keys(self.password2)
+        submit.send_keys(Keys.RETURN)
 
-    #     # submit form
-    #     assert self.username2 in self.browser.page_source
+        # submit form
+        assert self.username2 in self.browser.page_source
 
-    # def test_wrong_login(self):
-    #     """Check login in function detect wrong user"""
-    #     self.browser.get(self.my_web)
-    #     but_login = self.browser.find_element(
-    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]/a")
-    #     but_login.click()
-    #     username = self.browser.find_element(By.ID, "id_login")
-    #     password = self.browser.find_element(By.ID, "id_password")
-    #     submit = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[7]/button")
-    #     # send data input
-    #     username.send_keys(self.username2)
-    #     password.send_keys(self.password)
-    #     submit.send_keys(Keys.RETURN)
+    def test_wrong_login(self):
+        """Check login in function detect wrong user"""
+        self.browser.get(self.my_web)
+        but_login = self.browser.find_element(
+            By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]/a")
+        but_login.click()
+        username = self.browser.find_element(By.ID, "id_login")
+        password = self.browser.find_element(By.ID, "id_password")
+        submit = self.browser.find_element(
+            By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[7]/button")
+        # send data input
+        username.send_keys(self.username2)
+        password.send_keys(self.password)
+        submit.send_keys(Keys.RETURN)
 
-    #     time.sleep(1)
-    #     assert "The username and/or password you specified are not correct." in self.browser.page_source
-    #     # self.browser.get(self.live_server_url)
+        time.sleep(1)
+        assert "The username and/or password you specified are not correct." in self.browser.page_source
+        # self.browser.get(self.live_server_url)
     
-    # def test_register(self):
-    #     """check login function in web form """
+    def test_register(self):
+        """check login function in web form """
         
-    #     self.browser.get(self.my_web)
-    #     but_regis = self.browser.find_element(
-    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[1]")
-    #     but_regis.click()
-    #     # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
-    #     username = self.browser.find_element(By.ID, "id_username")
-    #     email = self.browser.find_element(By.ID, "id_email")
-    #     password1 = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[6]/input")
-    #     password2 = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[8]/input")
+        self.browser.get(self.my_web)
+        but_regis = self.browser.find_element(
+            By.XPATH, "/html/body/header/nav/div/ul[2]/li[1]")
+        but_regis.click()
+        # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
+        username = self.browser.find_element(By.ID, "id_username")
+        email = self.browser.find_element(By.ID, "id_email")
+        password1 = self.browser.find_element(
+            By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[6]/input")
+        password2 = self.browser.find_element(
+            By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[8]/input")
 
-    #     submit = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[10]/button")
-    #     # send data input
-    #     time.sleep(1)
-    #     username.send_keys(self.username_new)
-    #     email.send_keys(self.email_new)
-    #     password1.send_keys(self.password_new)
-    #     password2.send_keys(self.password_new)
-    #     submit.send_keys(Keys.RETURN)
+        submit = self.browser.find_element(
+            By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[10]/button")
+        # send data input
+        time.sleep(1)
+        username.send_keys(self.username_new)
+        email.send_keys(self.email_new)
+        password1.send_keys(self.password_new)
+        password2.send_keys(self.password_new)
+        submit.send_keys(Keys.RETURN)
 
-    #     # submit form
-    #     assert self.username_new in self.browser.page_source
+        # submit form
+        assert self.username_new in self.browser.page_source
         
-    # def test_user_account_is_used(self):
-    #     """check login function in web form in_main_server """
-    #     self.browser.get(self.my_web)
-    #     but_regis = self.browser.find_element(
-    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[1]")
-    #     but_regis.click()
-        
-    #     # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
-    #     username = self.browser.find_element(By.ID, "id_username")
-    #     email = self.browser.find_element(By.ID, "id_email")
-    #     password1 = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[6]/input")
-    #     password2 = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[8]/input")
-
-    #     submit = self.browser.find_element(
-    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[10]/button")
-    #     # send data input
-    #     time.sleep(1)
-    #     username.send_keys(self.username_new)
-    #     email.send_keys(self.email_new)
-    #     password1.send_keys("Admin1234@")
-    #     password2.send_keys("Admin1234@")
-    #     submit.send_keys(Keys.RETURN)
-
-    #     # submit form
-    #     assert self.username_new in self.browser.page_source
-        
-    def test_logout(self):
-        """Check logout function this website"""
-        name =  namegenerator.gen()
-        password_ = "Admin1234@"
-        x =namegenerator.gen() 
-        email_key =   str(x) + "@gmail.com"
-        
+    def test_user_account_is_used(self):
+        """check login function in web form in_main_server """
         self.browser.get(self.my_web)
         but_regis = self.browser.find_element(
             By.XPATH, "/html/body/header/nav/div/ul[2]/li[1]")
@@ -183,33 +150,70 @@ class TestAuth_E2E(StaticLiveServerTestCase):
 
         submit = self.browser.find_element(
             By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[10]/button")
-
         # send data input
         time.sleep(1)
-        username.send_keys(name)
-        email.send_keys(email_key)
-        password1.send_keys(self.password_new2)
-        password2.send_keys(self.password_new2)
+        username.send_keys(self.username_new)
+        email.send_keys(self.email_new)
+        password1.send_keys("Admin1234@")
+        password2.send_keys("Admin1234@")
         submit.send_keys(Keys.RETURN)
-        # register completion
-        time.sleep(4)
+
+        # submit form
+        assert self.username_new in self.browser.page_source
         
-        but_out = self.browser.find_element(
-            By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]")
-        but_out.click()
+    # def test_logout(self):
+    #     """Check logout function this website"""
+    #     name =  namegenerator.gen()
+    #     password_ = "Admin1234@"
+    #     x =namegenerator.gen() 
+    #     email_key =   str(x) + "@gmail.com"
         
-        time.sleep(3)
+    #     # self.browser.get(self.my_web)
+    #     self.browser.get(self.live_server_url)
+    #     but_regis = self.browser.find_element(
+    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[1]")
+    #     but_regis.click()
         
+    #     # assert "DON'T HAVE AN ACCOUNT?" in self.browser.page_source
+    #     username = self.browser.find_element(By.ID, "id_username")
+    #     email = self.browser.find_element(By.ID, "id_email")
+    #     password1 = self.browser.find_element(
+    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[6]/input")
+    #     password2 = self.browser.find_element(
+    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[8]/input")
+
+    #     submit = self.browser.find_element(
+    #         By.XPATH, "/html/body/div/div[2]/div/div/form/div/div[2]/div[10]/button")
+
+    #     # send data input
+    #     time.sleep(1)
+    #     username.send_keys(name)
+    #     email.send_keys(email_key)
+    #     password1.send_keys(self.password_new2)
+    #     password2.send_keys(self.password_new2)
+    #     submit.send_keys(Keys.RETURN)
+    #     # register completion
+    #     but_out = self.browser.find_element(
+    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]")
+    #     but_out.click()
         
-        assert " Logout" in self.browser.page_source 
+    #     time.sleep(2)
         
-        # time.sleep(3)
-        # logout = self.browser.find_element(
-        #     By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]/a")
+    #     assert " Logout" in self.browser.page_source 
         
-        # self.browser.execute_script("arguments[0].click();", logout)
-        
-        # logout.click()
+    #     # self.client.logout()
+    #     # self.browser.refresh()
+    #     time.sleep(2)
+    #     re = self.browser.find_element(
+    #         By.XPATH, "/html/body/header/nav/div/ul[2]/li[2]/a")
+    #     self.browser.execute_script("arguments[0].click();", re)
+    #     # self.browser.execute_script("arguments[0].removeAttribute('style')", re)  
+    #     # self.browser.execute_script("arguments[0].click();", WebDriverWait(self.browser, 20).until(
+    #     #     EC.element_to_be_clickable((By.XPATH, "//button[@class='btn btn-large' and @id='sprawdz']"))))
+    #     # self.client.logout()
+    #     # re.click()
+    
+    #     re.click()
     
     
     # def test_come_google_login(self):
