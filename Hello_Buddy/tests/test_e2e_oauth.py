@@ -48,8 +48,8 @@ class TestAuth_E2E(StaticLiveServerTestCase):
         options = ChromeOptions()
         # options.add_argument("--headless")
         cls.browser = Chrome(options=options)
-        # cls.my_web = cls.live_server_url
-        cls.my_web = "https://hello-buddy-th.herokuapp.com/home"
+        cls.my_web = cls.live_server_url
+        # cls.my_web = "https://hello-buddy-th.herokuapp.com/home"
         # cls.browser.set_window_size(1920, 1080)
 
     # @override_settings(DEBUG=True)
