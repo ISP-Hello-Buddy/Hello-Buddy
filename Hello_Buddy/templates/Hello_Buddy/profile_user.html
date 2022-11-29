@@ -6,6 +6,26 @@
         max-width: 120px;
         height: 100px;
     }
+    a:link {
+        color: Black;
+        background-color: transparent;
+        text-decoration: none;
+    }
+    a:visited {
+        color: Black;
+        background-color: transparent;
+        text-decoration: none;
+    }
+    a:hover {
+        color: grey;
+        background-color: transparent;
+        text-decoration: none;
+    }
+    a:active {
+        color: grey;
+        background-color: transparent;
+        text-decoration: underline;
+    }
 </style>
 
 {% for message in messages %}
@@ -56,10 +76,11 @@ Swal.fire({
         <!--created event-->
         <div class="col-sm-9">
             {% for i in events %}
+            <a href='{%url 'event' i.event.id%}'>
             <div class="col-sm-6">
                 <div class="well well-sm">
                     <div class="row">
-
+                        
                         <!-- Modal -->
                         <div class="modal fade" id="{{i.event.id}}" data-backdrop="false">
                             <div class="modal-dialog">
@@ -70,21 +91,20 @@ Swal.fire({
                                     <div class="modal-body">Are you sure to delete this event?</div>
                                     <div class="modal-footer">
                                         <button name="delete" value="{{i.event.id}}" type="submit"
-                                                class="btn btn-default">Delete
-                                        </button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
-                                    </div>
+                                        class="btn btn-default">Delete
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <!--event photo-->
-                        <div class="col-sm-4">
-                            <img src="{{i.event.image_upload.url}}" alt=""
-                                 class="img-rounded img-responsive" width="142" height="98"/>
-                        </div>
-                        <div class="col-sm-6">
-                            
+                    </div>
+                    <!--event photo-->
+                    <div class="col-sm-4">
+                        <img src="{{i.event.image_upload.url}}" alt=""
+                        class="img-rounded img-responsive" width="142" height="98"/>
+                    </div>
+                    <div class="col-sm-6">
                             {% if i.event.is_active %}
                             <h4><i class="fa fa-circle" aria-hidden="true" style='color: #6CEB3F;'></i> {{ i.event.name }}</h4>
                             {%else%}
@@ -96,6 +116,7 @@ Swal.fire({
                             <nav></nav>
                             <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
+                    </a>
                         <div class="col-sm-2">
                                 <!-- close button trigger modal -->
     
@@ -130,7 +151,7 @@ Swal.fire({
         <!--joined event-->
         <div class="col-sm-9">
             {% for i in joined_events %}
-
+            <a href='{%url 'event' i.event.id%}'>
             <div class="col-sm-6">
                 <div class="well well-sm">
                     <div class="row">
@@ -148,6 +169,7 @@ Swal.fire({
                             <nav></nav>
                             <span class="glyphicon glyphicon-calendar"></span> {{ i.event.date}}
                         </div>
+                    </a>
                     </div>
                 </div>
             </div>
