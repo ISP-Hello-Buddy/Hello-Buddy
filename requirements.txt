@@ -13,5 +13,6 @@ whitenoise
 psycopg2
 django-cloudinary-storage
 coverage
+webdriver_manager
 
 
