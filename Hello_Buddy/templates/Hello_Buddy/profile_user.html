@@ -42,6 +42,19 @@ Swal.fire({
 })
 </script>
 {%endif%}
+{% if 'error' in message.tags %}
+<script type="text/javascript"> 
+  var message = "{{ message }}"
+</script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: message,
+  showConfirmButton: false,
+  timer: 2000
+})
+</script>
+{%endif%}
 {%endfor%}
 
 <div class="container" style="margin-top:100px">
@@ -127,6 +140,7 @@ Swal.fire({
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
+                                                <li><a href="{%url 'edit' i.event.id%}" data-toggle="modal">Edit</a></li>
                                                 <li><a href="#" data-toggle="modal"
                                                        data-target="#{{i.event.id}}">Delete</a></li>
                                                 <li role="separator" class="divider"></li>

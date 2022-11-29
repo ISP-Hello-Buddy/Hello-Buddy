@@ -58,7 +58,7 @@ def events_by_category(request, event_category):
         return render(request,
                   "Hello_Buddy/event_by_category.html",
                   context)
-        
+
     sorted_event = Event.objects.filter(type=event_category)
     if len(sorted_event) == 0:
         messages.info(request, 'No event in this category')
@@ -95,9 +95,6 @@ def create(request):
                                   'Hello_Buddy/create_event.html', context=context)
 
                 if check_date(user, data['date'], 'host'):
-                    messages.info(request, 'WARNING')
-                    messages.info(
-                        request, 'You are allow to create 1 event per day.')
                     messages.info(
                         request, 'You are allow to create 1 event per day. So, choose another day to create event')
                     context = {'form': form}
@@ -187,16 +184,16 @@ def profile_user(request):
 @login_required
 def event(request, event_id):
     """
-    Each event page that show information and users can join and 
+    Each event page that show information and users can join and
     leave
     """
     id = event_id
     user = request.user
-    event_active = Event.objects.filter(id=event_id).first().is_active()
-    if not event_active:
-        messages.error(request, 'Event is already end.')
-        return redirect ('home')
     try:
+        event_active = Event.objects.filter(id=event_id).first().is_active()
+        if not event_active:
+            messages.error(request, 'Event is already end.')
+            return redirect('profile-user')
         event = Event.objects.filter(id=event_id).first()
         all_event = Event.objects.all()
 
@@ -295,16 +292,16 @@ def map(request):
                 {mp.event}</a></center></h3>
                 <div><center> Place: {mp.address}</center> </div>
                 <div><center> </center></div>
-                        
+
                         <div><center> Date: {mp.event.date}</center> </div>
                         <div><center> Time: {mp.event.time}</center> </div>
                         <div><center> Participant: {mp.event.joined}/
                         {mp.event.participant}
                 </center> </div>
                 <div><center>
-                <button class="btn btn-info" type="button" 
+                <button class="btn btn-info" type="button"
                 onclick="window.open('/event/{mp.event.id}',
-                '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}" 
+                '_blank');" id="myButton">Visit<a href="/event/{mp.event.id}"
                 target="_blank"class="button" ></a></button>
                 </div></center>
 
@@ -317,3 +314,50 @@ def map(request):
     m = m._repr_html_()
     context = {'m': m, }
     return render(request, 'Hello_Buddy/map.html', context)
+
+
+def edit(request, event_id):
+    user = request.user
+    try:
+        event = Event.objects.filter(id=event_id).first()
+        event_active = event.is_active()
+        date = event.date
+        if not event_active:
+            messages.error(request, 'Event is already end.')
+            return redirect('profile-user')
+        if request.method == 'POST':
+            form = CreateEventForm(request.POST, instance=event)
+            nomi = Nominatim(user_agent="hi_buddy")
+            if form.is_valid():
+                data = form.cleaned_data
+                if "create_event" in request.POST:
+                    location = nomi.geocode(data['place'])
+                    if not location:
+                        messages.warning(request,
+                                        "This location has not on the map location")  # add text error
+                        context = {'form': form, 'event_id': event_id}
+                        return render(request,
+                                    'Hello_Buddy/edit.html', context=context)
+                        
+                    if data['date'] != date:
+                        if check_date(user, data['date'], 'host'):
+                            messages.info(
+                                request, 'You are allow to create 1 event per day. So, choose another day')
+                            context = {'form': form, 'event_id': event_id}
+                            return render(request,
+                                        'Hello_Buddy/edit.html', context=context)
+                    
+                    form.save()
+                    messages.success(request,
+                                        "Your event is updated successfully")
+                    return redirect(to="profile-user")
+                elif "check_place" in request.POST:
+                    loca = nomi.geocode(data['place'])
+                    messages.warning(request, f"Location is {loca}")
+    except:
+        messages.error(request, 'Event does not exit.')
+        return redirect('home')
+                
+    form = CreateEventForm(instance=event)
+    context = {'form': form, 'event_id': event_id}
+    return render(request, 'Hello_Buddy/edit.html', context)
