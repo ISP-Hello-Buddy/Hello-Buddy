@@ -103,6 +103,7 @@ class TestCreateEvent(StaticLiveServerTestCase):
     def test_create_event_wrong_place_submit(self):
         self.browser.get(self.live_server_url)
 
+    
         self.login_id1()
         but_create = self.browser.find_element(
             By.XPATH, "/html/body/header/nav/div/ul[1]/li[4]/a")
