@@ -87,7 +87,7 @@ def create(request):
             if "create_event" in request.POST:
                 location = nomi.geocode(data['place'])
                 if not location:
-                    form = CreateEventForm()
+                    form = CreateEventForm(request.POST, request.FILES)
                     messages.warning(request,
                                      "This location has not on the map location")  # add text error
                     context = {'form': form}
