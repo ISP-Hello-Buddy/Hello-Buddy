@@ -1,51 +1,45 @@
-from django.test import TestCase
-from django.urls import reverse
-from Hello_Buddy.models import Event, HostOfEvent
-import datetime
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-
-class TestCatagory(TestCase):
-
-    def setUp(self):
-        self.create_url = reverse('create')
-        self.register = reverse('account_signup')
-
-        self.account1 = {
-            'username': 'demo12',
-            'password1': 'admin123456',
-            'password2': 'admin123456',
-            'email': 'admin@mail.com'
-        }
-
-    def revers_toevent_catagory(self, type:str):
-        return reverse(type)
-
-    def test_revers_to_catagory(self):
-        self.client.post(self.register, self.account1)
-
-        eating_event = Event.objects.create(
-            name="Eating", place="มหาลัยเกษตร",
-            participant=4, joined=0, date="2022-11-22",
-            type="", image_upload="event/images/default.jpg",
-            time="00:52:48")
-
-        response = self.client.post(self.create_url, )
-        self.assertEqual(response.status_code, 302)
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 
+class Test(unittest.TestCase):
+        option = webdriver.ChromeOptions()
+        browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=option)
 
-        # self.non_type_event = Event.objects.create(
-        #     name="event1", place="มหาลัยเกษตร",
-        #     participant=1, joined=1, date="2022-11-22",
-        #     type="", image_upload="event/images/default.jpg",
-        #     time="10:52:48")
-        #
-        #
-        # self.party_event = Event.objects.create(
-        #     name="Party", place="มหาลัยเกษตร",
-        #     participant=6, joined=1, date="2022-11-22",
-        #     type="", image_upload="event/images/default.jpg",
-        #     time="00:52:48")
+        def login(self):
+            """For login"""
+            self.browser.get("https://hello-buddy-th.herokuapp.com/home")
+            self.browser.find_element(By.LINK_TEXT, "Login").click()
+            self.browser.find_element(By.NAME, "login").send_keys(("ForTest"))
+            self.browser.find_element(By.NAME, "password").send_keys("admin@1234")
+            self.browser.find_element(By.CSS_SELECTOR, '[type="submit"]').click()
 
+        def test_crate_event(self):
+            """test create event"""
+            self.login() #login
+            # create event
+            self.browser.get("https://hello-buddy-th.herokuapp.com/create")
+            name = self.browser.find_element(
+                By.XPATH, "/html/body/div[2]/form/div[1]/div/div/input")
+            place = self.browser.find_element(
+                By.XPATH, "/html/body/div[2]/form/div[2]/div/div/input")
+            time = self.browser.find_element(
+                By.XPATH, "/html/body/div[2]/form/div[5]/div/div/div/input")
+            type = self.browser.find_element(By.XPATH, "/html/body/div[2]/form/div[6]/div/div/select")
+            name.send_keys("event_test")
+            place.send_keys("kaset")
+            time.send_keys("23:00:00")
+            type.send_keys("eating")
 
+            self.browser.find_element(By.XPATH, "/html/body/div[2]/form/div[8]/button[2]").click()
+            self.browser.refresh()
+            self.browser.get("https://hello-buddy-th.herokuapp.com/home")
+            assert "event_test" in self.browser.page_source
+
+        def test_sort_by_category(self):
+            self.browser.get("https://hello-buddy-th.herokuapp.com/eating")
+            assert "event_test" in self.browser.page_source
