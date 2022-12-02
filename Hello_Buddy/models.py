@@ -25,7 +25,7 @@ class Event(models.Model):
         ('education', 'Education'),
     ]
 
-    name = models.CharField("Name", max_length=15)
+    name = models.CharField("Name", max_length=30)
     place = models.CharField("Place", max_length=30)
     participant = models.PositiveIntegerField("Participant",
                                             default=1)
@@ -57,10 +57,6 @@ class Event(models.Model):
         time = now.time()
         return date < self.date or (date == self.date and time < self.time)
         
-
-    def get_url(self):
-        """ Come to main your event """
-        return reverse("event",kwargs={"id" : self.id})
         
 class HostOfEvent(models.Model):
     """model for record user with their own event"""

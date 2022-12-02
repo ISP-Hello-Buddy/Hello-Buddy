@@ -52,7 +52,7 @@ def events_by_category(request, event_category):
     if event_category == 'all':
         all = Event.objects.all()
         if len(all) == 0:
-            messages.info(request, 'No event in this category')
+            messages.info(request, 'No event has been created yet.')
             return redirect('home')
         context = {"events_in_category": all}
         return render(request,
@@ -87,7 +87,7 @@ def create(request):
             if "create_event" in request.POST:
                 location = nomi.geocode(data['place'])
                 if not location:
-                    form = CreateEventForm()
+                    form = CreateEventForm(request.POST, request.FILES)
                     messages.warning(request,
                                      "This location has not on the map location")  # add text error
                     context = {'form': form}
@@ -126,8 +126,11 @@ def create(request):
 
                 return redirect(reverse('event_category', args=['all']))
             elif "check_place" in request.POST:
-                loca = nomi.geocode(data['place'])
-                messages.warning(request, f"Location is {loca}")
+                try:
+                    loca = nomi.geocode(data['place'])
+                    messages.warning(request, f"Location is {loca}")
+                except:
+                    messages.warning(request, f"Location is {loca}")
     else:
         form = CreateEventForm()
     context = {'form': form}
