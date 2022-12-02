@@ -7,11 +7,13 @@ django-bootstrap4
 folium
 geopy
 geocoder
+selenium
 gunicorn
 python-decouple
 whitenoise
 psycopg2
 django-cloudinary-storage
 coverage
+namegenerator         # name generator for selenium
 
 
